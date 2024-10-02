@@ -24,15 +24,11 @@ namespace DAPM.ClientApi.Controllers
         }
 
         [HttpPost("login")]
-        [SwaggerOperation(Description = "Handles user login and returns a JWT token.")]
-        public async Task<ActionResult<ApiResponse>> Login([FromBody] LoginRequest loginRequest)
+        [SwaggerOperation(Description = "Send user login request")]
+        public async Task<ActionResult<Guid>> PostLogin(string username, string password)
         {
-            var token = await _authenticationService.RequestJwtTokenAsync(loginRequest.Username, loginRequest.Password);
-            if (string.IsNullOrEmpty(token))
-            {
-                return Unauthorized(new ApiResponse { RequestName = "Login", Message = "Invalid credentials" });
-            }
-            return Ok(new ApiResponse { RequestName = "Login", Token = token });
+            Guid id = _authenticationService.PostLogin(username, password);
+            return Ok(new ApiResponse { RequestName = "PostLogin", TicketId = id });
         }
     }
 }

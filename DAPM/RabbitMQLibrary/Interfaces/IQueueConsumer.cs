@@ -9,5 +9,6 @@ namespace RabbitMQLibrary.Interfaces
     public interface IQueueConsumer <in TQueueMessage> where TQueueMessage : class, IQueueMessage
     {
         Task ConsumeAsync(TQueueMessage message);
+        Task<string?> ConsumeAsync(string v);
     }
 }
