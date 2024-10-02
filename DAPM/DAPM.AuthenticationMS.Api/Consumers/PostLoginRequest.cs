@@ -3,6 +3,7 @@ using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
 using RabbitMQLibrary.Messages.Authentication;
+using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 
 namespace DAPM.AuthenticationMS.API.Consumers
 {

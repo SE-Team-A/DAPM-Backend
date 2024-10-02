@@ -1,5 +1,6 @@
 ﻿using DAPM.ClientApi.Services.Interfaces;
 using RabbitMQLibrary.Interfaces;
+using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.Authentication;
 using Microsoft.Extensions.Logging;
 
