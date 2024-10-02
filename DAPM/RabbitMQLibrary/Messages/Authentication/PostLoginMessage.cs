@@ -2,7 +2,7 @@ using RabbitMQLibrary.Interfaces;
 
 namespace RabbitMQLibrary.Messages.Authentication
 {
-    public class LoginRequest : IQueueMessage
+    public class PostLoginMessage : IQueueMessage
     {
         public string Username { get; set; }
         public string Password { get; set; }
