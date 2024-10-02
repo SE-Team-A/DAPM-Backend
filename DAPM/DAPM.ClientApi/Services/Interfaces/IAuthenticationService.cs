@@ -7,7 +7,7 @@ namespace DAPM.ClientApi.Services.Interfaces
     public interface IAuthenticationService
 
     {
-        Guid PostLogin(string username, string password);
+        public Guid PostLogin(string username, string password);
     }
 
 }
