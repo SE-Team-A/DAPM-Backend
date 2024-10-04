@@ -26,7 +26,16 @@ namespace DAPM.AuthenticationMS.Api.Consumers
             var password = message.Password;
 
             //TODO: Implement authentication logic
+            
 
+            var resultMessage = new PostLoginResultMessage
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                ProcessId = message.ProcessId,
+                Succeeded = true
+            };
+
+            _postLoginResultProducer.PublishMessage(resultMessage);
 
             return;
         }
