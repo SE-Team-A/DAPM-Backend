@@ -205,6 +205,14 @@ namespace DAPM.Orchestrator
             sendExecuteOperatorActionProcess.StartProcess();
         }
 
+        public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password)
+        {
+            var processId = Guid.NewGuid();
+            var postLogingRequestProcess = new PostLoginRequestProcess(this, _serviceProvider,ticketId, processId,UserName, Password);
+            _processes[processId] = postLogingRequestProcess;
+            postLogingRequestProcess.StartProcess();
+        }
+
 
         #endregion
     }
