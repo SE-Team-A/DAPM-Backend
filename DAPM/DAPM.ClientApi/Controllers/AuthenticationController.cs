@@ -25,9 +25,9 @@ namespace DAPM.ClientApi.Controllers
 
         [HttpPost("login")]
         [SwaggerOperation(Description = "Send user login request")]
-        public async Task<ActionResult<Guid>> PostLogin(string username, string password)
+        public async Task<ActionResult<Guid>> PostLogin([FromBody] LoginRequestDTO loginRequestDTO)
         {
-            Guid id = _authenticationService.PostLogin(username, password);
+            Guid id = _authenticationService.PostLogin(loginRequestDTO.username, loginRequestDTO.password);
             return Ok(new ApiResponse { RequestName = "PostLogin", TicketId = id });
         }
     }

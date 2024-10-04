@@ -8,15 +8,15 @@ namespace DAPM.AuthenticationMS.Api.Consumers
     public class PostLoginConsumer : IQueueConsumer<PostLoginMessage>
     {
         private ILogger<PostLoginConsumer> _logger;
-        private IAuthenticationService _authenticationService;
+        private IUserService _userService;
         private IQueueProducer<PostLoginResultMessage> _postLoginResultProducer;
         public PostLoginConsumer(ILogger<PostLoginConsumer> logger,
             IQueueProducer<PostLoginResultMessage> postLoginResultProducer,
-            IAuthenticationService authenticationService)
+            IUserService userService)
         {
             _logger = logger;
             _postLoginResultProducer = postLoginResultProducer;
-            _authenticationService = authenticationService;
+            _userService = userService;
         }
         public async Task ConsumeAsync(PostLoginMessage message)
         {
@@ -25,15 +25,16 @@ namespace DAPM.AuthenticationMS.Api.Consumers
             var username = message.Username;
             var password = message.Password;
 
-            //TODO: Implement authentication logic
-            
-
             var resultMessage = new PostLoginResultMessage
             {
                 TimeToLive = TimeSpan.FromMinutes(1),
                 ProcessId = message.ProcessId,
-                Succeeded = true
+                Token = await _userService.LoginUserAsync(username, password),
             };
+
+            if (resultMessage.Token != null) {
+                resultMessage.Succeeded = true;
+            }
 
             _postLoginResultProducer.PublishMessage(resultMessage);
 

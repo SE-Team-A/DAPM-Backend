@@ -44,8 +44,8 @@ namespace DAPM.Orchestrator.Processes
             {
                 TicketId = _ticketId,
                 TimeToLive = TimeSpan.FromMinutes(1),
-                Succeeded = true
-                //Organizations = message.Organizations
+                Succeeded = message.Succeeded,
+                Token = message.Token
             };
 
             postLoginProcessResultProducer.PublishMessage(processResultMessage);

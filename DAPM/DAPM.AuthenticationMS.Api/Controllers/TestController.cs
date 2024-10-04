@@ -27,7 +27,7 @@ namespace DAPM.AuthenticationMS.Api.Controllers
         {
             try
             {
-                string token = await _userService.LoginUserAsync("username1--", "Password1@--");
+                string token = await _userService.LoginUserAsync("username1", "Password1@");
                 return Ok(token);
             } catch (Exception e) {
                 return Problem(

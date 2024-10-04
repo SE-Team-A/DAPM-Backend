@@ -32,13 +32,13 @@ public class UserService : IUserService
         var user = await _userManager.FindByNameAsync(username);
         if (user == null)
         {
-            throw new Exception("Invalid username.");
+            return null;
         }
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
 
         if (!result.Succeeded) {
-            throw new Exception("Invalid password.");
+            return null;
         }
 
         return _tokenService.CreateToken(user);
