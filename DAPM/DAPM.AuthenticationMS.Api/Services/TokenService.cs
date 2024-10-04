@@ -12,14 +12,25 @@ namespace DAPM.AuthenticationMS.Api.Services;
 
 public class TokenService : ITokenService
 {
-    public string CreateToken(IdentityUser user)
+    public readonly UserManager<IdentityUser> _userManager;
+
+    public TokenService(UserManager<IdentityUser> userManager)
     {
+        _userManager = userManager;
+    }
+    
+    public async Task<string> CreateToken(IdentityUser user)
+    {
+
+        bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Name, user.UserName),
-            // new Claim(ClaimTypes.Role, user.) // do the roles later xd
+            new Claim("isAdmin", isAdmin.ToString().ToLower())
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkey??????????????????????????"));

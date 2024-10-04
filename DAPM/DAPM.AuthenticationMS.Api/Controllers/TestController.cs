@@ -18,7 +18,7 @@ namespace DAPM.AuthenticationMS.Api.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<IdentityResult>> CreateUser()
         {
-            IdentityResult result = await _userService.CreateUserAsync("username1", "Password1@");
+            IdentityResult result = await _userService.CreateUserAsync("username1", "Password1@", true);
             return Ok(result);
         }
 

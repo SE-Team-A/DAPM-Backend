@@ -5,5 +5,5 @@ namespace DAPM.AuthenticationMS.Api.Services.Interfaces;
 
 public interface ITokenService
 {
-    public string CreateToken(IdentityUser user);
+    public Task<string> CreateToken(IdentityUser user);
 }
