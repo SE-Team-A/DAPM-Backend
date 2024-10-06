@@ -27,5 +27,10 @@ namespace DAPM.RepositoryMS.Api.Repositories
         {
             return await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == repositoryId);
         }
+
+        public async Task<IEnumerable<Pipeline>> GetPipelines(Guid repositoryId)
+        {
+            return await _repositoryDbContext.Pipelines.Where(p => p.RepositoryId == repositoryId).ToListAsync();
+        }
     }
 }

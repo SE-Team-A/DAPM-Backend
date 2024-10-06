@@ -88,6 +88,25 @@ namespace DAPM.ClientApi.Services
             return ticketId;
         }
 
+        public Guid GetPipelinesForRepository(Guid organizationId, Guid repositoryId)
+        {
+            Guid ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+
+            var message = new GetPipelinesRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                OrganizationId = organizationId,
+                RepositoryId = repositoryId
+            };
+
+            _getPipelinesRequestProducer.PublishMessage(message);
+
+            _logger.LogDebug("GetPipelinesForRepositoryRequest Enqueued");
+
+            return ticketId;
+        }
+
         public Guid PostStartCommand(Guid organizationId, Guid repositoryId, Guid pipelineId, Guid executionId)
         {
             Guid ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
