@@ -7,7 +7,6 @@ on:
       - main
       - DEV
       - discord-webhook
-  workflow_dispatch: # For manual runs
 
 jobs:
   notify-discord:
@@ -30,26 +29,23 @@ jobs:
           commits=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].oid')
           commit_messages=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].messageHeadline')
           gh pr view ${{ github.event.pull_request.number }} --json commits
-          echo "commits=$(echo $commits | xargs -n1 | awk '{print substr($1,1,7)}')" >> $GITHUB_ENV
-          echo "commit_messages=$(echo $commit_messages | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
-
-      - name: Set test data (for manual run)
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          echo "source_branch=test-source-branch" >> $GITHUB_ENV
-          echo "target_branch=test-target-branch" >> $GITHUB_ENV
-          echo "commits=test123,test456" >> $GITHUB_ENV
-          echo "commit_messages='Test commit message 1, Test commit message 2'" >> $GITHUB_ENV
+          description=""
+          for i in $(seq 1 $(echo "$commits" | wc -w)); do
+            commit=$(echo "$commits" | cut -d ' ' -f $i | cut -c 1-7)
+            message=$(echo "$commit_messages" | cut -d ' ' -f $i)
+            description+="$commit -- $message\n\n"
+          done
+          echo -e "$description" > description.txt
 
       - name: Construct JSON payload
         id: payload
         run: |
-          description=$(paste -d " " <(echo $commits | tr ',' '\n') <(echo $commit_messages | tr ',' '\n'))
+          description=$(cat description.txt)
           jq -n --arg username "Github changes (backend)" \
               --arg title "$source_branch merged into $target_branch" \
               --arg description "$description" \
               --arg thumbnail_url "https://scontent-arn2-1.xx.fbcdn.net/v/t39.30808-6/309442137_496211302516262_905279675209114671_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=gTytY4lsV2kQ7kNvgHUXTQd&_nc_ht=scontent-arn2-1.xx&_nc_gid=A--MMk5IUx7Ql6LlT_eJRJp&oh=00_AYBJu2cx1DC67P2QIQaCgoaPv9LaGcV9du3ckKLcUGaRCA&oe=670AB4D5" \
-              --arg footer_text "footer for scale" \
+              --arg footer_text "Group A for the win" \
               '{
                   "username": $username,
                   "embeds": [
