@@ -11,6 +11,8 @@ on:
 jobs:
   notify-discord:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -22,8 +24,8 @@ jobs:
         if: github.event_name == 'pull_request'
         id: pr
         run: |
-          echo "source_branch=$(jq -r .pull_request.head.ref <<< "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
-          echo "target_branch=$(jq -r .pull_request.base.ref <<< "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
+          echo "source_branch=$(jq -r '.pull_request.head.ref' "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
+          echo "target_branch=$(jq -r '.pull_request.base.ref' "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
           commits=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].oid')
           commit_messages=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].message')
           echo "commits=$(echo $commits | xargs -n1 | awk '{print substr($1,1,7)}')" >> $GITHUB_ENV
