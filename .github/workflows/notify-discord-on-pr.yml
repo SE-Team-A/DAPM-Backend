@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - DEV
+      - discord-webhook
   workflow_dispatch: # For manual runs
 
 jobs:
