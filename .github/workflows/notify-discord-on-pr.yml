@@ -28,7 +28,7 @@ jobs:
           echo "target_branch=$(jq -r '.pull_request.base.ref' "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
 
           touch description.txt
-          gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[] | "\(.oid[0:7]) \(.messageHeadline)"' | while read line; do
+          gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[] | "\(.oid[0:7]) -- \(.messageHeadline)"' | while read line; do
             echo $line >> description.txt
           done
 
