@@ -180,5 +180,10 @@ namespace DAPM.Orchestrator
         {
             return;
         }
+
+        public virtual void OnPostRegistrationResult(PostRegistrationResultMessage message)
+        {
+            return;
+        }
     }
 }

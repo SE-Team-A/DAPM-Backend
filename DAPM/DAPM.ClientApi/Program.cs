@@ -62,6 +62,7 @@ builder.Services.AddQueueMessageConsumer<CollabHandshakeProcessResultConsumer, C
 builder.Services.AddQueueMessageConsumer<PostPipelineCommandProcessResultConsumer, PostPipelineCommandProcessResult>();
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusProcessResultConsumer, GetPipelineExecutionStatusRequestResult>();
 builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationProcessResult>();
 
 
 

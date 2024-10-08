@@ -30,5 +30,13 @@ namespace DAPM.ClientApi.Controllers
             Guid id = _authenticationService.PostLogin(loginRequestDTO.username, loginRequestDTO.password);
             return Ok(new ApiResponse { RequestName = "PostLogin", TicketId = id });
         }
+
+        [HttpPost("registration")]
+        [SwaggerOperation(Description = "Send user registration request")]
+        public async Task<ActionResult<Guid>> PostRegistration([FromBody] RegistrationRequestDTO registrationRequestDTO)
+        {
+            Guid id = _authenticationService.PostRegistration(registrationRequestDTO.username, registrationRequestDTO.password, registrationRequestDTO.name, registrationRequestDTO.role);
+            return Ok(new ApiResponse { RequestName = "PostRegistration", TicketId = id });
+        }
     }
 }

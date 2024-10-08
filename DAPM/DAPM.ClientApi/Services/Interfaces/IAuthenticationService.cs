@@ -8,6 +8,7 @@ namespace DAPM.ClientApi.Services.Interfaces
 
     {
         public Guid PostLogin(string username, string password);
+        public Guid PostRegistration(string username, string password, string name, string role);
     }
 
 }

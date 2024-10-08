@@ -33,7 +33,7 @@ namespace DAPM.Orchestrator
         public void OnActionResultFromPeer(ActionResultReceivedMessage message);
 
         public void OnPostLoginResult(PostLoginResultMessage message);
-
+        public void OnPostRegistrationResult(PostRegistrationResultMessage message);
 
         public void OnHandshakeRequestResponse(HandshakeRequestResponseMessage message);
         public void OnRegistryUpdate(RegistryUpdateMessage message);
