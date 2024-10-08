@@ -7,7 +7,6 @@ on:
       - main
       - DEV
       - discord-webhook
-  workflow_dispatch: # For manual runs
 
 jobs:
   notify-discord:
@@ -30,21 +29,18 @@ jobs:
           commits=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].oid')
           commit_messages=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].messageHeadline')
           gh pr view ${{ github.event.pull_request.number }} --json commits
-          echo "commits=$(echo $commits | xargs -n1 | awk '{print substr($1,1,7)}')" >> $GITHUB_ENV
-          echo "commit_messages=$(echo $commit_messages | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
-
-      - name: Set test data (for manual run)
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          echo "source_branch=test-source-branch" >> $GITHUB_ENV
-          echo "target_branch=test-target-branch" >> $GITHUB_ENV
-          echo "commits=test123,test456" >> $GITHUB_ENV
-          echo "commit_messages='Test commit message 1, Test commit message 2'" >> $GITHUB_ENV
+          description=""
+          for i in $(seq 1 $(echo "$commits" | wc -w)); do
+            commit=$(echo "$commits" | cut -d ' ' -f $i | cut -c 1-7)
+            message=$(echo "$commit_messages" | cut -d ' ' -f $i)
+            description+="$commit -- $message\n\n"
+          done
+          echo -e "$description" > description.txt
 
       - name: Construct JSON payload
         id: payload
         run: |
-          description=$(paste -d " " <(echo $commits | tr ',' '\n') <(echo $commit_messages | tr ',' '\n'))
+          description=$(cat description.txt)
           jq -n --arg username "Github changes (backend)" \
               --arg title "$source_branch merged into $target_branch" \
               --arg description "$description" \
