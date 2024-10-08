@@ -29,6 +29,7 @@ jobs:
           echo "target_branch=$(jq -r '.pull_request.base.ref' "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
           commits=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].oid')
           commit_messages=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].message')
+          gh pr view ${{ github.event.pull_request.number }} --json commits
           echo "commits=$(echo $commits | xargs -n1 | awk '{print substr($1,1,7)}')" >> $GITHUB_ENV
           echo "commit_messages=$(echo $commit_messages | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
 
