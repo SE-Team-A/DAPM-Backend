@@ -60,6 +60,7 @@ jobs:
     #                   "footer": {"text": $footer_text}
     #                   }
     #               ]
+
     #               }' > payload.json
 
     #   - name: Send to Discord
