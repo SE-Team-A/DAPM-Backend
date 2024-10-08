@@ -82,7 +82,7 @@ namespace DAPM.ClientApi.Controllers
             return Ok(new ApiResponse { RequestName = "PostPipelineToRepository", TicketId = id });
         }
 
-        [HttpPut("{organizationId}/repositories/{repositoryId}/resources/{resourceId}/delete")]
+        [HttpDelete("{organizationId}/repositories/{repositoryId}/resources/{resourceId}")]
         [SwaggerOperation(Description = "Marks a resource as deleted in a specific repository.")]
         public async Task<IActionResult> DeleteResourceById(Guid organizationId, Guid repositoryId, Guid resourceId)
         {
@@ -91,7 +91,7 @@ namespace DAPM.ClientApi.Controllers
          //   return Ok(new ApiResponse { RequestName = "PostPipelineToRepository", TicketId = id });
             if (id != Guid.Empty)
             {
-                return Ok(new { success = true, message = "Resource marked as deleted." });
+                return Ok(new { success = true, message = id});
             }
             else
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RabbitMQLibrary.Messages.Orchestrator.ProcessRequests
 {
-    public class GetResourceDeleteRequest : IQueueMessage
+    public class DeleteResourceRequest : IQueueMessage
     {
         public Guid MessageId { get; set; }
         public Guid TicketId { get; set; }

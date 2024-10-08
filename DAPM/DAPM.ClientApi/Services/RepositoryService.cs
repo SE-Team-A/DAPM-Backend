@@ -20,7 +20,7 @@ namespace DAPM.ClientApi.Services
         IQueueProducer<PostOperatorRequest> _postOperatorRequestProducer;
         IQueueProducer<PostPipelineRequest> _postPipelineRequestProducer;
         IQueueProducer<GetPipelinesRequest> _getPipelinesRequestProducer;
-        IQueueProducer<GetResourceDeleteRequest> _getResourceDeleteRequest;
+        IQueueProducer<DeleteResourceRequest> _getResourceDeleteRequest;
 
         public RepositoryService(
             ILogger<RepositoryService> logger,
@@ -31,7 +31,7 @@ namespace DAPM.ClientApi.Services
             IQueueProducer<PostPipelineRequest> postPipelineRequestProducer,
             IQueueProducer<GetPipelinesRequest> getPipelinesRequestProducer,
             IQueueProducer<PostOperatorRequest> postOperatorRequestProducer,
-            IQueueProducer<GetResourceDeleteRequest> getResourceDeletetProducer) 
+            IQueueProducer<DeleteResourceRequest> getResourceDeletetProducer) 
         {
             _ticketService = ticketService;
             _logger = logger;
@@ -48,7 +48,7 @@ namespace DAPM.ClientApi.Services
         {
              var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
 
-            var message = new GetResourceDeleteRequest
+            var message = new DeleteResourceRequest
             {
                 TimeToLive = TimeSpan.FromMinutes(1),
                 TicketId = ticketId,

@@ -4,6 +4,7 @@ using DAPM.Orchestrator.Processes.PipelineCommands;
 using DAPM.Orchestrator.Services.Models;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DAPM.Orchestrator
@@ -139,6 +140,15 @@ namespace DAPM.Orchestrator
             var getPipelineExecutionStatusProcess = new GetPipelineExecutionStatusProcess(this, _serviceProvider, ticketId, processId, executionId);
             _processes[processId] = getPipelineExecutionStatusProcess;
             getPipelineExecutionStatusProcess.StartProcess();
+        }
+
+        public void StartDeleteResourceProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId,
+            Guid messageResourceId)
+        {
+            var processId = Guid.NewGuid();
+            var postResourceProcess = new DeleteResourceProcess(this, _serviceProvider, processId, messageOrganizationId, messageRepositoryId, messageTicketId, messageResourceId);
+            _processes[processId] = postResourceProcess;
+            postResourceProcess.StartProcess();
         }
 
         #endregion
