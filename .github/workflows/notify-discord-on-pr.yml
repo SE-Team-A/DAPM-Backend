@@ -30,8 +30,8 @@ jobs:
           commits=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].oid')
           commit_messages=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].messageHeadline')
 
-          echo commits
-          echo commit_messages
+          echo $commits
+          echo $commit_messages
 
           gh pr view ${{ github.event.pull_request.number }} --json commits
 
