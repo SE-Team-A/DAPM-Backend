@@ -30,6 +30,9 @@ jobs:
           commits=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].oid')
           commit_messages=$(gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[].messageHeadline')
 
+          echo commits
+          echo commit_messages
+
           gh pr view ${{ github.event.pull_request.number }} --json commits
 
           description=""
@@ -38,7 +41,7 @@ jobs:
           done
 
           echo -e "$description" > description.txt
-          cat description.txt
+          cat description.txt || echo "description.txt is empty or not found"
 
     #   - name: Construct JSON payload
     #     id: payload
