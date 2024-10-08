@@ -20,6 +20,7 @@ namespace DAPM.ClientApi.Services
         IQueueProducer<PostOperatorRequest> _postOperatorRequestProducer;
         IQueueProducer<PostPipelineRequest> _postPipelineRequestProducer;
         IQueueProducer<GetPipelinesRequest> _getPipelinesRequestProducer;
+        IQueueProducer<GetResourceDeleteRequest> _getResourceDeleteRequest;
 
         public RepositoryService(
             ILogger<RepositoryService> logger,
@@ -29,7 +30,8 @@ namespace DAPM.ClientApi.Services
             IQueueProducer<PostResourceRequest> postResourceRequestProducer,
             IQueueProducer<PostPipelineRequest> postPipelineRequestProducer,
             IQueueProducer<GetPipelinesRequest> getPipelinesRequestProducer,
-            IQueueProducer<PostOperatorRequest> postOperatorRequestProducer) 
+            IQueueProducer<PostOperatorRequest> postOperatorRequestProducer,
+            IQueueProducer<GetResourceDeleteRequest> getResourceDeletetProducer) 
         {
             _ticketService = ticketService;
             _logger = logger;
@@ -39,7 +41,29 @@ namespace DAPM.ClientApi.Services
             _postPipelineRequestProducer = postPipelineRequestProducer;
             _getPipelinesRequestProducer = getPipelinesRequestProducer;
             _postOperatorRequestProducer = postOperatorRequestProducer;
+            _getResourceDeleteRequest = getResourceDeletetProducer;
         }
+
+        public Guid DeleteResourceById (Guid organizationId, Guid repositoryId, Guid resourceId)
+        {
+             var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+
+            var message = new GetResourceDeleteRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                OrganizationId = organizationId,
+                RepositoryId = repositoryId,
+                ResourceId = resourceId
+            };
+
+             _getResourceDeleteRequest.PublishMessage(message);
+
+            _logger.LogDebug("DeleteResourceFromRepoMessage Enqueued");
+
+            return ticketId;
+        }
+
 
         public Guid GetRepositoryById(Guid organizationId, Guid repositoryId)
         {

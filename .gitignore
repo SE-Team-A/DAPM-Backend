@@ -6,3 +6,4 @@ DAPM/DAPM.Orchestrator/Services/Configuration/IdentityConfiguration.json
 /DAPM/DAPM.OperatorMS.Api/registry
 
 .DS_Store
+.fake

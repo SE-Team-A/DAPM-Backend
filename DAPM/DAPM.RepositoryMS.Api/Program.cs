@@ -54,6 +54,7 @@ builder.Services.AddQueueMessageConsumer<PostPipelineToRepoConsumer, PostPipelin
 builder.Services.AddQueueMessageConsumer<GetPipelinesFromRepoConsumer, GetPipelinesFromRepoMessage>();
 builder.Services.AddQueueMessageConsumer<GetResourceFilesFromRepoConsumer, GetResourceFilesFromRepoMessage>();
 builder.Services.AddQueueMessageConsumer<GetOperatorFilesFromRepoConsumer, GetOperatorFilesFromRepoMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceFromRepoMessage>();
 
 
 

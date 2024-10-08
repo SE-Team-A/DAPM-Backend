@@ -11,9 +11,10 @@ namespace DAPM.ClientApi.Services
     {
         private readonly ILogger<ResourceService> _logger;
         private ITicketService _ticketService;
-
+       
         private IQueueProducer<GetResourcesRequest> _getResourcesRequestProducer;
         private IQueueProducer<GetResourceFilesRequest> _getResourceFilesRequestProducer;
+
 
         public ResourceService(ILogger<ResourceService> logger, ITicketService ticketService,
             IQueueProducer<GetResourceFilesRequest> getResourceFilesProducer,
@@ -23,6 +24,7 @@ namespace DAPM.ClientApi.Services
             _ticketService = ticketService;
             _getResourceFilesRequestProducer = getResourceFilesProducer;
             _getResourcesRequestProducer = getResourcesProducer;
+            
         }
 
         public Guid GetResourceById(Guid organizationId, Guid repositoryId, Guid resourceId)
@@ -64,5 +66,6 @@ namespace DAPM.ClientApi.Services
 
             return ticketId;
         }
+
     }
 }
