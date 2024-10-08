@@ -2,3 +2,4 @@ mongo/
 postgres/
 postgres-repository/
 pgadmin/
+postgres-auth/
