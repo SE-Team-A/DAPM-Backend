@@ -2,6 +2,7 @@
 using DAPM.ClientApi.Models.DTOs;
 using DAPM.ClientApi.Services;
 using DAPM.ClientApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -24,6 +25,7 @@ namespace DAPM.ClientApi.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         [SwaggerOperation(Description = "Send user login request")]
         public async Task<ActionResult<Guid>> PostLogin([FromBody] LoginRequestDTO loginRequestDTO)
         {

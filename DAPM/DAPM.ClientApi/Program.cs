@@ -10,6 +10,9 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults;
 using Microsoft.OpenApi.Models;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +85,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkey??????????????????????????")),
+        ValidateLifetime = true,
+        ValidateIssuer = false,
+        ValidateAudience = false, 
+    };
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
@@ -95,9 +117,8 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
+// app.UseAuthorization();
 
-app.UseAuthorization();
-
-app.MapControllers();
+app.MapControllers().RequireAuthorization();;
 
 app.Run();
