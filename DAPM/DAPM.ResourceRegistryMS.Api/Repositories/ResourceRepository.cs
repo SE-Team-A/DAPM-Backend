@@ -28,13 +28,14 @@ namespace DAPM.ResourceRegistryMS.Api.Repositories
         public async Task<bool> DeleteResource(Guid resourceId)
         {
             var resource = await _context.Resources.FindAsync(resourceId);
+            var found = _context.Resources.First(r => r.Id == resourceId /*s&& r.RepositoryId == repositoryId*/);
 
             if (resource == null)
             {
                 return false;
             }
 
-            _context.Resources.Remove(resource);
+            _context.Resources.Remove(found );
             await _context.SaveChangesAsync();
 
             return true;
