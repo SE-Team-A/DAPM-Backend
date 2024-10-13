@@ -18,27 +18,28 @@ namespace DAPM.ClientApi.Consumers
             _ticketService = ticketService;
         }
 
-        public Task ConsumeAsync(DeleteResourceFromRepoResult message)
+       public Task ConsumeAsync(DeleteResourceFromRepoResult message)
         {
-            _logger.LogInformation("GetOrganizationsResultMessage received");
-
-
-            IEnumerable<ResourceDTO> resourcesDTOs = message.resources;
+           _logger.LogInformation("DeleteResourceFromRepoResult received");
 
             // Objects used for serialization
             JToken result = new JObject();
             JsonSerializer serializer = JsonSerializer.Create(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
 
+            //JToken idsJSON = JToken.FromObject(message., serializer);
 
             //Serialization
-            JToken organizationsJSON = JToken.FromObject(resourcesDTOs, serializer);
-            result["organizations"] = organizationsJSON;
-
+            //result["itemIds"] = idsJSON;
+            //result["itemType"] = message.ItemType;
+            result["resourceId"] = message.resourceId;
+            //result["message"] = message.Message;  
 
             // Update resolution
             _ticketService.UpdateTicketResolution(message.TicketId, result);
-            
+
+
             return Task.CompletedTask;
+            
         }
 
     }

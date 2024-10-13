@@ -34,7 +34,7 @@ namespace DAPM.ClientApi.Services
             IQueueProducer<DeleteResourceRequest> getResourceDeletetProducer) 
         {
             _ticketService = ticketService;
-            _logger = logger;
+            _logger = logger; 
             _getRepositoriesRequestProducer = getRepositoriesRequestProducer;
             _getResourcesRequestProducer = getResourcesRequestProducer;
             _postResourceRequestProducer = postResourceRequestProducer;

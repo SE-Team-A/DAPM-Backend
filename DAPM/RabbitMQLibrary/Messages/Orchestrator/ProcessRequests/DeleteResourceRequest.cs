@@ -18,3 +18,4 @@ namespace RabbitMQLibrary.Messages.Orchestrator.ProcessRequests
         public Guid ResourceId { get; set; }
     }
 }
+

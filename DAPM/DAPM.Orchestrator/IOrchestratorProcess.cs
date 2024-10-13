@@ -1,4 +1,5 @@
 ﻿using RabbitMQLibrary.Messages.Orchestrator.Other;
+using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromOperator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPeerApi;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator;
@@ -31,7 +32,8 @@ namespace DAPM.Orchestrator
         public void OnGetResourceFilesFromOperatorResult(GetExecutionOutputResultMessage message);
         public void OnSendResourceToPeerResult(SendResourceToPeerResultMessage message);
         public void OnActionResultFromPeer(ActionResultReceivedMessage message);
-
+        public void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message);
+        public void OnDeleteResourceFromRegistryResult (DeleteResourceFromRegistryResultMessage message);
 
         public void OnHandshakeRequestResponse(HandshakeRequestResponseMessage message);
         public void OnRegistryUpdate(RegistryUpdateMessage message);

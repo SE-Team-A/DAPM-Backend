@@ -14,6 +14,7 @@ namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
         public Task ConsumeAsync(DeleteResourceRequest message)
         {
             _engine.StartDeleteResourceProcess(message.TicketId, message.OrganizationId, message.RepositoryId, message.ResourceId);
+
             return Task.CompletedTask;
         }
     }

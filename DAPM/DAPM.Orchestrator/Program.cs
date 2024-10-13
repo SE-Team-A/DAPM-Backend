@@ -92,6 +92,8 @@ builder.Services.AddQueueMessageConsumer<GetOperatorFilesFromRepoResultConsumer,
 builder.Services.AddQueueMessageConsumer<GetResourceFilesFromOperatorResultConsumer, GetExecutionOutputResultMessage>();
 builder.Services.AddQueueMessageConsumer<SendResourceToPeerResultConsumer, SendResourceToPeerResultMessage>();
 builder.Services.AddQueueMessageConsumer<ExecuteOperatorResultConsumer, ExecuteOperatorResultMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryResultMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
 
 
 
@@ -101,6 +103,7 @@ builder.Services.AddQueueMessageConsumer<HandshakeRequestResponseConsumer, Hands
 builder.Services.AddQueueMessageConsumer<RegistryUpdateConsumer, RegistryUpdateMessage>();
 builder.Services.AddQueueMessageConsumer<ApplyRegistryUpdateResultConsumer, ApplyRegistryUpdateResult>();
 builder.Services.AddQueueMessageConsumer<GetEntriesFromOrgResultConsumer, GetEntriesFromOrgResult>();
+
 
 // Pipeline Execution
 builder.Services.AddQueueMessageConsumer<ActionResultReceivedConsumer, ActionResultReceivedMessage>();

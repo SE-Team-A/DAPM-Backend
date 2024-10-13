@@ -149,8 +149,10 @@ namespace DAPM.Orchestrator
             var postResourceProcess = new DeleteResourceProcess(this, _serviceProvider, processId, messageOrganizationId, messageRepositoryId, messageTicketId, messageResourceId);
             _processes[processId] = postResourceProcess;
             postResourceProcess.StartProcess();
+            //postResourceProcess.OnDeleteResourcesFromRegistryResult();
         }
 
+        
         #endregion
 
         #region PROCESSES TRIGGERED BY SYSTEM

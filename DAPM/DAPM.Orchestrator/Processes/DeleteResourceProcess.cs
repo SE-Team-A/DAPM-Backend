@@ -1,4 +1,8 @@
-﻿using RabbitMQLibrary.Interfaces;
+﻿using OpenTelemetry.Resources;
+using RabbitMQLibrary.Interfaces;
+using RabbitMQLibrary.Messages.ClientApi;
+using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
+using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 using System.Runtime.CompilerServices;
@@ -36,5 +40,35 @@ namespace DAPM.Orchestrator.Processes
 
             deleteResourcesProducer.PublishMessage(message);
         }
+
+        public override void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message)
+        {
+             var deleteResourceFromRegistryMessageProducer =  _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<DeleteResourceFromRegistryMessage>>();
+             var processResultMessage = new DeleteResourceFromRegistryMessage()
+            {
+                 ProcessId= _processId,
+                 TimeToLive=TimeSpan.FromMinutes(1),
+                 ResourceId=_resourceId
+            };
+            
+            deleteResourceFromRegistryMessageProducer.PublishMessage(processResultMessage);
+            
+        }
+        public override void OnDeleteResourceFromRegistryResult (DeleteResourceFromRegistryResultMessage message){
+        
+         var messageProducer =  _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<DeleteResourceFromRepoResult>>();
+        
+            var processResultMessage = new DeleteResourceFromRepoResult()
+            {
+               
+                 TimeToLive=TimeSpan.FromMinutes(1),
+                 resourceId=_resourceId
+            };
+            messageProducer.PublishMessage(processResultMessage);
+
+            EndProcess();
+        }
+
+
     }
 }

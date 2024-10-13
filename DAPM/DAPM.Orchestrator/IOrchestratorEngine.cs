@@ -1,4 +1,5 @@
 ﻿using DAPM.Orchestrator.Services.Models;
+using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Models;
 
 namespace DAPM.Orchestrator
