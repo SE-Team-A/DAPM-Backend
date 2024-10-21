@@ -16,5 +16,7 @@ namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry
         public bool Succeeded { get; set; }
         public string Message { get; set; }
         public Guid ResourceId { get; set; }
+         public Guid organizationId { get; set; }
+         public  Guid repositoryId { get; set; }
     }
 }

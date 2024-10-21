@@ -14,5 +14,7 @@ namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo
         public Guid ProcessId { get; set; }
         public TimeSpan TimeToLive { get; set; }
         public bool Succeeded { get; set; }
+        public Guid organizationId { get; set; }
+        public Guid repositoryId { get; set; }
     }
 }

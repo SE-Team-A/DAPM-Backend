@@ -26,15 +26,15 @@ namespace DAPM.ResourceRegistryMS.Api.Consumers
         public async Task ConsumeAsync(DeleteResourceFromRegistryMessage message)
         {
             _logger.LogInformation("GetDeleteResourcesMessage received");
-                await _resourceService.DeleteResource(message.ResourceId);
+                await _resourceService.DeleteResource(message.OrganizationId, message.RepositoryId, message.ResourceId);
 
            var resultMessage = new DeleteResourceFromRegistryResultMessage
             {
                 MessageId = message.MessageId,
                 TimeToLive = TimeSpan.FromMinutes(1),
                 ProcessId = message.ProcessId,
-             //   OrganizationId = message.OrganizationId,
-              //  RepositoryId = message.RepositoryId,
+                organizationId = message.OrganizationId,
+                repositoryId = message.RepositoryId,
                 ResourceId = message.ResourceId,
             };
 

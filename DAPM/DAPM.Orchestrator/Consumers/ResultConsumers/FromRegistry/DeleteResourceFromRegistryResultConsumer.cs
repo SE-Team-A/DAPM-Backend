@@ -7,7 +7,7 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 namespace DAPM.Orchestrator.Consumers.ResultConsumers.FromRegistry
 {
     public class DeleteResourceFromRegistryConsumer : IQueueConsumer<DeleteResourceFromRegistryResultMessage>
-    {
+    { 
         private IOrchestratorEngine _orchestratorEngine;
 
         public DeleteResourceFromRegistryConsumer(IOrchestratorEngine orchestratorEngine)

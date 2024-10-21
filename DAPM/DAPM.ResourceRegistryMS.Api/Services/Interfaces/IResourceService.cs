@@ -7,6 +7,6 @@ namespace DAPM.ResourceRegistryMS.Api.Services.Interfaces
         Task<Resource> GetResourceById(Guid organizationId, Guid repositoryId, Guid resourceId);
         Task<Resource> AddResource(RabbitMQLibrary.Models.ResourceDTO resourceDto);  
         Task<IEnumerable<Resource>> GetAllResources();
-        Task<bool> DeleteResource(Guid id);
+        Task<bool> DeleteResource(Guid organizationId, Guid repositoryId, Guid resourceId);
     }
 }

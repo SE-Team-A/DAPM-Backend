@@ -14,5 +14,8 @@ namespace RabbitMQLibrary.Messages.ClientApi
         public Guid TicketId { get; set; }
         public TimeSpan TimeToLive { get; set; }
         public Guid resourceId { get; set; }
+        public Guid organizationId { get; set; }
+        public Guid repositoryId { get; set; }
+         
     }
 }

@@ -48,7 +48,10 @@ namespace DAPM.Orchestrator.Processes
             {
                  ProcessId= _processId,
                  TimeToLive=TimeSpan.FromMinutes(1),
-                 ResourceId=_resourceId
+                 ResourceId=_resourceId, 
+                 OrganizationId = _organizationId,
+                 RepositoryId = _repositoryId
+
             };
             
             deleteResourceFromRegistryMessageProducer.PublishMessage(processResultMessage);
@@ -61,8 +64,12 @@ namespace DAPM.Orchestrator.Processes
             var processResultMessage = new DeleteResourceFromRepoResult()
             {
                
-                 TimeToLive=TimeSpan.FromMinutes(1),
-                 resourceId=_resourceId
+                TimeToLive=TimeSpan.FromMinutes(1),
+                resourceId=_resourceId,
+                organizationId = _organizationId,
+                repositoryId = _repositoryId,
+                TicketId = _ticketId
+                
             };
             messageProducer.PublishMessage(processResultMessage);
 
