@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ClientApi.Controllers
 {
     [ApiController]

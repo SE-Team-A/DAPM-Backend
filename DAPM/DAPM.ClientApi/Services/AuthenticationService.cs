@@ -3,7 +3,10 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.Authentication;
 using Microsoft.Extensions.Logging;
-
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ClientApi.Services
 {
     public class AuthenticationService : IAuthenticationService

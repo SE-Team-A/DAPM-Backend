@@ -6,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry
 {
     public class PostLoginResultMessage : IQueueMessage

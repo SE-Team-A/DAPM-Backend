@@ -18,6 +18,11 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestra
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromOperator;
 using DAPM.Orchestrator.Consumers.ResultConsumers.FromOperator;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();

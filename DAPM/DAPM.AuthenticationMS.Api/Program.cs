@@ -11,6 +11,11 @@ using Microsoft.AspNetCore.Http.Features;
 using DAPM.ClientApi.Services;
 using DAPM.ClientApi.Services.Interfaces;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddQueueing(new QueueingConfigurationSettings

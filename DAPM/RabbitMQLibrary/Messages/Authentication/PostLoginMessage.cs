@@ -1,5 +1,9 @@
 using RabbitMQLibrary.Interfaces;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
 namespace RabbitMQLibrary.Messages.Authentication
 {
     public class PostLoginMessage : IQueueMessage
