@@ -77,6 +77,26 @@ services:
     networks:
       - DAPM
 
+  postgres-auth:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: DAPM_Auth
+    volumes:
+      - ./postgres-auth:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - DAPM
+
   postgres-repository:
     image: postgres
     restart: always

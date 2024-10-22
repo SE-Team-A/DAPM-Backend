@@ -6,5 +6,6 @@ namespace DAPM.ClientApi.Models
     {
         public string RequestName { get; set; }
         public Guid TicketId { get; set; }
+        public string Message { get; internal set; }
     }
 }

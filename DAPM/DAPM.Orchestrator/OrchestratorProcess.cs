@@ -175,5 +175,15 @@ namespace DAPM.Orchestrator
         {
             return;
         }
+
+        public virtual void OnPostLoginResult(PostLoginResultMessage message)
+        {
+            return;
+        }
+
+        public virtual void OnPostRegistrationResult(PostRegistrationResultMessage message)
+        {
+            return;
+        }
     }
 }

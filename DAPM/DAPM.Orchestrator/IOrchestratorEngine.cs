@@ -20,6 +20,10 @@ namespace DAPM.Orchestrator
         public void StartCollabHandshakeResponseProcess(Guid senderProcessId, Identity requesterPeerIdentity);
         public void StartRegistryUpdateProcess(Guid senderProcessId, RegistryUpdateDTO registryUpdate, IdentityDTO senderIdentity);
 
+        public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password);
+
+        public void StartPostRegistrationRequestProcess(Guid ticketId, string UserName, string Password, string Name, string Role);
+
         // Pipeline Processes
         public void StartPostPipelineProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name);
         public void StartGetPipelinesProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid? pipelineId);

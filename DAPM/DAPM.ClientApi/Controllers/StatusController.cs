@@ -1,6 +1,7 @@
 ﻿using DAPM.ClientApi.Models;
 using DAPM.ClientApi.Services;
 using DAPM.ClientApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -23,6 +24,7 @@ namespace DAPM.ClientApi.Controllers
         }
 
         [HttpGet(("{ticketId}"))]
+        [AllowAnonymous]
         [SwaggerOperation(Description = "Gets the status of a ticket defined by its id. If the ticket is resolved, it will return the resolution.")]
         public async Task<IActionResult> Get(Guid ticketId)
         {
