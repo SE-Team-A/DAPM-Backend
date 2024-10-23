@@ -1,0 +1,64 @@
+name: Notify Discord on Pull Request Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - DEV
+      - discord-webhook
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Fetch all history so we can access commits
+
+      - name: Get pull request details
+        if: github.event_name == 'pull_request'
+        id: pr
+        run: |
+          echo "source_branch=$(jq -r '.pull_request.head.ref' "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
+          echo "target_branch=$(jq -r '.pull_request.base.ref' "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
+
+          touch description.txt
+          gh pr view ${{ github.event.pull_request.number }} --json commits --jq '.commits[] | "\(.oid[0:7]) -- \(.messageHeadline)"' | while read line; do
+            echo $line >> description.txt
+          done
+
+          cat description.txt || echo "description.txt is empty or not found"
+
+      - name: Construct JSON payload
+        id: payload
+        run: |
+          description=$(cat description.txt)
+          jq -n --arg username "Github changes (backend)" \
+              --arg title "$source_branch merged into $target_branch" \
+              --arg description "\`\`\`$description\`\`\`" \
+              --arg thumbnail_url "https://scontent-arn2-1.xx.fbcdn.net/v/t39.30808-6/309442137_496211302516262_905279675209114671_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=gTytY4lsV2kQ7kNvgHUXTQd&_nc_ht=scontent-arn2-1.xx&_nc_gid=A--MMk5IUx7Ql6LlT_eJRJp&oh=00_AYBJu2cx1DC67P2QIQaCgoaPv9LaGcV9du3ckKLcUGaRCA&oe=670AB4D5" \
+              --arg footer_text "Group A for the win" \
+              '{
+                  "username": $username,
+                  "embeds": [
+                      {
+                      "title": $title,
+                      "color": 102204,
+                      "description": $description,
+                      "thumbnail": {"url": $thumbnail_url},
+                      "footer": {"text": $footer_text}
+                      }
+                  ]
+                  }' > payload.json
+
+      - name: Send to Discord
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          cat payload.json # This will show the JSON for debugging
+          curl -X POST -H "Content-Type: application/json" -d @payload.json "$WEBHOOK_URL"

@@ -7,6 +7,10 @@ using RabbitMQLibrary.Models;
 using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.Orchestrator
 {
     public class OrchestratorEngine : IOrchestratorEngine
@@ -215,6 +219,22 @@ namespace DAPM.Orchestrator
             var sendExecuteOperatorActionProcess = new SendExecuteOperatorActionProcess(this, _serviceProvider, processId, data);
             _processes[processId] = sendExecuteOperatorActionProcess;
             sendExecuteOperatorActionProcess.StartProcess();
+        }
+
+        public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password)
+        {
+            var processId = Guid.NewGuid();
+            var postLogingRequestProcess = new PostLoginRequestProcess(this, _serviceProvider,ticketId, processId,UserName, Password);
+            _processes[processId] = postLogingRequestProcess;
+            postLogingRequestProcess.StartProcess();
+        }
+
+        public void StartPostRegistrationRequestProcess(Guid ticketId, string UserName, string Password, string Name, string Role)
+        {
+            var processId = Guid.NewGuid();
+            var postRegistrationRequestProcess = new PostRegistrationRequestProcess(this, _serviceProvider,ticketId, processId,UserName, Password, Name, Role);
+            _processes[processId] = postRegistrationRequestProcess;
+            postRegistrationRequestProcess.StartProcess();
         }
 
 
