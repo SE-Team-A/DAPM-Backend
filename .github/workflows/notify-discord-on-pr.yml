@@ -49,7 +49,7 @@ jobs:
                       {
                       "title": $title,
                       "color": 102204,
-                      "description": $description,
+                      "description": "\`\`\`$description\`\`\`",
                       "thumbnail": {"url": $thumbnail_url},
                       "footer": {"text": $footer_text}
                       }
