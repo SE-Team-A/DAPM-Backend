@@ -4,7 +4,8 @@ using DAPM.ClientApi.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace DAPM.AuthenticationMS.Api.Services;
-
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
 public class UserService : IUserService
 {
     private readonly UserManager<IdentityUser> _userManager;

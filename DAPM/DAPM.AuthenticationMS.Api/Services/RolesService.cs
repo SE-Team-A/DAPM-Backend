@@ -2,7 +2,8 @@ using DAPM.ClientApi.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace DAPM.ClientApi.Services
-
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
 {
     public class RolesService : IRolesService
     {

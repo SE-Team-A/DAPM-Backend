@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAPM.AuthenticationMS.Api.Data;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
 public class AuthenticationDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options)

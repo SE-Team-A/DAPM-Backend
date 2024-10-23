@@ -27,8 +27,6 @@ builder.Services.AddQueueing(new QueueingConfigurationSettings
     RabbitMqUsername = "guest"
 });
 
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-
 // subscribe here to rabbitmq queues
 
 
@@ -63,7 +61,9 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
     await SeedRolesAsync(roleManager);
+    await CreateTmpAdmin(userManager);
 }
 
 app.Run();
@@ -79,4 +79,18 @@ async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
             await roleManager.CreateAsync(new IdentityRole(roleName));
         }
     }
+}
+
+// temporary seed admin user
+async Task CreateTmpAdmin(UserManager<IdentityUser> userManager)
+{
+    var result = await userManager.CreateAsync(new IdentityUser { UserName = "admin" }, "Password1@");
+
+    if (!result.Succeeded) return;
+
+    var user = await userManager.FindByNameAsync("admin");
+
+    if (user == null) return;
+    
+    await userManager.AddToRoleAsync(user, "Admin");
 }

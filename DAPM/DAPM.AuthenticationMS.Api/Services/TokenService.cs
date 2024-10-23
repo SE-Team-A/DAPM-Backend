@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DAPM.AuthenticationMS.Api.Services;
-
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
 public class TokenService : ITokenService
 {
     public readonly UserManager<IdentityUser> _userManager;
