@@ -37,7 +37,7 @@ namespace DAPM.RepositoryMS.Api.Consumers
             }
             else
             {
-                pipelines = await _repositoryService.GetPipelinesFromRepository(message.RepositoryId);
+                pipelines = await _pipelineService.GetPipelines(message.RepositoryId);
             }
 
             var pipelinesDTOs = Enumerable.Empty<PipelineDTO>();

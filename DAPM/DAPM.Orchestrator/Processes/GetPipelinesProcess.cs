@@ -26,10 +26,7 @@ namespace DAPM.Orchestrator.Processes
         }
 
         public override void StartProcess()
-        {
-
-            if(_pipelineId != null)
-            {
+        {    
                 var getPipelinesFromRepoProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<GetPipelinesFromRepoMessage>>();
 
                 var message = new GetPipelinesFromRepoMessage()
@@ -41,22 +38,6 @@ namespace DAPM.Orchestrator.Processes
                 };
 
                 getPipelinesFromRepoProducer.PublishMessage(message);
-            }
-
-            else
-            {
-                var getPipelinesFromRegistryProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<GetPipelinesMessage>>();
-
-                var message = new GetPipelinesMessage()
-                {
-                    ProcessId = _processId,
-                    TimeToLive = TimeSpan.FromMinutes(1),
-                    OrganizationId = _organizationId,
-                    RepositoryId = _repositoryId,
-                };
-
-                getPipelinesFromRegistryProducer.PublishMessage(message);
-            }
             
         }
 
