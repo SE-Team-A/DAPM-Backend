@@ -40,7 +40,7 @@ jobs:
           description=$(cat description.txt)
           jq -n --arg username "Github changes (backend)" \
               --arg title "$source_branch merged into $target_branch" \
-              --arg description "$description" \
+              --arg description "\`\`\`$description\`\`\`" \
               --arg thumbnail_url "https://scontent-arn2-1.xx.fbcdn.net/v/t39.30808-6/309442137_496211302516262_905279675209114671_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=gTytY4lsV2kQ7kNvgHUXTQd&_nc_ht=scontent-arn2-1.xx&_nc_gid=A--MMk5IUx7Ql6LlT_eJRJp&oh=00_AYBJu2cx1DC67P2QIQaCgoaPv9LaGcV9du3ckKLcUGaRCA&oe=670AB4D5" \
               --arg footer_text "Group A for the win" \
               '{
@@ -49,7 +49,7 @@ jobs:
                       {
                       "title": $title,
                       "color": 102204,
-                      "description": "```$description```",
+                      "description": $description,
                       "thumbnail": {"url": $thumbnail_url},
                       "footer": {"text": $footer_text}
                       }
