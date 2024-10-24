@@ -49,7 +49,7 @@ namespace DAPM.ResourceRegistryMS.Api.Consumers
                     Id = pipeline.Id,
                     Name = pipeline.Name,
                     OrganizationId = pipeline.PeerId,
-                    RepositoryId = pipeline.RepositoryId,
+                    RepositoryId = pipeline.RepositoryId
                 };
 
                 pipelinesDTOs = pipelinesDTOs.Append(r);
