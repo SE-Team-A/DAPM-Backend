@@ -20,6 +20,7 @@ namespace DAPM.ClientApi.Services
         IQueueProducer<PostOperatorRequest> _postOperatorRequestProducer;
         IQueueProducer<PostPipelineRequest> _postPipelineRequestProducer;
         IQueueProducer<GetPipelinesRequest> _getPipelinesRequestProducer;
+        IQueueProducer<DeleteResourceRequest> _getResourceDeleteRequest;
 
         public RepositoryService(
             ILogger<RepositoryService> logger,
@@ -29,17 +30,40 @@ namespace DAPM.ClientApi.Services
             IQueueProducer<PostResourceRequest> postResourceRequestProducer,
             IQueueProducer<PostPipelineRequest> postPipelineRequestProducer,
             IQueueProducer<GetPipelinesRequest> getPipelinesRequestProducer,
-            IQueueProducer<PostOperatorRequest> postOperatorRequestProducer) 
+            IQueueProducer<PostOperatorRequest> postOperatorRequestProducer,
+            IQueueProducer<DeleteResourceRequest> getResourceDeletetProducer) 
         {
             _ticketService = ticketService;
-            _logger = logger;
+            _logger = logger; 
             _getRepositoriesRequestProducer = getRepositoriesRequestProducer;
             _getResourcesRequestProducer = getResourcesRequestProducer;
             _postResourceRequestProducer = postResourceRequestProducer;
             _postPipelineRequestProducer = postPipelineRequestProducer;
             _getPipelinesRequestProducer = getPipelinesRequestProducer;
             _postOperatorRequestProducer = postOperatorRequestProducer;
+            _getResourceDeleteRequest = getResourceDeletetProducer;
         }
+
+        public Guid DeleteResourceById (Guid organizationId, Guid repositoryId, Guid resourceId)
+        {
+             var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+
+            var message = new DeleteResourceRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                OrganizationId = organizationId,
+                RepositoryId = repositoryId,
+                ResourceId = resourceId
+            };
+
+             _getResourceDeleteRequest.PublishMessage(message);
+
+            _logger.LogDebug("DeleteResourceFromRepoMessage Enqueued");
+
+            return ticketId;
+        }
+
 
         public Guid GetRepositoryById(Guid organizationId, Guid repositoryId)
         {

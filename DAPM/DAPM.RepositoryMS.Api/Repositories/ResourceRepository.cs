@@ -6,6 +6,7 @@ using DAPM.RepositoryMS.Api.Models;
 using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 using DAPM.RepositoryMS.Api.Data;
 using Amazon.Runtime.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAPM.RepositoryMS.Api.Repositories
 {
@@ -39,6 +40,28 @@ namespace DAPM.RepositoryMS.Api.Repositories
         public async Task<Resource> GetResourceById(Guid repositoryId, Guid resourceId)
         {
             return _repositoryDbContext.Resources.First(r => r.Id == resourceId && r.RepositoryId == repositoryId);
+        }
+
+        public async Task<bool> DeleteResource(Guid organisationId, Guid repositoryId ,Guid resourceId)
+        {
+
+            Console.Write("i am here");
+            var found = _repositoryDbContext.Resources.First(r => r.Id == resourceId && r.RepositoryId == repositoryId);
+            Console.Write("i am here now");
+            if (found == null)
+            {
+                _logger.LogInformation($"Resource with ID {resourceId} not found.");
+             // Resource not found
+             return false;
+            }
+
+              _repositoryDbContext.Resources.Remove(found);
+
+              
+              await _repositoryDbContext.SaveChangesAsync();
+
+        _logger.LogInformation($"Resource with ID {resourceId} successfully deleted.");
+        return true;
         }
     }
 }

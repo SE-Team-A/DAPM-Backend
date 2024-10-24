@@ -109,6 +109,10 @@ namespace DAPM.Orchestrator
         {
             return;
         }
+         public virtual void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message)
+        {
+            return;
+        }
 
         public virtual void OnHandshakeRequestResponse(HandshakeRequestResponseMessage message)
         {
@@ -129,7 +133,7 @@ namespace DAPM.Orchestrator
         {
             return;
         }
-
+    
         public virtual void OnRegistryUpdateAck(RegistryUpdateAckMessage message)
         {
             return;
@@ -188,6 +192,11 @@ namespace DAPM.Orchestrator
         public virtual void OnPostRegistrationResult(PostRegistrationResultMessage message)
         {
             return;
+        }
+
+        public virtual void OnDeleteResourceFromRegistryResult(DeleteResourceFromRegistryResultMessage message)
+        {
+          return;
         }
     }
 }

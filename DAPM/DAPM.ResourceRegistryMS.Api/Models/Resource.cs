@@ -24,5 +24,10 @@ namespace DAPM.ResourceRegistryMS.Api.Models
         public virtual Peer Peer { get; set; }
         [ForeignKey("PeerId, RepositoryId")]
         public virtual Repository Repository { get; set; }
+
+        public static explicit operator Resource(Task<Resource> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

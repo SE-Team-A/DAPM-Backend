@@ -64,6 +64,7 @@ builder.Services.AddQueueMessageConsumer<PostPipelineRequestConsumer, PostPipeli
 builder.Services.AddQueueMessageConsumer<GetResourceFilesRequestConsumer, GetResourceFilesRequest>();
 builder.Services.AddQueueMessageConsumer<PostLoginRequestConsumer, PostLoginRequest>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRegistrationRequest>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceRequest>();
 
 //Handshake
 builder.Services.AddQueueMessageConsumer<CollabHandshakeRequestConsumer, CollabHandshakeRequest>();
@@ -101,6 +102,8 @@ builder.Services.AddQueueMessageConsumer<ExecuteOperatorResultConsumer, ExecuteO
 
 builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationResultMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryResultMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
 
 
 
@@ -110,6 +113,7 @@ builder.Services.AddQueueMessageConsumer<HandshakeRequestResponseConsumer, Hands
 builder.Services.AddQueueMessageConsumer<RegistryUpdateConsumer, RegistryUpdateMessage>();
 builder.Services.AddQueueMessageConsumer<ApplyRegistryUpdateResultConsumer, ApplyRegistryUpdateResult>();
 builder.Services.AddQueueMessageConsumer<GetEntriesFromOrgResultConsumer, GetEntriesFromOrgResult>();
+
 
 // Pipeline Execution
 builder.Services.AddQueueMessageConsumer<ActionResultReceivedConsumer, ActionResultReceivedMessage>();

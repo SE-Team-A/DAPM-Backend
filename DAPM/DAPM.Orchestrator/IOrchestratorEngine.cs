@@ -1,4 +1,5 @@
 ﻿using DAPM.Orchestrator.Services.Models;
+using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Models;
 
 /// <author>Ákos Gelencsér</author>
@@ -39,5 +40,6 @@ namespace DAPM.Orchestrator
         public void StartPipelineStartCommandProcess(Guid ticketId, Guid executionId);
         public void StartPostResourceFromPeerProcess(Guid senderProcessId, ResourceDTO resource, int storageMode, Guid executionId, IdentityDTO senderIdentity);
         public void StartGetPipelineExecutionStatusProcess(Guid ticketId, Guid executionId);
+        public void StartDeleteResourceProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messageResourceId);
     }
 }
