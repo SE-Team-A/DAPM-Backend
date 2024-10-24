@@ -46,7 +46,7 @@ namespace DAPM.ResourceRegistryMS.Api.Services
 
             return resource;
         }
-
+        // AYAT AL RIFAI
         public async Task<bool> DeleteResource(Guid organizationId, Guid repositoryId, Guid resourceId)
         {
             return await _resourceRepository.DeleteResource( organizationId,  repositoryId, resourceId);
