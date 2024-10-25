@@ -37,3 +37,16 @@ Once the containers are up and running, you can interact with the platform by us
 
 http://localhost:5000/swagger/v1/swagger.json
 
+## Changes
+
+### Release 1 (25-10-2024)
+
+#### Access control
+- Created the AuthenticationMS microservice for user and role management
+- Implemented registration workflow (currently only working with "admin" and "user" rights) through the ClientAPI
+- Implemented login workflow through the ClientAPI
+- Protected ClientAPI endpoints with token signature verification
+
+#### Core functionality
+- Added resource deletion workflow
+- Added an alternative endpoint for querying pipelines more efficiently
