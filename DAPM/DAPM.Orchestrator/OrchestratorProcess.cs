@@ -8,6 +8,10 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestra
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.Orchestrator
 {
     public abstract class OrchestratorProcess : IOrchestratorProcess
@@ -105,6 +109,10 @@ namespace DAPM.Orchestrator
         {
             return;
         }
+         public virtual void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message)
+        {
+            return;
+        }
 
         public virtual void OnHandshakeRequestResponse(HandshakeRequestResponseMessage message)
         {
@@ -125,7 +133,7 @@ namespace DAPM.Orchestrator
         {
             return;
         }
-
+    
         public virtual void OnRegistryUpdateAck(RegistryUpdateAckMessage message)
         {
             return;
@@ -174,6 +182,21 @@ namespace DAPM.Orchestrator
         public virtual void OnGetPipelineExecutionStatusResult(GetPipelineExecutionStatusResultMessage message)
         {
             return;
+        }
+
+        public virtual void OnPostLoginResult(PostLoginResultMessage message)
+        {
+            return;
+        }
+
+        public virtual void OnPostRegistrationResult(PostRegistrationResultMessage message)
+        {
+            return;
+        }
+
+        public virtual void OnDeleteResourceFromRegistryResult(DeleteResourceFromRegistryResultMessage message)
+        {
+          return;
         }
     }
 }

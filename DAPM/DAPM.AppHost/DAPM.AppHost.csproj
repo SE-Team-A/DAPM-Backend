@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.4.24156.9" />
+    <PackageReference Include="Aspire.Hosting" Version="8.2.0" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,6 +28,7 @@
     <ProjectReference Include="..\DAPM.PipelineOrchestratorMS.Api\DAPM.PipelineOrchestratorMS.Api.csproj" />
     <ProjectReference Include="..\DAPM.RepositoryMS.Api\DAPM.RepositoryMS.Api.csproj" />
     <ProjectReference Include="..\DAPM.ResourceRegistryMS.Api\DAPM.ResourceRegistryMS.Api.csproj" />
+    <ProjectReference Include="..\DAPM.AuthenticationMS.Api\DAPM.AuthenticationMS.Api.csproj" />
   </ItemGroup>
 
 </Project>

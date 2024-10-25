@@ -1,6 +1,11 @@
 ﻿using DAPM.Orchestrator.Services.Models;
+using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Models;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.Orchestrator
 {
     public interface IOrchestratorEngine
@@ -20,6 +25,10 @@ namespace DAPM.Orchestrator
         public void StartCollabHandshakeResponseProcess(Guid senderProcessId, Identity requesterPeerIdentity);
         public void StartRegistryUpdateProcess(Guid senderProcessId, RegistryUpdateDTO registryUpdate, IdentityDTO senderIdentity);
 
+        public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password);
+
+        public void StartPostRegistrationRequestProcess(Guid ticketId, string UserName, string Password, string Name, string Role);
+
         // Pipeline Processes
         public void StartPostPipelineProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name);
         public void StartGetPipelinesProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid? pipelineId);
@@ -31,5 +40,6 @@ namespace DAPM.Orchestrator
         public void StartPipelineStartCommandProcess(Guid ticketId, Guid executionId);
         public void StartPostResourceFromPeerProcess(Guid senderProcessId, ResourceDTO resource, int storageMode, Guid executionId, IdentityDTO senderIdentity);
         public void StartGetPipelineExecutionStatusProcess(Guid ticketId, Guid executionId);
+        public void StartDeleteResourceProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messageResourceId);
     }
 }

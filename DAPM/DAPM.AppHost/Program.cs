@@ -12,4 +12,6 @@ builder.AddProject<Projects.DAPM_Orchestrator>("dapm-orchestrator");
 
 builder.AddProject<Projects.DAPM_PeerApi>("dapm-peerapi");
 
+builder.AddProject<Projects.DAPM_AuthenticationMS_Api>("dapm-authenticationms-api");
+
 builder.Build().Run();
