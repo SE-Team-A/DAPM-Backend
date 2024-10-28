@@ -3,6 +3,7 @@ using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 using RabbitMQLibrary.Messages.Repository;
+using RabbitMQLibrary.Messages.ResourceRegistry;
 
 namespace DAPM.Orchestrator.Processes
 {
@@ -46,21 +47,32 @@ namespace DAPM.Orchestrator.Processes
 
         public override void OnDeleteRepositoryPipelineResult(DeleteRepositoryPipelineResultMessage message)
         {
+            var deleteRepositoryPipelineMessageProducer = _serviceScope.ServiceProvider
+                            .GetRequiredService<IQueueProducer<DeleteRepositoryPipelineResult>>();
 
-        }
-
-        public override void OnDeleteRegistryPipelineResult(DeleteRegistryPipelineResultMessage message)
-        {
-            var deleteRegistryPipelineMessageProducer = _serviceScope.ServiceProvider
-                            .GetRequiredService<IQueueProducer<DeleteRegistryPipelineResult>>();
-
-            var processResultMessage = new DeleteRegistryPipelineResult
+            var processResultMessage = new DeleteRepositoryPipelineResult
             {
                 TimeToLive = TimeSpan.FromMinutes(1),
                 OrganizationId = _organizationId,
                 RepositoryId = _repositoryId,
                 PipelineId = _pipelineId,
                 TicketId = _ticketId
+            };
+
+            deleteRepositoryPipelineMessageProducer.PublishMessage(processResultMessage);
+        }
+
+        public override void OnDeleteRegistryPipelineResult(DeleteRegistryPipelineResultMessage message)
+        {
+            var deleteRegistryPipelineMessageProducer = _serviceScope.ServiceProvider
+                            .GetRequiredService<IQueueProducer<DeleteRegistryPipelineMessage>>();
+
+            var processResultMessage = new DeleteRegistryPipelineMessage
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                OrganizationId = _organizationId,
+                RepositoryId = _repositoryId,
+                PipelineId = _pipelineId
             };
 
             deleteRegistryPipelineMessageProducer.PublishMessage(processResultMessage);
