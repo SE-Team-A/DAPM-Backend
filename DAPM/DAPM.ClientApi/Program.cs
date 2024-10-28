@@ -69,9 +69,10 @@ builder.Services.AddQueueMessageConsumer<GetResourceFilesProcessResultConsumer, 
 builder.Services.AddQueueMessageConsumer<CollabHandshakeProcessResultConsumer, CollabHandshakeProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostPipelineCommandProcessResultConsumer, PostPipelineCommandProcessResult>();
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusProcessResultConsumer, GetPipelineExecutionStatusRequestResult>();
-builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginProcessResult>();
-builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer, PostLoginProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer, PostRegistrationProcessResult>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();
+builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineConsumer, DeleteRepositoryPipelineResult>();
 
 
 
@@ -104,7 +105,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkey??????????????????????????")),
         ValidateLifetime = true,
         ValidateIssuer = false,
-        ValidateAudience = false, 
+        ValidateAudience = false,
     };
 });
 
@@ -125,6 +126,6 @@ app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
-app.MapControllers().RequireAuthorization();;
+app.MapControllers().RequireAuthorization();
 
 app.Run();

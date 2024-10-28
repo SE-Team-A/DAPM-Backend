@@ -9,14 +9,14 @@ using System.Runtime.CompilerServices;
 
 namespace DAPM.Orchestrator.Processes
 {
-    public class DeleteResourceProcess: OrchestratorProcess
+    public class DeleteResourceProcess : OrchestratorProcess
     {
         private Guid _organizationId;
         private Guid _repositoryId;
         private Guid _ticketId;
         private Guid _resourceId;
 
-        public DeleteResourceProcess(OrchestratorEngine engine, IServiceProvider serviceProvider, Guid processId, 
+        public DeleteResourceProcess(OrchestratorEngine engine, IServiceProvider serviceProvider, Guid processId,
             Guid organizationId, Guid repositoryId, Guid ticketId, Guid resourceId) : base(engine, serviceProvider, processId)
         {
             _organizationId = organizationId;
@@ -43,33 +43,34 @@ namespace DAPM.Orchestrator.Processes
 
         public override void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message)
         {
-             var deleteResourceFromRegistryMessageProducer =  _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<DeleteResourceFromRegistryMessage>>();
-             var processResultMessage = new DeleteResourceFromRegistryMessage()
+            var deleteResourceFromRegistryMessageProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<DeleteResourceFromRegistryMessage>>();
+            var processResultMessage = new DeleteResourceFromRegistryMessage()
             {
-                 ProcessId= _processId,
-                 TimeToLive=TimeSpan.FromMinutes(1),
-                 ResourceId=_resourceId, 
-                 OrganizationId = _organizationId,
-                 RepositoryId = _repositoryId
+                ProcessId = _processId,
+                TimeToLive = TimeSpan.FromMinutes(1),
+                ResourceId = _resourceId,
+                OrganizationId = _organizationId,
+                RepositoryId = _repositoryId
 
             };
-            
+
             deleteResourceFromRegistryMessageProducer.PublishMessage(processResultMessage);
-            
+
         }
-        public override void OnDeleteResourceFromRegistryResult (DeleteResourceFromRegistryResultMessage message){
-        
-         var messageProducer =  _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<DeleteResourceFromRepoResult>>();
-        
+        public override void OnDeleteResourceFromRegistryResult(DeleteResourceFromRegistryResultMessage message)
+        {
+
+            var messageProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<DeleteResourceFromRepoResult>>();
+
             var processResultMessage = new DeleteResourceFromRepoResult()
             {
-               
-                TimeToLive=TimeSpan.FromMinutes(1),
-                resourceId=_resourceId,
+
+                TimeToLive = TimeSpan.FromMinutes(1),
+                resourceId = _resourceId,
                 organizationId = _organizationId,
                 repositoryId = _repositoryId,
                 TicketId = _ticketId
-                
+
             };
             messageProducer.PublishMessage(processResultMessage);
 

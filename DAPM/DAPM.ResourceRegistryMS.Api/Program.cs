@@ -58,6 +58,7 @@ builder.Services.AddQueueMessageConsumer<ApplyRegistryUpdateConsumer, ApplyRegis
 builder.Services.AddQueueMessageConsumer<GetEntriesFromOrgConsumer, GetEntriesFromOrgMessage>();
 builder.Services.AddQueueMessageConsumer<PostPeerConsumer, PostPeerMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteRegistryPipelineConsumer, DeleteRegistryPipelineMessage>();
 
 // Add services to the container.
 
@@ -84,7 +85,8 @@ builder.Services.AddScoped<IPipelineRepository, PipelineRepository>();
 
 builder.Services.AddDbContext<ResourceRegistryDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")); }
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+}
 );
 
 
