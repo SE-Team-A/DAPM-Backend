@@ -23,7 +23,7 @@ namespace DAPM.ResourceRegistryMS.Api.Repositories
 
         public async Task<bool> DeletePipeline(Guid organizationId, Guid repositoryId, Guid pipelineId)
         {
-            var pipeline = _context.Pipelines.FirstOrDefault(p => p.Id == pipelineId && p.RepositoryId == repositoryId);
+            var pipeline = _context.Pipelines.FirstOrDefault(p => p.Id == pipelineId);
 
             if (pipeline == null)
             {

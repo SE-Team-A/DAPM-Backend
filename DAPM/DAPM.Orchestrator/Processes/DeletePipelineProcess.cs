@@ -47,6 +47,23 @@ namespace DAPM.Orchestrator.Processes
 
         public override void OnDeleteRepositoryPipelineResult(DeleteRepositoryPipelineResultMessage message)
         {
+            var deleteRegistryPipelineMessageProducer = _serviceScope.ServiceProvider
+                            .GetRequiredService<IQueueProducer<DeleteRegistryPipelineMessage>>();
+
+            var processResultMessage = new DeleteRegistryPipelineMessage
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                OrganizationId = _organizationId,
+                RepositoryId = _repositoryId,
+                PipelineId = _pipelineId
+            };
+
+            deleteRegistryPipelineMessageProducer.PublishMessage(processResultMessage);
+        }
+
+
+        public override void OnDeleteRegistryPipelineResult(DeleteRegistryPipelineResultMessage message)
+        {
             var deleteRepositoryPipelineMessageProducer = _serviceScope.ServiceProvider
                             .GetRequiredService<IQueueProducer<DeleteRepositoryPipelineResult>>();
 
@@ -60,22 +77,7 @@ namespace DAPM.Orchestrator.Processes
             };
 
             deleteRepositoryPipelineMessageProducer.PublishMessage(processResultMessage);
-        }
-
-        public override void OnDeleteRegistryPipelineResult(DeleteRegistryPipelineResultMessage message)
-        {
-            var deleteRegistryPipelineMessageProducer = _serviceScope.ServiceProvider
-                            .GetRequiredService<IQueueProducer<DeleteRegistryPipelineMessage>>();
-
-            var processResultMessage = new DeleteRegistryPipelineMessage
-            {
-                TimeToLive = TimeSpan.FromMinutes(1),
-                OrganizationId = _organizationId,
-                RepositoryId = _repositoryId,
-                PipelineId = _pipelineId
-            };
-
-            deleteRegistryPipelineMessageProducer.PublishMessage(processResultMessage);
+        
 
             EndProcess();
         }
