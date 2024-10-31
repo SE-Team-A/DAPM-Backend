@@ -74,6 +74,16 @@ namespace DAPM.Orchestrator
         {
             return;
         }
+        public virtual void OnEditPipelineToRepoResult(EditPipelineInRepoResultMessage message)
+        {
+            return;
+        }
+
+        public virtual void OnEditPipelineToRegistryResult(EditPipelineToRegistryResultMessage message)
+        {
+            return;
+        }
+
 
         public virtual void OnCreateRepoInRepoResult(PostRepoToRepoResultMessage message)
         {

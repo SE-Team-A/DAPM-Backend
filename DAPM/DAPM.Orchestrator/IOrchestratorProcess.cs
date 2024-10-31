@@ -29,7 +29,11 @@ namespace DAPM.Orchestrator
         public void OnPostResourceToOperatorResult(PostInputResourceResultMessage message);
         public void OnPostResourceToRegistryResult(PostResourceToRegistryResultMessage message);
         public void OnPostPipelineToRepoResult(PostPipelineToRepoResultMessage message);
+
         public void OnPostPipelineToRegistryResult(PostPipelineToRegistryResultMessage message);
+        public void OnEditPipelineToRepoResult(EditPipelineInRepoResultMessage message);
+        public void OnEditPipelineToRegistryResult(EditPipelineToRegistryResultMessage message);
+
         public void OnCreateRepoInRepoResult(PostRepoToRepoResultMessage message);
         public void OnGetResourceFilesFromRepoResult(GetResourceFilesFromRepoResultMessage message);
         public void OnGetOperatorFilesFromRepoResult(GetOperatorFilesFromRepoResultMessage message);

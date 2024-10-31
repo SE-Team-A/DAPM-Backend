@@ -119,6 +119,14 @@ namespace DAPM.Orchestrator
             _processes[processId] = postPipelineProcess;
             postPipelineProcess.StartProcess();
         }
+        public void StartEditPipelineProcess(Guid apiTicketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name, Guid pipelineId)
+        {
+            var processId = Guid.NewGuid();
+            var editPipelineProcess = new EditPipelineProcess(this, _serviceProvider, apiTicketId, processId, organizationId, repositoryId, pipeline, name, pipelineId);
+            _processes[processId] = editPipelineProcess;
+            editPipelineProcess.StartProcess();
+        }
+
 
         public void StartPostResourceProcess(Guid apiTicketId, Guid organizationId, Guid repositoryId, string name, string resourceType, FileDTO file)
         {

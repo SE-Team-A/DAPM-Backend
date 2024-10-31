@@ -17,6 +17,7 @@ namespace DAPM.ClientApi.Controllers
 
         private readonly ILogger<RepositoryController> _logger;
         private readonly IRepositoryService _repositoryService;
+        
         public RepositoryController(ILogger<RepositoryController> logger, IRepositoryService repositoryService)
         {
             _logger = logger;
@@ -81,6 +82,16 @@ namespace DAPM.ClientApi.Controllers
             Guid id = _repositoryService.PostPipelineToRepository(organizationId, repositoryId, pipelineApiDto);
             return Ok(new ApiResponse { RequestName = "PostPipelineToRepository", TicketId = id });
         }
+
+        [HttpPut("{organizationId}/repositories/{repositoryId}/pipeline/{pipelineId}")]
+        [SwaggerOperation(Description = "Edits a pipeline by id. This endpoint includes the " +
+            "pipeline model in JSON. You need to have a collaboration agreement to retrieve this information.")]
+        public async Task<ActionResult<Guid>> EditPipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId, [FromBody]PipelineApiDto pipelineApiDto)
+        {
+            Guid id = _repositoryService.EditPipelineById(organizationId, repositoryId, pipelineId, pipelineApiDto);
+            return Ok(new ApiResponse { RequestName = "EditPipelineById", TicketId = id });
+        }
+
 
         [HttpDelete("{organizationId}/repositories/{repositoryId}/resources/{resourceId}")]
         [SwaggerOperation(Description = "Marks a resource as deleted in a specific repository.")]
