@@ -21,7 +21,6 @@ namespace DAPM.RepositoryMS.Api.Data
 
         public DbSet<PipelineExecution> PipelineExecutions { get; set; }
         public DbSet<Operator> Operators { get; set; }
-        public object PipelineExecutions { get; internal set; }
 
         public void InitializeDatabase()
         {

@@ -16,7 +16,7 @@ namespace DAPM.RepositoryMS.Api.Models.PostgreSQL
         public string Name { get; set; }
 
         [Required]
-        public string PipelineExecution { get; set; }
+        public string PipelineExecutionJson { get; set; }
 
         // Navigation Attributes (Foreign Keys)
         [ForeignKey("RepositoryId")]

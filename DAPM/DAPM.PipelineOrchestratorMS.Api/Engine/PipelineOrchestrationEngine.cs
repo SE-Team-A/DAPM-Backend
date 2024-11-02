@@ -36,7 +36,7 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
             };
 
             // Send the message to the DAPM.RepositoryMS.API
-            _queueProducer.PublishMessageAsync(message)
+            _queueProducer.PublishMessageAsync(message);
             
            // _pipelineExecutions[guid] = pipelineExecution;
             _logger.LogInformation($"A new execution instance has been created");

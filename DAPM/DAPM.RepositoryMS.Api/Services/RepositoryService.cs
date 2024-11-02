@@ -87,7 +87,21 @@ namespace DAPM.RepositoryMS.Api.Services
             return createdPipeline;
         }
 
-        public async Task.
+        public async Task<Models.PostgreSQL.PipelineExecution> CreateNewPipelineExecution(Guid repositoryId, string name, RabbitMQLibrary.Models.PipelineExecution pipelineExecution)
+        {
+            var pipelineExecutionJson = Newtonsoft.Json.JsonConvert.SerializeObject(pipelineExecution);
+
+            var pipelineExecutionObject = new Models.PostgreSQL.PipelineExecution
+            {
+                Name = name,
+                RepositoryId = repositoryId,
+                PipelineExecutionJson = pipelineExecutionJson
+            };
+
+            var createdPipelineExecution = await _pipelineRepository.AddPipelineExecution(pipelineExecutionObject);
+
+            return createdPipelineExecution;
+        }
 
         public async Task<Models.PostgreSQL.Resource> CreateNewResource(Guid repositoryId, string name, string resourceType, FileDTO fileDto)
         {
@@ -177,5 +191,9 @@ namespace DAPM.RepositoryMS.Api.Services
             throw new NotImplementedException();
         }
 
+        public Task<Models.PostgreSQL.PipelineExecution> CreateNewPipelineExecution(Guid repositoryId, Guid pipelineId, string name, string status, string message)
+        {
+            throw new NotImplementedException();
+        }
     }  
 }
