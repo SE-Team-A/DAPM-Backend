@@ -1,5 +1,7 @@
 ﻿using DAPM.PipelineOrchestratorMS.Api.Engine.Interfaces;
 using DAPM.PipelineOrchestratorMS.Api.Models;
+using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
+using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
 
 namespace DAPM.PipelineOrchestratorMS.Api.Engine
@@ -23,8 +25,20 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
             Guid guid = Guid.NewGuid();
 
             var pipelineExecution = new PipelineExecution(guid, pipeline, _serviceProvider);
+
+            // send a message to the DAPM.RespositoryMS.API to create and store the pipeline execution instance using the variable pipelineExecution
+            var message = new PipelineExecutionMessage
+            {
+                ExecutionId = guid,
+                PipelineId = pipeline.Id,
+                CreatedAt = DateTime.UtcNow,
+                Status = "Created"
+            };
+
+            // Send the message to the DAPM.RepositoryMS.API
+            _queueProducer.PublishMessageAsync(message)
             
-            _pipelineExecutions[guid] = pipelineExecution;
+           // _pipelineExecutions[guid] = pipelineExecution;
             _logger.LogInformation($"A new execution instance has been created");
             
             return guid;

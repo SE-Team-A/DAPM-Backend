@@ -23,6 +23,13 @@ namespace DAPM.RepositoryMS.Api.Repositories
             return pipeline;
         }
 
+        public async Task<PipelineExecution> AddPipelineExecution(PipelineExecution pipelineExecution)
+        {
+            await _repositoryDbContext.PipelineExecutions.AddAsync(pipelineExecution);
+            _repositoryDbContext.SaveChanges();
+            return pipelineExecution;
+        }
+
         public async Task<Pipeline> GetPipelineById(Guid repositoryId, Guid pipelineId)
         {
             return await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == repositoryId);

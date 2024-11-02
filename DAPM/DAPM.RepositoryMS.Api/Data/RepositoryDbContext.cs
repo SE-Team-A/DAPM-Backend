@@ -18,8 +18,10 @@ namespace DAPM.RepositoryMS.Api.Data
         public DbSet<Repository> Repositories { get; set; }
         public DbSet<Models.PostgreSQL.File>  Files { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
-        public DbSet<Operator> Operators { get; set; }
 
+        public DbSet<PipelineExecution> PipelineExecutions { get; set; }
+        public DbSet<Operator> Operators { get; set; }
+        public object PipelineExecutions { get; internal set; }
 
         public void InitializeDatabase()
         {
