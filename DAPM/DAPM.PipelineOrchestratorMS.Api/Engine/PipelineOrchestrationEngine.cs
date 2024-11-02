@@ -1,5 +1,6 @@
 ﻿using DAPM.PipelineOrchestratorMS.Api.Engine.Interfaces;
 using DAPM.PipelineOrchestratorMS.Api.Models;
+using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
@@ -12,6 +13,8 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         private readonly ILogger<IPipelineOrchestrationEngine> _logger;
         private IServiceProvider _serviceProvider;
         private Dictionary<Guid, IPipelineExecution> _pipelineExecutions;
+
+        IQueueProducer<CreatePipelineExecutionRequest> _queueProducer;
 
         public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider)
         {
