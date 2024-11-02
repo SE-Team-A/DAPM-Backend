@@ -27,9 +27,9 @@ namespace DAPM.RepositoryMS.Api.Repositories
             
             var found = await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == pipeline.RepositoryId);
         
-          //  found.PipelineJson=pipeline.PipelineJson;    
+            found.PipelineJson=pipeline.PipelineJson;    
 
-            _repositoryDbContext.Entry(found).CurrentValues.SetValues(pipeline.PipelineJson);
+           // _repositoryDbContext.Entry(found).CurrentValues.SetValues(pipeline.PipelineJson);
 
             _repositoryDbContext.SaveChanges();
             return pipeline;

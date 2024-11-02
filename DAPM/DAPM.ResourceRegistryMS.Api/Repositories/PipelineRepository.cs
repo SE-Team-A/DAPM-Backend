@@ -22,9 +22,10 @@ namespace DAPM.ResourceRegistryMS.Api.Repositories
         }
         public async Task<Pipeline> EditPipeline(Pipeline pipeline, Guid pipelineId)
         {
-           var found = GetPipelineById(pipeline.PeerId, pipeline.RepositoryId, pipelineId);
-            
-            _context.Entry(found).CurrentValues.SetValues(pipeline);
+          // var found = GetPipelineById(pipeline.PeerId, pipeline.RepositoryId, pipelineId);
+           
+        
+            //_context.Entry(found).CurrentValues.SetValues(pipeline);
 
        //  var found = (Pipeline)_context.Resources.Where(r => r.PeerId == pipeline.PeerId && r.RepositoryId == pipeline.RepositoryId && r.Id == pipelineId);
         //    found.PipelineJson=pipeline.PipelineJson;   
