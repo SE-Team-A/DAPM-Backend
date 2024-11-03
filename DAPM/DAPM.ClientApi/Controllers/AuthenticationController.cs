@@ -55,9 +55,9 @@ namespace DAPM.ClientApi.Controllers
                 var token = authHeader.ToString().Replace("Bearer ", "");
                 _logger.LogInformation(token);
                 // Now you have the JWT token as a string
+                Guid id = _authenticationService.GetAllUsers(token);
                 return Ok(new { Token = token });
             }
-            // Guid id = _authenticationService.PostRegistration(registrationRequestDTO.username, registrationRequestDTO.password, registrationRequestDTO.name, registrationRequestDTO.role);
             // return Ok(new ApiResponse { RequestName = "PostRegistration", TicketId = id });
             return Ok();
         }

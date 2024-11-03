@@ -65,6 +65,7 @@ builder.Services.AddQueueMessageConsumer<GetResourceFilesRequestConsumer, GetRes
 builder.Services.AddQueueMessageConsumer<PostLoginRequestConsumer, PostLoginRequest>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRegistrationRequest>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceRequest>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersRequestConsumer, GetAllUsersRequest>();
 
 //Handshake
 builder.Services.AddQueueMessageConsumer<CollabHandshakeRequestConsumer, CollabHandshakeRequest>();
@@ -104,6 +105,7 @@ builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginResult
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersResultConsumer, GetAllUsersResultMessage>();
 
 
 

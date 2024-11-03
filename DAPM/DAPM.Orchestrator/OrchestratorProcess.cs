@@ -198,5 +198,9 @@ namespace DAPM.Orchestrator
         {
           return;
         }
+        public virtual void OnGetAllUsersResult(GetAllUsersResultMessage message)
+        {
+            return;
+        }
     }
 }

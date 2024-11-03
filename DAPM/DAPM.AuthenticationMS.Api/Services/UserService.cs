@@ -2,6 +2,7 @@ using System;
 using DAPM.AuthenticationMS.Api.Services.Interfaces;
 using DAPM.ClientApi.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAPM.AuthenticationMS.Api.Services;
 /// <author>Ákos Gelencsér</author>
@@ -56,4 +57,26 @@ public class UserService : IUserService
 
         return await _tokenService.CreateToken(user);
     }
+
+    public async Task<string> GetAllUsersAsync(string token)
+    {
+        var users = await _userManager.Users
+        .Select(user => new UserDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email
+            // Map other properties as needed
+        })
+        .ToListAsync();
+
+        return await _tokenService.CreateToken(users);
+    }
+}
+public class UserDto
+{
+    public string Id { get; set; }
+    public string UserName { get; set; }
+    public string Email { get; set; }
+    // Add other properties you want to expose
 }

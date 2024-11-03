@@ -41,5 +41,6 @@ namespace DAPM.Orchestrator
         public void StartPostResourceFromPeerProcess(Guid senderProcessId, ResourceDTO resource, int storageMode, Guid executionId, IdentityDTO senderIdentity);
         public void StartGetPipelineExecutionStatusProcess(Guid ticketId, Guid executionId);
         public void StartDeleteResourceProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messageResourceId);
+        public void StartGetAllUsersProcess(Guid ticketId, string token);
     }
 }
