@@ -44,5 +44,23 @@ namespace DAPM.ClientApi.Controllers
             Guid id = _authenticationService.PostRegistration(registrationRequestDTO.username, registrationRequestDTO.password, registrationRequestDTO.name, registrationRequestDTO.role);
             return Ok(new ApiResponse { RequestName = "PostRegistration", TicketId = id });
         }
+
+        [HttpGet("users")]
+        [SwaggerOperation(Description = "Send user registration request")]
+        public async Task<ActionResult<Guid>> GetAllUsers()
+        {
+            if (Request.Headers.TryGetValue("Authorization", out var authHeader))
+            {
+                // Authorization header should look like "Bearer <token>"
+                var token = authHeader.ToString().Replace("Bearer ", "");
+                _logger.LogInformation(token);
+                // Now you have the JWT token as a string
+                return Ok(new { Token = token });
+            }
+            // Guid id = _authenticationService.PostRegistration(registrationRequestDTO.username, registrationRequestDTO.password, registrationRequestDTO.name, registrationRequestDTO.role);
+            // return Ok(new ApiResponse { RequestName = "PostRegistration", TicketId = id });
+            return Ok();
+        }
+
     }
 }
