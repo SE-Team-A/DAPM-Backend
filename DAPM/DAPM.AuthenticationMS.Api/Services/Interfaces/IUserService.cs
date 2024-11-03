@@ -8,5 +8,5 @@ public interface IUserService
 {
     public Task<IdentityResult> CreateUserAsync(string username, string password, bool isAdmin = false);
 
-    public Task<string> LoginUserAsync(string username, string password);
+    public Task<string> LoginUserAsync(string username, string password); 
 }

@@ -41,6 +41,8 @@ namespace DAPM.Orchestrator
         public void OnPostLoginResult(PostLoginResultMessage message);
         public void OnPostRegistrationResult(PostRegistrationResultMessage message);
 
+        public void OnPostUserRoleResult(PostUserRoleResultMessage message);
+
         public void OnHandshakeRequestResponse(HandshakeRequestResponseMessage message);
         public void OnRegistryUpdate(RegistryUpdateMessage message);
         public void OnApplyRegistryUpdateResult(ApplyRegistryUpdateResult message);

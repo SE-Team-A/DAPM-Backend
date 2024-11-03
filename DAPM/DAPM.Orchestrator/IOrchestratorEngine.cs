@@ -28,6 +28,7 @@ namespace DAPM.Orchestrator
         public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password);
 
         public void StartPostRegistrationRequestProcess(Guid ticketId, string UserName, string Password, string Name, string Role);
+        public void StartPostUserRoleProcess(Guid ticketId, string RequestToken, Guid UserId, string RoleName);
 
         // Pipeline Processes
         public void StartPostPipelineProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name);

@@ -237,6 +237,14 @@ namespace DAPM.Orchestrator
             postRegistrationRequestProcess.StartProcess();
         }
 
+        public void StartPostUserRoleProcess(Guid ticketId, string RequestToken, Guid UserId, string RoleName)
+        {
+            var processId = Guid.NewGuid();
+            var postUserRoleProcess = new PostUserRoleProcess(this, _serviceProvider,ticketId, processId,RequestToken, UserId, RoleName);
+            _processes[processId] = postUserRoleProcess;
+            postUserRoleProcess.StartProcess();
+        }
+
 
         #endregion
     }

@@ -62,5 +62,18 @@ namespace DAPM.ClientApi.Controllers
             return Ok();
         }
 
+        [HttpPost("users/{userId}/role/{roleName}")]
+        [SwaggerOperation(Description = "Set a user's role")]
+        public async Task<ActionResult<Guid>> SetUserRole(Guid userId, String roleName)
+        {
+            if (Request.Headers.TryGetValue("Authorization", out var authHeader))
+            {
+                var token = authHeader.ToString().Replace("Bearer ", "");
+                Guid id = _authenticationService.SetUserRole(token, userId, roleName);
+                return Ok(new ApiResponse { RequestName = "PostRegistration", TicketId = id });
+            }
+            
+            return Unauthorized();
+        }
     }
 }
