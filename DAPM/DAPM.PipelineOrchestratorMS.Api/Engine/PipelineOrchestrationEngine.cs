@@ -14,7 +14,7 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         private IServiceProvider _serviceProvider;
         private Dictionary<Guid, IPipelineExecution> _pipelineExecutions;
 
-        IQueueProducer<CreatePipelineExecutionRequest> _queueProducer;
+        IQueueProducer<CreateInstanceExecutionMessage> _queueProducer;
 
         public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider)
         {
@@ -29,19 +29,19 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
 
             var pipelineExecution = new PipelineExecution(guid, pipeline, _serviceProvider);
 
-            // send a message to the DAPM.RespositoryMS.API to create and store the pipeline execution instance using the variable pipelineExecution
-            var message = new PipelineExecutionMessage
+            // send a message to the DAPM.RespositoryMS.API to create and store the pipeline execution instance sending it with a message
+
+            var message = new CreateInstanceExecutionMessage()
             {
-                ExecutionId = guid,
-                PipelineId = pipeline.Id,
-                CreatedAt = DateTime.UtcNow,
-                Status = "Created"
+                ProcessId = Guid.NewGuid(),
+                TimeToLive = TimeSpan.FromMinutes(1),
+                execution = pipelineExecution
             };
 
             // Send the message to the DAPM.RepositoryMS.API
-            _queueProducer.PublishMessageAsync(message);
+            _queueProducer.PublishMessage(message);
             
-           // _pipelineExecutions[guid] = pipelineExecution;
+            _pipelineExecutions[guid] = pipelineExecution;
             _logger.LogInformation($"A new execution instance has been created");
             
             return guid;

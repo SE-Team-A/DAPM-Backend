@@ -191,9 +191,5 @@ namespace DAPM.RepositoryMS.Api.Services
             throw new NotImplementedException();
         }
 
-        public Task<Models.PostgreSQL.PipelineExecution> CreateNewPipelineExecution(Guid repositoryId, Guid pipelineId, string name, string status, string message)
-        {
-            throw new NotImplementedException();
-        }
     }  
 }
