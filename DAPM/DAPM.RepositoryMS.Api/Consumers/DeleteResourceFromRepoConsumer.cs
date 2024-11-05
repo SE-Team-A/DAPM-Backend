@@ -15,7 +15,7 @@ namespace DAPM.RepositoryMS.Api.Consumers
         private readonly IQueueProducer<DeleteResourceFromRepoResultMessage> _deleteResourceFromRepoResultProducer;
 
         public DeleteResourceFromRepoConsumer(
-            ILogger<DeleteResourceFromRepoConsumer> logger, 
+            ILogger<DeleteResourceFromRepoConsumer> logger,
             IRepositoryService repositoryService,
             IQueueProducer<DeleteResourceFromRepoResultMessage> deleteResourceFromRepoResultProducer)
         {

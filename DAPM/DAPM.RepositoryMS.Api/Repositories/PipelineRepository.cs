@@ -10,7 +10,7 @@ namespace DAPM.RepositoryMS.Api.Repositories
         private ILogger<PipelineRepository> _logger;
         private readonly RepositoryDbContext _repositoryDbContext;
 
-        public PipelineRepository(ILogger<PipelineRepository> logger,  RepositoryDbContext repositoryDbContext)
+        public PipelineRepository(ILogger<PipelineRepository> logger, RepositoryDbContext repositoryDbContext)
         {
             _logger = logger;
             _repositoryDbContext = repositoryDbContext;
@@ -31,6 +31,22 @@ namespace DAPM.RepositoryMS.Api.Repositories
         public async Task<IEnumerable<Pipeline>> GetPipelines(Guid repositoryId)
         {
             return await _repositoryDbContext.Pipelines.Where(p => p.RepositoryId == repositoryId).ToListAsync();
+        }
+
+        public async Task<bool> DeletePipeline(Guid organisationId, Guid repositoryId, Guid pipelineId)
+        {
+            var pipeline = await _repositoryDbContext.Pipelines.FirstAsync(p => p.Id == pipelineId);
+
+            if (pipeline == null)
+            {
+                _logger.LogInformation($"Pipeline with ID {pipelineId} not found.");
+                return false;
+            }
+
+            _repositoryDbContext.Pipelines.Remove(pipeline);
+            await _repositoryDbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }
