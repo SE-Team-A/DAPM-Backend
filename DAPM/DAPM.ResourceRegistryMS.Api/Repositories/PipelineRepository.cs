@@ -21,6 +21,22 @@ namespace DAPM.ResourceRegistryMS.Api.Repositories
             return pipeline;
         }
 
+        public async Task<bool> DeletePipeline(Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            var pipeline = _context.Pipelines.FirstOrDefault(p => p.Id == pipelineId);
+
+            if (pipeline == null)
+            {
+                _logger.LogWarning($"Pipeline with ID: {pipelineId} and RepositoryID: {repositoryId} not found");
+                return false;
+            }
+
+            _context.Pipelines.Remove(pipeline);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<Pipeline> GetPipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId)
         {
             return (Pipeline)_context.Resources.Where(r => r.PeerId == organizationId && r.RepositoryId == repositoryId && r.Id == pipelineId);

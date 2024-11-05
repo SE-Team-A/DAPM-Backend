@@ -109,7 +109,7 @@ namespace DAPM.Orchestrator
         {
             return;
         }
-         public virtual void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message)
+        public virtual void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message)
         {
             return;
         }
@@ -133,7 +133,7 @@ namespace DAPM.Orchestrator
         {
             return;
         }
-    
+
         public virtual void OnRegistryUpdateAck(RegistryUpdateAckMessage message)
         {
             return;
@@ -196,7 +196,17 @@ namespace DAPM.Orchestrator
 
         public virtual void OnDeleteResourceFromRegistryResult(DeleteResourceFromRegistryResultMessage message)
         {
-          return;
+            return;
+        }
+
+        public virtual void OnDeleteRepositoryPipelineResult(DeleteRepositoryPipelineResultMessage message)
+        {
+            return;
+        }
+
+        public virtual void OnDeleteRegistryPipelineResult(DeleteRegistryPipelineResultMessage message)
+        {
+            return;
         }
         public virtual void OnGetAllUsersResult(GetAllUsersResultMessage message)
         {

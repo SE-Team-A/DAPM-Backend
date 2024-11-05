@@ -5,7 +5,7 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 
 using RabbitMQLibrary.Messages.ResourceRegistry;
 using RabbitMQLibrary.Models;
-
+ // AYAT AL RIFAI
 namespace DAPM.ResourceRegistryMS.Api.Consumers
 {
     public class DeleteResourceFromRegistryConsumer: IQueueConsumer<DeleteResourceFromRegistryMessage>

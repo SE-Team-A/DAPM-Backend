@@ -37,7 +37,9 @@ namespace DAPM.Orchestrator
         public void OnSendResourceToPeerResult(SendResourceToPeerResultMessage message);
         public void OnActionResultFromPeer(ActionResultReceivedMessage message);
         public void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message);
-        public void OnDeleteResourceFromRegistryResult (DeleteResourceFromRegistryResultMessage message);
+        public void OnDeleteResourceFromRegistryResult(DeleteResourceFromRegistryResultMessage message);
+        public void OnDeleteRepositoryPipelineResult(DeleteRepositoryPipelineResultMessage message);
+        public void OnDeleteRegistryPipelineResult(DeleteRegistryPipelineResultMessage message);
         public void OnPostLoginResult(PostLoginResultMessage message);
         public void OnPostRegistrationResult(PostRegistrationResultMessage message);
         public void OnGetAllUsersResult(GetAllUsersResultMessage message);

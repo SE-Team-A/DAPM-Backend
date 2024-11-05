@@ -1,13 +1,8 @@
-﻿using RabbitMQLibrary.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-// AYAT AL RIFAI
+using RabbitMQLibrary.Interfaces;
+
 namespace RabbitMQLibrary.Messages.ResourceRegistry
 {
-    public class DeleteResourceFromRegistryMessage: IQueueMessage
+    public class DeleteRegistryPipelineMessage : IQueueMessage
     {
         public Guid MessageId { get; set; }
         public Guid ProcessId { get; set; }
@@ -15,6 +10,6 @@ namespace RabbitMQLibrary.Messages.ResourceRegistry
 
         public Guid OrganizationId { get; set; }
         public Guid RepositoryId { get; set; }
-        public Guid ResourceId { get; set; }
+        public Guid PipelineId { get; set; }
     }
 }

@@ -67,6 +67,7 @@ builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRe
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceRequest>();
 builder.Services.AddQueueMessageConsumer<GetAllUsersRequestConsumer, GetAllUsersRequest>();
 builder.Services.AddQueueMessageConsumer<PostUserRoleRequestConsumer, PostUserRoleRequest>();
+builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineConsumer, DeletePipelineRequest>();
 
 //Handshake
 builder.Services.AddQueueMessageConsumer<CollabHandshakeRequestConsumer, CollabHandshakeRequest>();
@@ -109,6 +110,8 @@ builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, Del
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetAllUsersResultConsumer, GetAllUsersResultMessage>();
 
+builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineResultConsumer, DeleteRepositoryPipelineResultMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteRegistryPipelineResultConsumer, DeleteRegistryPipelineResultMessage>();
 
 
 // Handshake
