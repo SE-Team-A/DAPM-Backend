@@ -3,8 +3,10 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
+using RabbitMQLibrary.Messages.PeerApi;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
+using RabbitMQLibrary.Models;
 using System.Runtime.CompilerServices;
 
 namespace DAPM.Orchestrator.Processes
@@ -15,6 +17,7 @@ namespace DAPM.Orchestrator.Processes
         private Guid _repositoryId;
         private Guid _ticketId;
         private Guid _resourceId;
+    
 
         public DeleteResourceProcess(OrchestratorEngine engine, IServiceProvider serviceProvider, Guid processId,
             Guid organizationId, Guid repositoryId, Guid ticketId, Guid resourceId) : base(engine, serviceProvider, processId)
@@ -57,26 +60,118 @@ namespace DAPM.Orchestrator.Processes
             deleteResourceFromRegistryMessageProducer.PublishMessage(processResultMessage);
 
         }
-        public override void OnDeleteResourceFromRegistryResult(DeleteResourceFromRegistryResultMessage message)
+        public override void OnDeleteResourceFromRegistryResult (DeleteResourceFromRegistryResultMessage message){
+        
+        var getOrganizationsProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<GetOrganizationsMessage>>();
+
+          var getOrganizationsMessage = new GetOrganizationsMessage()
+            {
+                ProcessId = _processId,
+                TimeToLive = TimeSpan.FromMinutes(1),
+                OrganizationId = null
+            };
+
+            getOrganizationsProducer.PublishMessage(getOrganizationsMessage);
+
+        }
+
+        public override void OnGetOrganizationsFromRegistryResult(GetOrganizationsResultMessage message)
         {
 
-            var messageProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<DeleteResourceFromRepoResult>>();
+            var targetOrganizations = message.Organizations;
+            var resourcesList = new List<ResourceDTO>() {};
 
-            var processResultMessage = new DeleteResourceFromRepoResult()
+            SendRegistryUpdates(targetOrganizations,
+                Enumerable.Empty<OrganizationDTO>(),
+                Enumerable.Empty<RepositoryDTO>(), 
+                Enumerable.Empty<ResourceDTO>(), 
+                Enumerable.Empty<PipelineDTO>());
+
+
+        }
+        
+        private void SendRegistryUpdates(IEnumerable<OrganizationDTO> targetOrganizations, IEnumerable<OrganizationDTO> organizations,
+            IEnumerable<RepositoryDTO> repositories, IEnumerable<ResourceDTO> resources, IEnumerable<PipelineDTO> pipelines)
+        {
+
+            var sendRegistryUpdateProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<SendRegistryUpdateMessage>>();
+            var identityDTO = new IdentityDTO()
+            {
+                Domain = _localPeerIdentity.Domain,
+                Id = _localPeerIdentity.Id,
+                Name = _localPeerIdentity.Name,
+            };
+
+            var registryUpdate = new RegistryUpdateDTO()
+            {
+                Organizations = organizations,
+                Repositories = repositories,
+                Pipelines = pipelines,
+                Resources = resources,
+            };
+
+
+            var registryUpdateMessages = new List<SendRegistryUpdateMessage>();
+
+            foreach (var organization in targetOrganizations)
             {
 
-                TimeToLive = TimeSpan.FromMinutes(1),
-                resourceId = _resourceId,
-                organizationId = _organizationId,
-                repositoryId = _repositoryId,
-                TicketId = _ticketId
+                if (organization.Id == _localPeerIdentity.Id)
+                    continue;
 
-            };
-            messageProducer.PublishMessage(processResultMessage);
+                var domain = organization.Domain;
+                var registryUpdateMessage = new SendRegistryUpdateMessage()
+                {
+                    TargetPeerDomain = domain,
+                    SenderPeerIdentity = identityDTO,
+                    SenderProcessId = _processId,
+                    TimeToLive = TimeSpan.FromMinutes(1),
+                    RegistryUpdate = registryUpdate,
+                    IsPartOfHandshake = false,
+                };
 
-            EndProcess();
+                registryUpdateMessages.Add(registryUpdateMessage);
+            //    _isRegistryUpdateCompleted[organization.Id] = false;
+            //    _registryUpdatesNotCompletedCounter++;
+            }
+
+            if (registryUpdateMessages.Count() == 0)
+            {
+                FinishProcess();
+            }
+            else
+            {
+                foreach (var message in registryUpdateMessages)
+                    sendRegistryUpdateProducer.PublishMessage(message);
+            }
+
         }
 
 
+         private void FinishProcess()
+        {
+        var postItemProcessResultProducer = _serviceScope.ServiceProvider.GetRequiredService<IQueueProducer<PostItemProcessResult>>();
+
+            var itemsIds = new ItemIds()
+            {
+                OrganizationId = _organizationId,
+                RepositoryId = _repositoryId
+            };
+
+            var postItemProcessResultMessage = new PostItemProcessResult()
+            {
+                TicketId = _ticketId,
+                TimeToLive = TimeSpan.FromMinutes(1),
+                ItemIds = itemsIds,
+                ItemType = "Resource",
+                Message = "The item was deleted successfully",
+                Succeeded = true
+            };
+
+            postItemProcessResultProducer.PublishMessage(postItemProcessResultMessage);
+
+            EndProcess();
+
+    }
     }
 }

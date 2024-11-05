@@ -5,7 +5,7 @@ using Newtonsoft.Json.Serialization;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Models;
-
+// AYAT AL RIFAI
 namespace DAPM.ClientApi.Consumers
 {
     public class DeleteResourceFromRepoResultConsumer : IQueueConsumer<DeleteResourceFromRepoResult>
