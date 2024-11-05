@@ -53,6 +53,7 @@ namespace DAPM.Orchestrator.Processes
             var processResultMessage = new DeleteRegistryPipelineMessage
             {
                 TimeToLive = TimeSpan.FromMinutes(1),
+                ProcessId = _processId,
                 OrganizationId = _organizationId,
                 RepositoryId = _repositoryId,
                 PipelineId = _pipelineId
