@@ -1,3 +1,4 @@
+using DAPM.AuthenticationMS.Api.Services;
 using DAPM.AuthenticationMS.Api.Services.Interfaces;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Authentication;
@@ -25,17 +26,15 @@ namespace DAPM.AuthenticationMS.Api.Consumers
         public async Task ConsumeAsync(GetAllUsersMessage message)
         {
             _logger.LogInformation("GetAllUsersMessage received");
-            
 
-            
+            List<UserDto> users = await _userService.GetAllUsersAsync(message.Token);
 
             var resultMessage = new GetAllUsersResultMessage
             {
                 TimeToLive = TimeSpan.FromMinutes(1),
                 ProcessId = message.ProcessId,
-                Token = await _userService.LoginUserAsync(username, password),
+                UserDtos = users
             };
-
 
             _getAllUsersResultProducer.PublishMessage(resultMessage);
 

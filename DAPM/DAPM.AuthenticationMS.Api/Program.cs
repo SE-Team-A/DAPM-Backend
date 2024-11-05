@@ -48,6 +48,7 @@ builder.Services.AddScoped<IRolesService, RolesService>();
 
 builder.Services.AddQueueMessageConsumer<PostLoginConsumer, PostLoginMessage>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationConsumer, PostRegistrationMessage>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersConsumer, GetAllUsersMessage>();
 
 
 var app = builder.Build();

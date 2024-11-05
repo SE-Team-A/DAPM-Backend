@@ -3,6 +3,7 @@ using DAPM.AuthenticationMS.Api.Services.Interfaces;
 using DAPM.ClientApi.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 
 namespace DAPM.AuthenticationMS.Api.Services;
 /// <author>Ákos Gelencsér</author>
@@ -10,13 +11,15 @@ namespace DAPM.AuthenticationMS.Api.Services;
 public class UserService : IUserService
 {
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly ITokenService _tokenService;
     private readonly IRolesService _rolesService;
 
-    public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService, IRolesService rolesService)
+    public UserService(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService, IRolesService rolesService)
     {
         _userManager = userManager;
+        _roleManager = roleManager;
         _signInManager = signInManager;
         _tokenService = tokenService;
         _rolesService = rolesService;
@@ -58,25 +61,25 @@ public class UserService : IUserService
         return await _tokenService.CreateToken(user);
     }
 
-    public async Task<string> GetAllUsersAsync(string token)
+    public async Task<List<UserDto>> GetAllUsersAsync(string token)
     {
         var users = await _userManager.Users
         .Select(user => new UserDto
         {
             Id = user.Id,
             UserName = user.UserName,
-            Email = user.Email
+            Role = null,
             // Map other properties as needed
         })
         .ToListAsync();
 
-        return await _tokenService.CreateToken(users);
+        foreach (var userDto in users)
+        {
+            var user = await _userManager.FindByIdAsync(userDto.Id);
+            userDto.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+        }
+
+        return users;
     }
 }
-public class UserDto
-{
-    public string Id { get; set; }
-    public string UserName { get; set; }
-    public string Email { get; set; }
-    // Add other properties you want to expose
-}
+

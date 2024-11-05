@@ -45,7 +45,7 @@ namespace DAPM.Orchestrator.Processes
             {
                 TicketId = _ticketId,
                 TimeToLive = TimeSpan.FromMinutes(1),
-                Token = message.Token
+                Users = message.UserDtos
             };
 
             getAllUsersProcessResultProducer.PublishMessage(processResultMessage);

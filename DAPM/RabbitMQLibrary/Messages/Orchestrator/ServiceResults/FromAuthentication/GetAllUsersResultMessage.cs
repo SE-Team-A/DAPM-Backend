@@ -17,7 +17,14 @@ namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry
         public Guid MessageId { get; set; }
         public Guid ProcessId { get; set; }
         public TimeSpan TimeToLive { get; set; }
-        public string? Token { get; set; }
+        public List<UserDto> UserDtos { get; set; }
 
+    }
+
+    public class UserDto
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Role { get; set; }
     }
 }
