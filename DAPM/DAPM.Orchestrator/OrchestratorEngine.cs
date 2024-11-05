@@ -245,6 +245,23 @@ namespace DAPM.Orchestrator
             postRegistrationRequestProcess.StartProcess();
         }
 
+        public void StartGetAllUsersProcess(Guid ticketId, string Token)
+        {
+            var processId = Guid.NewGuid();
+            var getAllUsersRequestProcess = new GetAllUsersRequestProcess(this, _serviceProvider,ticketId, processId, Token);
+            _processes[processId] = getAllUsersRequestProcess;
+            getAllUsersRequestProcess.StartProcess();
+        }
+        
+        public void StartPostUserRoleProcess(Guid ticketId, string RequestToken, Guid UserId, string RoleName)
+        {
+            var processId = Guid.NewGuid();
+            var postUserRoleProcess = new PostUserRoleProcess(this, _serviceProvider,ticketId, processId,RequestToken, UserId, RoleName);
+            _processes[processId] = postUserRoleProcess;
+            postUserRoleProcess.StartProcess();
+        }
+
+
         #endregion
     }
 }

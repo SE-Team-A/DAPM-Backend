@@ -14,17 +14,23 @@ namespace DAPM.ClientApi.Services
         private readonly ILogger<AuthenticationService> _logger;
         private readonly IQueueProducer<PostLoginRequest> _postloginRequestProducer;
         private readonly IQueueProducer<PostRegistrationRequest> _postregistrationRequestProducer;
+        private readonly IQueueProducer<PostUserRoleRequest> _postUserRoleRequestProducer;
         private readonly ITicketService _ticketService;
+        private readonly IQueueProducer<GetAllUsersRequest> _getAllUsersRequestProducer;
 
         public AuthenticationService(ILogger<AuthenticationService> logger,
             IQueueProducer<PostLoginRequest> postloginRequestProducer,
             IQueueProducer<PostRegistrationRequest> postregistrationRequestProducer,
-            ITicketService ticketService)
+            ITicketService ticketService,
+            IQueueProducer<GetAllUsersRequest> getAllUsersRequestProducer,
+            IQueueProducer<PostUserRoleRequest> postUserRoleRequestProducer)
         {
             _logger = logger;
             _ticketService = ticketService;
             _postloginRequestProducer = postloginRequestProducer;
             _postregistrationRequestProducer = postregistrationRequestProducer;
+            _getAllUsersRequestProducer = getAllUsersRequestProducer;
+            _postUserRoleRequestProducer = postUserRoleRequestProducer;
         }
 
         public Guid PostLogin(string username, string password)
@@ -63,6 +69,43 @@ namespace DAPM.ClientApi.Services
             _postregistrationRequestProducer.PublishMessage(message);
 
             _logger.LogDebug("Registration Request Enqueued");
+
+            return ticketId;
+        }
+
+        public Guid GetAllUsers(string token)
+        {
+            var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+            
+            var message = new GetAllUsersRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                Token = token
+            };
+
+            _getAllUsersRequestProducer.PublishMessage(message);
+
+            _logger.LogDebug("GetAllUsers Request Enqueued");
+
+            return ticketId;
+        }
+        public Guid SetUserRole(string token, Guid userId, string roleName)
+        {
+            var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+            
+            var message = new PostUserRoleRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                RequestToken = token,
+                UserId = userId,
+                RoleName = roleName,
+            };
+
+            _postUserRoleRequestProducer.PublishMessage(message);
+
+            _logger.LogDebug($"Set user role request enqueued for id {userId}, role {roleName}");
 
             return ticketId;
         }

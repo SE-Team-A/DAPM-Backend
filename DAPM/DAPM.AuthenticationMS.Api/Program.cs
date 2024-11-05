@@ -48,6 +48,8 @@ builder.Services.AddScoped<IRolesService, RolesService>();
 
 builder.Services.AddQueueMessageConsumer<PostLoginConsumer, PostLoginMessage>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationConsumer, PostRegistrationMessage>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersConsumer, GetAllUsersMessage>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleConsumer, PostUserRoleMessage>();
 
 
 var app = builder.Build();
@@ -70,7 +72,7 @@ app.Run();
 
 async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 {
-    string[] roleNames = { "User", "Admin" };
+    string[] roleNames = { "Guest", "User", "Admin", "SuperAdmin" };
 
     foreach (var roleName in roleNames)
     {
@@ -84,13 +86,18 @@ async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 // temporary seed admin user
 async Task CreateTmpAdmin(UserManager<IdentityUser> userManager)
 {
-    var result = await userManager.CreateAsync(new IdentityUser { UserName = "admin" }, "Password1@");
+    var a = await userManager.CreateAsync(new IdentityUser { UserName = "admin" }, "Password1@");
+    var s = await userManager.CreateAsync(new IdentityUser { UserName = "superadmin" }, "Password1@");
+    var u = await userManager.CreateAsync(new IdentityUser { UserName = "user" }, "Password1@");
+    var g = await userManager.CreateAsync(new IdentityUser { UserName = "guest" }, "Password1@");
 
-    if (!result.Succeeded) return;
-
-    var user = await userManager.FindByNameAsync("admin");
-
-    if (user == null) return;
+    var admin = await userManager.FindByNameAsync("admin");
+    var superadmin = await userManager.FindByNameAsync("superadmin");
+    var user = await userManager.FindByNameAsync("user");
+    var guest = await userManager.FindByNameAsync("guest");
     
-    await userManager.AddToRoleAsync(user, "Admin");
+    await userManager.AddToRoleAsync(admin, "Admin");
+    await userManager.AddToRoleAsync(superadmin, "SuperAdmin");
+    await userManager.AddToRoleAsync(user, "User");
+    await userManager.AddToRoleAsync(guest, "Guest");
 }

@@ -69,6 +69,11 @@ builder.Services.AddQueueMessageConsumer<GetResourceFilesProcessResultConsumer, 
 builder.Services.AddQueueMessageConsumer<CollabHandshakeProcessResultConsumer, CollabHandshakeProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostPipelineCommandProcessResultConsumer, PostPipelineCommandProcessResult>();
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusProcessResultConsumer, GetPipelineExecutionStatusRequestResult>();
+builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleProcessResultConsumer,PostUserRoleProcessResult>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersProcessResultConsumer, GetAllUsersProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer, PostLoginProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer, PostRegistrationProcessResult>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();

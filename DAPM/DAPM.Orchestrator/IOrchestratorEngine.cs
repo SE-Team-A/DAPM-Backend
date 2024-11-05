@@ -28,6 +28,7 @@ namespace DAPM.Orchestrator
         public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password);
 
         public void StartPostRegistrationRequestProcess(Guid ticketId, string UserName, string Password, string Name, string Role);
+        public void StartPostUserRoleProcess(Guid ticketId, string RequestToken, Guid UserId, string RoleName);
 
         // Pipeline Processes
         public void StartPostPipelineProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name);
@@ -41,6 +42,7 @@ namespace DAPM.Orchestrator
         public void StartPostResourceFromPeerProcess(Guid senderProcessId, ResourceDTO resource, int storageMode, Guid executionId, IdentityDTO senderIdentity);
         public void StartGetPipelineExecutionStatusProcess(Guid ticketId, Guid executionId);
         public void StartDeleteResourceProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messageResourceId);
+        public void StartGetAllUsersProcess(Guid ticketId, string token);
         public void StartDeletePipelineProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messagePipelineId);
     }
 }

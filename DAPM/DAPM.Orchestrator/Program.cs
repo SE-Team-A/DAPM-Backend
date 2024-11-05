@@ -65,6 +65,8 @@ builder.Services.AddQueueMessageConsumer<GetResourceFilesRequestConsumer, GetRes
 builder.Services.AddQueueMessageConsumer<PostLoginRequestConsumer, PostLoginRequest>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRegistrationRequest>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceRequest>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersRequestConsumer, GetAllUsersRequest>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleRequestConsumer, PostUserRoleRequest>();
 builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineConsumer, DeletePipelineRequest>();
 
 //Handshake
@@ -101,10 +103,12 @@ builder.Services.AddQueueMessageConsumer<GetResourceFilesFromOperatorResultConsu
 builder.Services.AddQueueMessageConsumer<SendResourceToPeerResultConsumer, SendResourceToPeerResultMessage>();
 builder.Services.AddQueueMessageConsumer<ExecuteOperatorResultConsumer, ExecuteOperatorResultMessage>();
 
-builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer, PostLoginResultMessage>();
-builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer, PostRegistrationResultMessage>();
+builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginResultMessage>();
+builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationResultMessage>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleResultConsumer,PostUserRoleResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersResultConsumer, GetAllUsersResultMessage>();
 
 builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineResultConsumer, DeleteRepositoryPipelineResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteRegistryPipelineResultConsumer, DeleteRegistryPipelineResultMessage>();
