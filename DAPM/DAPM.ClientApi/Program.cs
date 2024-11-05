@@ -71,6 +71,7 @@ builder.Services.AddQueueMessageConsumer<PostPipelineCommandProcessResultConsume
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusProcessResultConsumer, GetPipelineExecutionStatusRequestResult>();
 builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleProcessResultConsumer,PostUserRoleProcessResult>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();
 builder.Services.AddQueueMessageConsumer<GetAllUsersProcessResultConsumer, GetAllUsersProcessResult>();
 
