@@ -7,7 +7,7 @@ namespace DAPM.AuthenticationMS.Api.Services.Interfaces;
 /// <author>Vladyslav Synytskyi</author>
 public interface IUserService
 {
-    public Task<IdentityResult> CreateUserAsync(string username, string password, bool isAdmin = false);
+    public Task<IdentityResult> CreateUserAsync(string username, string password, string role);
 
     public Task<string> LoginUserAsync(string username, string password);
     public Task<List<UserDto>> GetAllUsersAsync(string token);

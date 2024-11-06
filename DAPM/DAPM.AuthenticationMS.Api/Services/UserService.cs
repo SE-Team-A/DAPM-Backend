@@ -24,7 +24,7 @@ public class UserService : IUserService
         _tokenService = tokenService;
         _rolesService = rolesService;
     }
-    public async Task<IdentityResult> CreateUserAsync(string username, string password, bool isAdmin = false)
+    public async Task<IdentityResult> CreateUserAsync(string username, string password, string role)
     {
         var user = new IdentityUser
         {
@@ -35,9 +35,9 @@ public class UserService : IUserService
 
         if (result.Succeeded)
         {
-            if (isAdmin)
+            if (new string[]{"superadmin", "admin", "user", "guest"}.Contains(role.ToLower()))
             {
-                await _rolesService.AddRoleToUser("Admin", username);
+                await _rolesService.AddRoleToUser(role, username);
             }
         }
 
