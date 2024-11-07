@@ -86,6 +86,21 @@ namespace DAPM.RepositoryMS.Api.Services
 
             return createdPipeline;
         }
+          public async Task<Models.PostgreSQL.Pipeline> EditPipeline(Guid repositoryId, string name, RabbitMQLibrary.Models.Pipeline pipeline, Guid pipelineId)
+        {
+            var pipelineJsonString = Newtonsoft.Json.JsonConvert.SerializeObject(pipeline); 
+
+            var pipelineObject = new Models.PostgreSQL.Pipeline
+            {
+                Name = name,
+                RepositoryId = repositoryId,
+                PipelineJson = pipelineJsonString
+            };
+
+            var edited = await _pipelineRepository.EditPipeline(pipelineObject, pipelineId);
+
+            return edited;
+        }
 
         public async Task<Models.PostgreSQL.Resource> CreateNewResource(Guid repositoryId, string name, string resourceType, FileDTO fileDto)
         {

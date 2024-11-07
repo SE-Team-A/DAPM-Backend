@@ -22,6 +22,18 @@ namespace DAPM.RepositoryMS.Api.Repositories
             _repositoryDbContext.SaveChanges();
             return pipeline;
         }
+        public async Task<Pipeline> EditPipeline(Pipeline pipeline, Guid pipelineId)
+        {
+            
+            var found = await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == pipeline.RepositoryId);
+        
+            found.PipelineJson=pipeline.PipelineJson;    
+
+           // _repositoryDbContext.Entry(found).CurrentValues.SetValues(pipeline.PipelineJson);
+
+            _repositoryDbContext.SaveChanges();
+            return pipeline;
+        }
 
         public async Task<Pipeline> GetPipelineById(Guid repositoryId, Guid pipelineId)
         {

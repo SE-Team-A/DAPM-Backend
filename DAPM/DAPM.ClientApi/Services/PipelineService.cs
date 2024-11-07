@@ -14,6 +14,8 @@ namespace DAPM.ClientApi.Services
         private readonly IQueueProducer<CreatePipelineExecutionRequest> _createInstanceProducer;
         private readonly IQueueProducer<PipelineStartCommandRequest> _pipelineStartCommandProducer;
         private readonly IQueueProducer<GetPipelineExecutionStatusRequest> _getPipelineExecutionStatusProducer;
+
+
         public PipelineService(
             ILogger<PipelineService> logger,
             ITicketService ticketService,
@@ -29,6 +31,7 @@ namespace DAPM.ClientApi.Services
             _pipelineStartCommandProducer = pipelineStartCommandProducer;
             _getPipelineExecutionStatusProducer = getPipelineExecutionStatusProducer;
         }
+
 
         public Guid CreatePipelineExecution(Guid organizationId, Guid repositoryId, Guid pipelineId)
         {

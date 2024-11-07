@@ -11,5 +11,7 @@ namespace DAPM.ResourceRegistryMS.Api.Services.Interfaces
         Task<IEnumerable<Models.Pipeline>> GetPipelinesOfRepository(Guid organizationId, Guid repositoryId);
         Task<Models.Pipeline> AddPipelineToRepository(Guid organizationId, Guid repositoryId, PipelineDTO pipeline);
         Task<bool> DeleteRepository(Guid organizationId, Guid repositoryId);
+        Task<Models.Pipeline> EditPipelineToRepository(Guid organizationId, Guid repositoryId, PipelineDTO pipeline, Guid pipelineId);
+
     }
 }

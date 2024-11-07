@@ -61,6 +61,8 @@ builder.Services.AddQueueMessageConsumer<PostResourceFromPeerRequestConsumer, Po
 builder.Services.AddQueueMessageConsumer<PostOperatorRequestConsumer, PostOperatorRequest>();
 builder.Services.AddQueueMessageConsumer<PostRepositoryRequestConsumer, PostRepositoryRequest>();
 builder.Services.AddQueueMessageConsumer<PostPipelineRequestConsumer, PostPipelineRequest>();
+builder.Services.AddQueueMessageConsumer<EditPipelineRequestConsumer, EditPipelineRequest>();
+
 builder.Services.AddQueueMessageConsumer<GetResourceFilesRequestConsumer, GetResourceFilesRequest>();
 builder.Services.AddQueueMessageConsumer<PostLoginRequestConsumer, PostLoginRequest>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRegistrationRequest>();
@@ -94,8 +96,10 @@ builder.Services.AddQueueMessageConsumer<PostResourceToRegistryResultConsumer, P
 builder.Services.AddQueueMessageConsumer<PostRepoToRepoResultConsumer, PostRepoToRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostRepoToRegistryResultConsumer, PostRepoToRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostPipelineToRepoResultConsumer, PostPipelineToRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<EditPipelineInRepoResultConsumer, EditPipelineInRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetPipelinesFromRepoResultConsumer, GetPipelinesFromRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostPipelineToRegistryResultConsumer, PostPipelineToRegistryResultMessage>();
+builder.Services.AddQueueMessageConsumer<EditPipelineToRegistryResultConsumer, EditPipelineToRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetPipelinesFromRegistryResultConsumer, GetPipelinesResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetResourceFilesFromRepoResultConsumer, GetResourceFilesFromRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetOperatorFilesFromRepoResultConsumer, GetOperatorFilesFromRepoResultMessage>();
