@@ -2,7 +2,7 @@ using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 using DAPM.RepositoryMS.Api.Services.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQLibrary.Interfaces;
-using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
+using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Models;
 
@@ -10,11 +10,11 @@ namespace DAPM.RepositoryMS.Api.Consumers
 {
     public class PostPipelineExecutionToRepoConsumer : IQueueConsumer<PostPipelineExecutionToRepoMessage>
     {
-        private ILogger<PostPipelineToRepoConsumer> _logger;
+        private ILogger<PostPipelineExecutionToRepoConsumer> _logger;
 
         private IRepositoryService _repositoryService;
 
-        IQueueProducer<PostPipelineExecutionToRepoResultMessage> _postPipelineExecutionToRepoResultProducer;
+        IQueueProducer<CreatePipelineExecutionResultMessage> _postPipelineExecutionToRepoResultProducer;
 
         public PostPipelineExecutionToRepoConsumer(ILogger<PostPipelineExecutionToRepoConsumer> logger,
             IRepositoryService repositoryService,

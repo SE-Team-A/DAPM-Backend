@@ -1,6 +1,7 @@
 ﻿using DAPM.ClientApi.Models;
 using DAPM.ClientApi.Models.DTOs;
 using DAPM.ClientApi.Services.Interfaces;
+using Grpc.Net.Client.Balancer;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -42,9 +43,9 @@ namespace DAPM.ClientApi.Controllers
 
         [HttpPost("{organizationId}/repositories/{repositoryId}/pipelines/{pipelineId}/executions")]
         [SwaggerOperation(Description = "Creates a new execution instance for a pipeline previously saved in the system. The execution is created but not started")]
-        public async Task<ActionResult<Guid>> CreatePipelineExecutionInstance(Guid organizationId, Guid repositoryId, Guid pipelineId)
+        public async Task<ActionResult<Guid>> CreatePipelineExecutionInstance(Guid organizationId, Guid repositoryId, [FromBody]PipelineExecutionApiDto pipelineExecutionApiDto)
         {
-            Guid id = _pipelineService.CreatePipelineExecution(organizationId, repositoryId, pipelineId);
+            Guid id = _pipelineService.CreatePipelineExecution(organizationId, repositoryId, pipelineExecutionApiDto);
             return Ok(new ApiResponse { RequestName = "CreatePipelineExecutionInstance", TicketId = id });
         }
 

@@ -31,11 +31,11 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
 
             // send a message to the DAPM.RespositoryMS.API to create and store the pipeline execution instance sending it with a message
 
-            var message = new CreateInstanceExecutionMessage()
+            var message = new PipelineExecutionMessage()
             {
-                ProcessId = Guid.NewGuid(),
+                ProcessId = guid,
                 TimeToLive = TimeSpan.FromMinutes(1),
-                execution = pipelineExecution
+                PipelineExecution = pipelineExecution
             };
 
             // Send the message to the DAPM.RepositoryMS.API

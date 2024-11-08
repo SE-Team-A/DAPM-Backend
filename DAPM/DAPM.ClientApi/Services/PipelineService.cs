@@ -1,4 +1,5 @@
-﻿using DAPM.ClientApi.Services.Interfaces;
+﻿using DAPM.ClientApi.Models.DTOs;
+using DAPM.ClientApi.Services.Interfaces;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
@@ -30,7 +31,7 @@ namespace DAPM.ClientApi.Services
             _getPipelineExecutionStatusProducer = getPipelineExecutionStatusProducer;
         }
 
-        public Guid CreatePipelineExecution(Guid organizationId, Guid repositoryId, Guid pipelineId)
+        public Guid CreatePipelineExecution(Guid organizationId, Guid repositoryId, PipelineExecutionApiDto pipelinExecution)
         {
             Guid ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
 
@@ -38,10 +39,10 @@ namespace DAPM.ClientApi.Services
             {
                 TicketId = ticketId,
                 TimeToLive = TimeSpan.FromMinutes(1),
-
                 OrganizationId = organizationId,
                 RepositoryId = repositoryId,
-                PipelineId = pipelineId
+                Name = pipelinExecution.Name,
+                PipelineExecution = pipelinExecution.PipelineExecution
             };
 
             _createInstanceProducer.PublishMessage(message);

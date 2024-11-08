@@ -1,11 +1,12 @@
 ﻿using DAPM.PipelineOrchestratorMS.Api.Models;
+using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
 
 namespace DAPM.PipelineOrchestratorMS.Api.Engine.Interfaces
 {
     public interface IPipelineOrchestrationEngine
     {
-        public Guid CreatePipelineExecutionInstance(Pipeline pipelineDTO);
+        public Guid CreatePipelineExecutionInstance(Pipeline pipeline);
         public void ExecutePipelineStartCommand(Guid executionId);
         public PipelineExecutionStatus GetPipelineExecutionStatus(Guid executionId);
         public void ProcessActionResult(ActionResultDTO actionResultDto);
