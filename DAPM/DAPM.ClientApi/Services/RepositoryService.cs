@@ -22,6 +22,8 @@ namespace DAPM.ClientApi.Services
         IQueueProducer<GetPipelinesRequest> _getPipelinesRequestProducer;
         IQueueProducer<DeleteResourceRequest> _getResourceDeleteRequest;
         IQueueProducer<EditPipelineRequest> _editPipelineRequestProducer;
+        IQueueProducer<DeletePipelineRequest> _getPipelineDeleteRequest;
+
 
 
         public RepositoryService(
