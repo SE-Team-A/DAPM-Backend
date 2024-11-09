@@ -15,5 +15,6 @@ namespace DAPM.ClientApi.Services.Interfaces
        public Guid EditPipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId, PipelineApiDto pipelineApiDto);
 
         public Guid DeletePipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId);
+        
     }
 }
