@@ -11,4 +11,5 @@ public interface IUserService
 
     public Task<string> LoginUserAsync(string username, string password);
     public Task<List<UserDto>> GetAllUsersAsync(string token);
+    public Task DeleteUserFromSystem(string requestToken, Guid userId);
 }

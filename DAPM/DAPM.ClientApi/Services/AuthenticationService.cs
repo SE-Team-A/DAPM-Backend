@@ -17,13 +17,15 @@ namespace DAPM.ClientApi.Services
         private readonly IQueueProducer<PostUserRoleRequest> _postUserRoleRequestProducer;
         private readonly ITicketService _ticketService;
         private readonly IQueueProducer<GetAllUsersRequest> _getAllUsersRequestProducer;
+        private readonly IQueueProducer<DeleteUserRequest> _deleteUserRequestProducer;
 
         public AuthenticationService(ILogger<AuthenticationService> logger,
             IQueueProducer<PostLoginRequest> postloginRequestProducer,
             IQueueProducer<PostRegistrationRequest> postregistrationRequestProducer,
             ITicketService ticketService,
             IQueueProducer<GetAllUsersRequest> getAllUsersRequestProducer,
-            IQueueProducer<PostUserRoleRequest> postUserRoleRequestProducer)
+            IQueueProducer<PostUserRoleRequest> postUserRoleRequestProducer,
+            IQueueProducer<DeleteUserRequest> deleteUserRequestProducer)
         {
             _logger = logger;
             _ticketService = ticketService;
@@ -31,6 +33,7 @@ namespace DAPM.ClientApi.Services
             _postregistrationRequestProducer = postregistrationRequestProducer;
             _getAllUsersRequestProducer = getAllUsersRequestProducer;
             _postUserRoleRequestProducer = postUserRoleRequestProducer;
+            _deleteUserRequestProducer = deleteUserRequestProducer;
         }
 
         public Guid PostLogin(string username, string password)
@@ -90,6 +93,7 @@ namespace DAPM.ClientApi.Services
 
             return ticketId;
         }
+
         public Guid SetUserRole(string token, Guid userId, string roleName)
         {
             var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
@@ -106,6 +110,25 @@ namespace DAPM.ClientApi.Services
             _postUserRoleRequestProducer.PublishMessage(message);
 
             _logger.LogDebug($"Set user role request enqueued for id {userId}, role {roleName}");
+
+            return ticketId;
+        }
+
+        public Guid DeleteUserFromSystem(string token, Guid userId)
+        {
+            var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+            
+            var message = new DeleteUserRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                RequestToken = token,
+                UserId = userId,
+            };
+
+            _deleteUserRequestProducer.PublishMessage(message);
+
+            _logger.LogDebug($"Delete user request enqueued for id {userId}");
 
             return ticketId;
         }

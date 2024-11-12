@@ -15,6 +15,7 @@ namespace DAPM.ClientApi.Services.Interfaces
         public Guid PostRegistration(string username, string password, string name, string role);
         public Guid GetAllUsers(string token);
         public Guid SetUserRole(string token, Guid userId, string roleName);
+        public Guid DeleteUserFromSystem(string token, Guid userId);
     }
 
 }
