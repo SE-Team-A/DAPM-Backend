@@ -85,5 +85,39 @@ namespace DAPM.ClientApi.Services
 
             return null;
         }
+
+        public async Task DeleteUserRole(string requestToken, Guid userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null) {
+                _logger.LogInformation($"Failed to delete role {roleName} for UserID {userId}, because user does not exist.");
+                return;
+            }
+
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null) {
+                _logger.LogInformation($"Failed to delete role {roleName} for UserID {userId}, because role does not exist.");
+                return;
+            }
+
+            // If the request comes from a regular user
+            string requestRoleName = _tokenService.GetRoleFromToken(requestToken);
+            if (requestRoleName != "Admin" && requestRoleName != "SuperAdmin") {
+                _logger.LogInformation($"Failed to delete role {roleName} for UserID {userId}, because request role is only {requestRoleName}");
+                return;
+            }
+
+            // If the original role is a type of admin, it can only be changed by a superadmin
+            string? originalRoleName = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            if (originalRoleName == "Admin" || originalRoleName == "SuperAdmin") {
+                if (requestRoleName != "SuperAdmin") {
+                    _logger.LogInformation($"Failed to delete role {roleName} for UserID {userId}, because request role is only {requestRoleName}");
+                    return;
+                }
+            }
+            
+            await _userManager.RemoveFromRoleAsync(user, roleName);
+        }
     }
 }

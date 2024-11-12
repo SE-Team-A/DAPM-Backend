@@ -79,6 +79,7 @@ builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer, PostLoginProce
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer, PostRegistrationProcessResult>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();
 builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineConsumer, DeleteRepositoryPipelineResult>();
+builder.Services.AddQueueMessageConsumer<DeleteUserResultConsumer, DeleteUserProcessResult>();
 
 
 

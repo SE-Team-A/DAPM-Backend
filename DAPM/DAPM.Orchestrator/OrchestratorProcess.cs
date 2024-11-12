@@ -227,5 +227,10 @@ namespace DAPM.Orchestrator
         {
             return;
         }
+
+        public virtual void OnDeleteUserResult(DeleteUserResultMessage message)
+        {
+            return;
+        }
     }
 }

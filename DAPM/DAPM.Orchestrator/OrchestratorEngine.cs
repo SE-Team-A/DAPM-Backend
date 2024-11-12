@@ -269,6 +269,14 @@ namespace DAPM.Orchestrator
             postUserRoleProcess.StartProcess();
         }
 
+        public void StartDeleteUserProcess(Guid ticketId, string RequestToken, Guid UserId)
+        {
+            var processId = Guid.NewGuid();
+            var deleteUserProcess = new DeleteUserProcess(this, _serviceProvider, ticketId, processId, RequestToken, UserId);
+            _processes[processId] = deleteUserProcess;
+            deleteUserProcess.StartProcess();
+        }
+
 
         #endregion
     }

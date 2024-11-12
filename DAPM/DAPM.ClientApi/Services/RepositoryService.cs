@@ -48,11 +48,11 @@ namespace DAPM.ClientApi.Services
             _getPipelinesRequestProducer = getPipelinesRequestProducer;
             _postOperatorRequestProducer = postOperatorRequestProducer;
             _getResourceDeleteRequest = getResourceDeletetProducer;
-            _editPipelineRequestProducer= editPipelineRequestProducer;
+            _editPipelineRequestProducer = editPipelineRequestProducer;
 
         }
 
-          public Guid EditPipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId, PipelineApiDto pipeline)
+        public Guid EditPipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId, PipelineApiDto pipeline)
         {
             Guid ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
 

@@ -50,6 +50,7 @@ builder.Services.AddQueueMessageConsumer<PostLoginConsumer, PostLoginMessage>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationConsumer, PostRegistrationMessage>();
 builder.Services.AddQueueMessageConsumer<GetAllUsersConsumer, GetAllUsersMessage>();
 builder.Services.AddQueueMessageConsumer<PostUserRoleConsumer, PostUserRoleMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteUserConsumer, DeleteUserMessage>();
 
 
 var app = builder.Build();

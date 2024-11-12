@@ -75,5 +75,19 @@ namespace DAPM.ClientApi.Controllers
             
             return Unauthorized();
         }
+
+        [HttpDelete("users/{userId}")]
+        [SwaggerOperation(Description = "Delete a user")]
+        public async Task<ActionResult<Guid>> DeleteUserFromSystem(Guid userId)
+        {
+            if (Request.Headers.TryGetValue("Authorization", out var authHeader))
+            {
+                var token = authHeader.ToString().Replace("Bearer ", "");
+                Guid id = _authenticationService.DeleteUserFromSystem(token, userId);
+                return Ok(new ApiResponse { RequestName = "PostRegistration", TicketId = id });
+            }
+            
+            return Unauthorized();
+        }
     }
 }
