@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace RabbitMQLibrary.Models
 {
     public class PipelineExecutionStatusDTO

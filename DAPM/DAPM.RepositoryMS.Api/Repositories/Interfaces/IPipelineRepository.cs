@@ -1,5 +1,7 @@
 ﻿using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Repositories.Interfaces
 {
     public interface IPipelineRepository

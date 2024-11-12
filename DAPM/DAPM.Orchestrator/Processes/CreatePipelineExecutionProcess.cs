@@ -6,6 +6,8 @@ using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Models;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.Orchestrator.Processes
 {
     public class CreatePipelineExecutionProcess : OrchestratorProcess

@@ -2,6 +2,8 @@
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.PipelineOrchestratorMS.Api.Engine.Interfaces
 {
     public interface IPipelineOrchestrationEngine

@@ -1,6 +1,8 @@
 ﻿using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 using RabbitMQLibrary.Models;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Services.Interfaces
 {
     public interface IRepositoryService

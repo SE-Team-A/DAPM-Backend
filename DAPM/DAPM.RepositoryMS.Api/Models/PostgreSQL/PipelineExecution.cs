@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Models.PostgreSQL
 {
     public class PipelineExecution

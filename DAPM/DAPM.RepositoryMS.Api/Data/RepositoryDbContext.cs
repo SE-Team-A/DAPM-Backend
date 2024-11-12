@@ -1,6 +1,8 @@
 ﻿using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 using Microsoft.EntityFrameworkCore;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Data
 {
     public class RepositoryDbContext : DbContext

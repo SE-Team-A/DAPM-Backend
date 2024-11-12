@@ -6,6 +6,7 @@ using RabbitMQLibrary.Models;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.Orchestrator
 {
     public interface IOrchestratorEngine

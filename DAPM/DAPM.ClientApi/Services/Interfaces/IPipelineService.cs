@@ -1,5 +1,7 @@
 ﻿using DAPM.ClientApi.Models.DTOs;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.ClientApi.Services.Interfaces
 {
     public interface IPipelineService

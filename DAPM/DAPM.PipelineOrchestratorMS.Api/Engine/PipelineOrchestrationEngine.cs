@@ -5,6 +5,8 @@ using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.PipelineOrchestratorMS.Api.Engine
 {
     public class PipelineOrchestrationEngine : IPipelineOrchestrationEngine

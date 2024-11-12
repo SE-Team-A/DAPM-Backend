@@ -5,6 +5,8 @@ using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.ClientApi.Services
 {
     public class PipelineService : IPipelineService

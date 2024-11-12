@@ -10,6 +10,8 @@ using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.ClientApi.Controllers
 {
     [ApiController]

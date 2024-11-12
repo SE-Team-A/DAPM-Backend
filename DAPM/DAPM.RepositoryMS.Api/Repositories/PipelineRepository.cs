@@ -3,6 +3,8 @@ using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 using DAPM.RepositoryMS.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Repositories
 {
     public class PipelineRepository : IPipelineRepository
