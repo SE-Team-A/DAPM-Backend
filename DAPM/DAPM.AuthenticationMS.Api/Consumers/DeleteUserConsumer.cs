@@ -11,28 +11,27 @@ namespace DAPM.AuthenticationMS.Api.Consumers
     {
         private ILogger<DeleteUserConsumer> _logger;
         private IUserService _userService;
-        private IRolesService _roleService;
 
         private IQueueProducer<DeleteUserResultMessage> _deleteUserResultProducer;
         public DeleteUserConsumer(ILogger<DeleteUserConsumer> logger,
             IQueueProducer<DeleteUserResultMessage> deleteUserResultProducer,
-            IUserService userService, IRolesService roleService)
+            IUserService userService)
         {
             _logger = logger;
             _deleteUserResultProducer = deleteUserResultProducer;
             _userService = userService;
-            _roleService = roleService;
         }
         public async Task ConsumeAsync(DeleteUserMessage message)
         {
             _logger.LogInformation($"Delete user process started. Token: {message.RequestToken}, UserId: {message.UserId}");
 
-            await _userService.DeleteUserFromSystem(message.RequestToken, message.UserId);
+            var deleted = await _userService.DeleteUserFromSystem(message.RequestToken, message.UserId);
 
             var resultMessage = new DeleteUserResultMessage
             {
                 TimeToLive = TimeSpan.FromMinutes(1),
-                ProcessId = message.ProcessId
+                ProcessId = message.ProcessId,
+                Succeeded = deleted
             };
 
             _deleteUserResultProducer.PublishMessage(resultMessage);

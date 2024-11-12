@@ -12,16 +12,14 @@ namespace DAPM.AuthenticationMS.Api.Services;
 public class UserService : IUserService
 {
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly ITokenService _tokenService;
     private readonly IRolesService _rolesService;
     private readonly ILogger<UserService> _logger;
 
-    public UserService(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService, IRolesService rolesService, ILogger<UserService> logger)
+    public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ITokenService tokenService, IRolesService rolesService, ILogger<UserService> logger)
     {
         _userManager = userManager;
-        _roleManager = roleManager;
         _signInManager = signInManager;
         _tokenService = tokenService;
         _rolesService = rolesService;
@@ -86,13 +84,13 @@ public class UserService : IUserService
         return users;
     }
 
-    public async Task DeleteUserFromSystem(string requestToken, Guid userId)
+    public async Task<bool> DeleteUserFromSystem(string requestToken, Guid userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
         if (user == null)
         {
             _logger.LogInformation($"Failed to delete user {userId}, because user does not exist.");
-            return;
+            return false;
         }
 
         // If the request comes from a regular user
@@ -100,7 +98,7 @@ public class UserService : IUserService
         if (requestRoleName != "Admin" && requestRoleName != "SuperAdmin")
         {
             _logger.LogInformation($"Failed to delete user {userId}, because request role is only {requestRoleName}");
-            return;
+            return false;
         }
 
         // If the original role is a type of admin, it can only be changed by a superadmin
@@ -110,11 +108,14 @@ public class UserService : IUserService
             if (requestRoleName != "SuperAdmin")
             {
                 _logger.LogInformation($"Failed to delete user {userId}, because request role is only {requestRoleName}");
-                return;
+                return false;
             }
         }
+        
         await _userManager.RemoveFromRolesAsync(user, await _userManager.GetRolesAsync(user));
-        await _userManager.DeleteAsync(user);
+        var deleteUser = await _userManager.DeleteAsync(user);
+
+        return deleteUser.Succeeded;
     }
 }
 
