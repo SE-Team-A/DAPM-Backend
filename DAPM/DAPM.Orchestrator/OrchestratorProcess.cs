@@ -1,4 +1,5 @@
-﻿using DAPM.Orchestrator.Processes;
+﻿using DAPM.Orchestrator.Consumers.StartProcessConsumers;
+using DAPM.Orchestrator.Processes;
 using DAPM.Orchestrator.Services;
 using DAPM.Orchestrator.Services.Models;
 using RabbitMQLibrary.Messages.Orchestrator.Other;
@@ -91,6 +92,11 @@ namespace DAPM.Orchestrator
         }
 
         public virtual void OnGetPipelinesFromRepoResult(GetPipelinesFromRepoResultMessage message)
+        {
+            return;
+        }
+
+        public virtual void OnGetPipelineExecutionsFromRepoResult(GetPipelineExecutionsFromRepoResultMessage message)
         {
             return;
         }

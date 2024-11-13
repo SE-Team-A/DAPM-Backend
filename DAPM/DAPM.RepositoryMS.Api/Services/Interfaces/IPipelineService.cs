@@ -6,5 +6,6 @@ namespace DAPM.RepositoryMS.Api.Services.Interfaces
     {
         Task<Pipeline> GetPipelineById(Guid repositoryId, Guid pipelineId);
         Task<IEnumerable<Pipeline>> GetPipelines(Guid repositoryId);
+        Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid repositoryId, Guid pipelineId);
     }
 }

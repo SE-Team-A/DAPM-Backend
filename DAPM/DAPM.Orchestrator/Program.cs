@@ -17,6 +17,7 @@ using DAPM.Orchestrator.Consumers.ResultConsumers.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromOperator;
 using DAPM.Orchestrator.Consumers.ResultConsumers.FromOperator;
+using RabbitMQLibrary.Messages.ClientApi;
 
 /// <author>Ákos Gelencsér</author>
 /// <author>Vladyslav Synytskyi</author>
@@ -65,6 +66,7 @@ builder.Services.AddQueueMessageConsumer<GetResourceFilesRequestConsumer, GetRes
 builder.Services.AddQueueMessageConsumer<PostLoginRequestConsumer, PostLoginRequest>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRegistrationRequest>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceRequest>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsRequestConsumer, GetPipelineExecutionsRequest>();
 
 //Handshake
 builder.Services.AddQueueMessageConsumer<CollabHandshakeRequestConsumer, CollabHandshakeRequest>();
@@ -104,6 +106,7 @@ builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginResult
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsFromRepoResultMessageConsumer, GetPipelineExecutionsFromRepoResultMessage>();
 
 
 

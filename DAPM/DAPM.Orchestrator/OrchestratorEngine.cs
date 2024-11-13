@@ -49,6 +49,14 @@ namespace DAPM.Orchestrator
             collabHandshakeProcess.StartProcess();
         }
 
+        public void StartGetPipelineExecutionsProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            var processId = Guid.NewGuid();
+            var process = new GetPipelineExecutionsProcess(this, _serviceProvider, ticketId, processId, organizationId, pipelineId);
+            _processes[processId] = process;
+            process.StartProcess();
+        }
+
         public void StartCreatePipelineExecutionProcess(Guid apiTicketId, Guid organizationId, Guid repositoryId, Guid pipelineId)
         {
             var processId = Guid.NewGuid();

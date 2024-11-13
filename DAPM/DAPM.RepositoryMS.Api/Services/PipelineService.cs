@@ -20,5 +20,10 @@ namespace DAPM.RepositoryMS.Api.Services
         {
             return _pipelineRepository.GetPipelines(repositoryId);
         }
+
+        public Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid repositoryId, Guid pipelineId)
+        {
+            return _pipelineRepository.GetPipelineExecutions(repositoryId, pipelineId);
+        }
     }
 }

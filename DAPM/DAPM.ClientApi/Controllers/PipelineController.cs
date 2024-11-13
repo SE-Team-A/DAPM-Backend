@@ -51,6 +51,14 @@ namespace DAPM.ClientApi.Controllers
             return Ok(new ApiResponse { RequestName = "CreatePipelineExecutionInstance", TicketId = id });
         }
 
+        [HttpGet("{organizationId}/repositories/{repositoryId}/pipelines/{pipelineId}/executions")]
+        [SwaggerOperation(Description = "Returns the Executions mapped to a specific Pipeline")]
+        public async Task<ActionResult<IEnumerable<PipelineExecution>>> GetPipelineExecutionByPipelineId(Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            Guid id = _pipelineService.GetPipelineExecutionByPipelineId(organizationId, repositoryId, pipelineId);
+            return Ok(new ApiResponse { RequestName = "GetPipelineExecutionByPipelineId", TicketId = id });
+        }
+
         [HttpPost("{organizationId}/repositories/{repositoryId}/pipelines/{pipelineId}/executions/{executionId}/commands/start")]
         [SwaggerOperation(Description = "Posts a start command to the defined pipeline execution. The start command will start the pipeline execution.")]
         public async Task<ActionResult<Guid>> PostStartCommand(Guid organizationId, Guid repositoryId, Guid pipelineId, Guid executionId)

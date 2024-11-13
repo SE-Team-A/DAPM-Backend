@@ -72,7 +72,7 @@ builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusProcessResult
 builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationProcessResult>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();
-
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsProcessResultConsumer, GetPipelineExecutionsProcessResult>();
 
 
 // Add services to the container.

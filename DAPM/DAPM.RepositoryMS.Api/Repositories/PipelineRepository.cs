@@ -42,6 +42,11 @@ namespace DAPM.RepositoryMS.Api.Repositories
             return await _repositoryDbContext.Pipelines.Where(p => p.RepositoryId == repositoryId).ToListAsync();
         }
 
+        public async Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid repositoryId, Guid pipelineId)
+        {
+            return await _repositoryDbContext.PipelineExecutions.Where(p => p.PipelineId == pipelineId).ToListAsync();
+        }
+
         public Task<PipelineExecution> AddPipelineExecution(RabbitMQLibrary.Models.PipelineExecution pipelineExecution)
         {
             throw new NotImplementedException();
