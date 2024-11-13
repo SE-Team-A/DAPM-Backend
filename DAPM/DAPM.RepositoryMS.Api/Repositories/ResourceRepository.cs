@@ -41,7 +41,7 @@ namespace DAPM.RepositoryMS.Api.Repositories
         {
             return _repositoryDbContext.Resources.First(r => r.Id == resourceId && r.RepositoryId == repositoryId);
         }
-
+        // AYAT AL RIFAI
         public async Task<bool> DeleteResource(Guid organisationId, Guid repositoryId ,Guid resourceId)
         {
 

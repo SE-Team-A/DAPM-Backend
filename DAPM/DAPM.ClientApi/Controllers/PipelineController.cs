@@ -56,7 +56,29 @@ namespace DAPM.ClientApi.Controllers
         public async Task<ActionResult<IEnumerable<PipelineExecution>>> GetPipelineExecutionByPipelineId(Guid organizationId, Guid repositoryId, Guid pipelineId)
         {
             Guid id = _pipelineService.GetPipelineExecutionByPipelineId(organizationId, repositoryId, pipelineId);
-            return Ok(new ApiResponse { RequestName = "GetPipelineExecutionByPipelineId", TicketId = id });
+
+            var tries = 1;
+            while (tries < 4)
+            {
+                var resp = _ticketService.GetTicketResolution(id);
+
+                switch ((int)resp["status"])
+                {
+                    case 0:
+                    {
+                        tries++;
+                        Thread.Sleep(2000);
+                        break;
+                    }
+                    case 1:
+                        return Ok(JsonConvert.SerializeObject(resp));
+                    case 2:
+                    case 3:
+                        return NotFound($"No pipelines found for repository {repositoryId}.");
+                }
+            }
+
+            return NotFound("Ticket Resolution timed out");
         }
 
         [HttpPost("{organizationId}/repositories/{repositoryId}/pipelines/{pipelineId}/executions/{executionId}/commands/start")]

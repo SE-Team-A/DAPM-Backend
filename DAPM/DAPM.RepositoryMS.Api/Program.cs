@@ -52,6 +52,7 @@ builder.Services.AddQueueMessageConsumer<PostOperatorToRepoConsumer, PostOperato
 builder.Services.AddQueueMessageConsumer<PostRepoToRepoConsumer, PostRepoToRepoMessage>();
 builder.Services.AddQueueMessageConsumer<PostPipelineToRepoConsumer, PostPipelineToRepoMessage>();
 builder.Services.AddQueueMessageConsumer<PostPipelineExecutionToRepoConsumer, PostPipelineExecutionToRepoMessage>();
+builder.Services.AddQueueMessageConsumer<EditPipelineInRepoConsumer, EditPipelineInRepoMessage>();
 builder.Services.AddQueueMessageConsumer<GetPipelinesFromRepoConsumer, GetPipelinesFromRepoMessage>();
 builder.Services.AddQueueMessageConsumer<GetResourceFilesFromRepoConsumer, GetResourceFilesFromRepoMessage>();
 builder.Services.AddQueueMessageConsumer<GetOperatorFilesFromRepoConsumer, GetOperatorFilesFromRepoMessage>();
@@ -59,6 +60,7 @@ builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteR
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsFromRepoMessageConsumer, GetPipelineExecutionsFromRepoMessage>();
 
 
+builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineConsumer, DeleteRepositoryPipelineMessage>();
 
 builder.Services.AddDbContext<RepositoryDbContext>(options =>
 {

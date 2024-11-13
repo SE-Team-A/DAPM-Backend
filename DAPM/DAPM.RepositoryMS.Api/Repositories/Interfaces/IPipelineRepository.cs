@@ -12,5 +12,8 @@ namespace DAPM.RepositoryMS.Api.Repositories.Interfaces
         Task<Pipeline> GetPipelineById(Guid repositoryId, Guid pipelineId);
         Task<IEnumerable<Pipeline>> GetPipelines(Guid repositoryId);
         Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid repositoryId, Guid pipelineId);
+        Task<Pipeline> EditPipeline(Pipeline pipeline, Guid pipelindId);
+
+        Task<bool> DeletePipeline(Guid organizationId, Guid repositoryId, Guid pipelineId);
     }
 }

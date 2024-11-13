@@ -31,7 +31,11 @@ namespace DAPM.Orchestrator
         public void OnPostResourceToOperatorResult(PostInputResourceResultMessage message);
         public void OnPostResourceToRegistryResult(PostResourceToRegistryResultMessage message);
         public void OnPostPipelineToRepoResult(PostPipelineToRepoResultMessage message);
+
         public void OnPostPipelineToRegistryResult(PostPipelineToRegistryResultMessage message);
+        public void OnEditPipelineToRepoResult(EditPipelineInRepoResultMessage message);
+        public void OnEditPipelineToRegistryResult(EditPipelineToRegistryResultMessage message);
+
         public void OnCreateRepoInRepoResult(PostRepoToRepoResultMessage message);
         public void OnGetResourceFilesFromRepoResult(GetResourceFilesFromRepoResultMessage message);
         public void OnGetOperatorFilesFromRepoResult(GetOperatorFilesFromRepoResultMessage message);
@@ -39,9 +43,14 @@ namespace DAPM.Orchestrator
         public void OnSendResourceToPeerResult(SendResourceToPeerResultMessage message);
         public void OnActionResultFromPeer(ActionResultReceivedMessage message);
         public void OnDeleteResourcesFromRepoResult(DeleteResourceFromRepoResultMessage message);
-        public void OnDeleteResourceFromRegistryResult (DeleteResourceFromRegistryResultMessage message);
+        public void OnDeleteResourceFromRegistryResult(DeleteResourceFromRegistryResultMessage message);
+        public void OnDeleteRepositoryPipelineResult(DeleteRepositoryPipelineResultMessage message);
+        public void OnDeleteRegistryPipelineResult(DeleteRegistryPipelineResultMessage message);
         public void OnPostLoginResult(PostLoginResultMessage message);
         public void OnPostRegistrationResult(PostRegistrationResultMessage message);
+        public void OnGetAllUsersResult(GetAllUsersResultMessage message);
+        public void OnPostUserRoleResult(PostUserRoleResultMessage message);
+        public void OnDeleteUserResult(DeleteUserResultMessage message);
 
         public void OnHandshakeRequestResponse(HandshakeRequestResponseMessage message);
         public void OnRegistryUpdate(RegistryUpdateMessage message);

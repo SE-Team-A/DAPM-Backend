@@ -12,7 +12,7 @@ namespace DAPM.RepositoryMS.Api.Repositories
         private ILogger<PipelineRepository> _logger;
         private readonly RepositoryDbContext _repositoryDbContext;
 
-        public PipelineRepository(ILogger<PipelineRepository> logger,  RepositoryDbContext repositoryDbContext)
+        public PipelineRepository(ILogger<PipelineRepository> logger, RepositoryDbContext repositoryDbContext)
         {
             _logger = logger;
             _repositoryDbContext = repositoryDbContext;
@@ -21,6 +21,18 @@ namespace DAPM.RepositoryMS.Api.Repositories
         public async Task<Pipeline> AddPipeline(Pipeline pipeline)
         {
             await _repositoryDbContext.Pipelines.AddAsync(pipeline);
+            _repositoryDbContext.SaveChanges();
+            return pipeline;
+        }
+        public async Task<Pipeline> EditPipeline(Pipeline pipeline, Guid pipelineId)
+        {
+            
+            var found = await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == pipeline.RepositoryId);
+        
+            found.PipelineJson=pipeline.PipelineJson;    
+
+           // _repositoryDbContext.Entry(found).CurrentValues.SetValues(pipeline.PipelineJson);
+
             _repositoryDbContext.SaveChanges();
             return pipeline;
         }
@@ -46,10 +58,20 @@ namespace DAPM.RepositoryMS.Api.Repositories
         {
             return await _repositoryDbContext.PipelineExecutions.Where(p => p.PipelineId == pipelineId).ToListAsync();
         }
-
-        public Task<PipelineExecution> AddPipelineExecution(RabbitMQLibrary.Models.PipelineExecution pipelineExecution)
+        public async Task<bool> DeletePipeline(Guid organisationId, Guid repositoryId, Guid pipelineId)
         {
-            throw new NotImplementedException();
+            var pipeline = await _repositoryDbContext.Pipelines.FirstAsync(p => p.Id == pipelineId);
+
+            if (pipeline == null)
+            {
+                _logger.LogInformation($"Pipeline with ID {pipelineId} not found.");
+                return false;
+            }
+
+            _repositoryDbContext.Pipelines.Remove(pipeline);
+            await _repositoryDbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }
