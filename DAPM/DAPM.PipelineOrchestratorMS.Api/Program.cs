@@ -42,7 +42,7 @@ builder.Services.AddQueueMessageConsumer<PipelineStartCommandConsumer, PipelineS
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusConsumer, GetPipelineExecutionStatusMessage>();
 
 
-builder.Services.AddSingleton<IPipelineOrchestrationEngine, PipelineOrchestrationEngine>();
+builder.Services.AddScoped<IPipelineOrchestrationEngine, PipelineOrchestrationEngine>();
 
 var app = builder.Build();
 

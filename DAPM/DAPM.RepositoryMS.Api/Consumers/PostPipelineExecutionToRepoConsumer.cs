@@ -5,6 +5,7 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Models;
+using PipelineExecution = RabbitMQLibrary.Models.PipelineExecution;
 
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Tamás Drabos</author>
@@ -16,45 +17,46 @@ namespace DAPM.RepositoryMS.Api.Consumers
 
         private IRepositoryService _repositoryService;
 
-        IQueueProducer<CreatePipelineExecutionResultMessage> _postPipelineExecutionToRepoResultProducer;
+        IQueueProducer<CreatePipelineExecutionResultMessage> _queueProducer;
 
         public PostPipelineExecutionToRepoConsumer(ILogger<PostPipelineExecutionToRepoConsumer> logger,
             IRepositoryService repositoryService,
-            IQueueProducer<PostPipelineExecutionToRepoResultMessage> postPipelineExecutionToRepoResultProducer)
+            IQueueProducer<CreatePipelineExecutionResultMessage> queueProducer)
         {
             _logger = logger;
             _repositoryService = repositoryService;
-            _postPipelineExecutionToRepoResultProducer = postPipelineExecutionToRepoResultProducer;
+            _queueProducer = queueProducer;
         }
 
-         public async Task ConsumeAsync(PostPipelineExecutionToRepoMessage message)
+        public async Task ConsumeAsync(PostPipelineExecutionToRepoMessage message)
         {
             _logger.LogInformation("PostPipelineExecutionToRepoMessage received");
 
-            Models.PostgreSQL.PipelineExecution pipelineExecution = await _repositoryService.CreateNewPipeline(message.RepositoryId, message.Name, message.Pipeline);
+            var pipelineExecution =
+                await _repositoryService.CreateNewPipelineExecution(message.RepositoryId, message.PipelineId,
+                    "Not Started");
 
             if (pipelineExecution != null)
             {
-                var pipelineExecutionStatusDTO = new PipelineExecutionStatusDTO()
+                var newExecution = new PipelineExecution()
                 {
-                    Id = pipeline.Id,
-                    RepositoryId = pipeline.RepositoryId,
-                    Name = pipeline.Name,
-                    Pipeline = JsonConvert.DeserializeObject<RabbitMQLibrary.Models.Pipeline>(pipeline.PipelineJson)
+                    ExecutionId = pipelineExecution.Id,
+                    CreatedAt = DateTime.Now,
+                    PipelineId = pipelineExecution.PipelineId,
+                    State = "Not Started"
                 };
 
-                var resultMessage = new PostPipelineExecutionToRepoResultMessage
+                var resultMessage = new CreatePipelineExecutionResultMessage
                 {
                     ProcessId = message.ProcessId,
                     TimeToLive = TimeSpan.FromMinutes(1),
-                    Message = "Item created successfully",
+                    PipelineExecution = newExecution,
                     Succeeded = true,
-                    Pipeline = pipelineDTO
                 };
 
-                _postPipelineToRepoResultProducer.PublishMessage(resultMessage);
+                _queueProducer.PublishMessage(resultMessage);
 
-                _logger.LogInformation("PostPipelineToRepoResultMessage produced");
+                _logger.LogInformation("CreatePipelineExecutionResultMessage produced");
 
             }
             else
@@ -64,4 +66,5 @@ namespace DAPM.RepositoryMS.Api.Consumers
 
             return;
         }
+    }
 }

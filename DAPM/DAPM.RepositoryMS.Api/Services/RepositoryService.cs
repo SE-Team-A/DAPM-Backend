@@ -89,15 +89,13 @@ namespace DAPM.RepositoryMS.Api.Services
             return createdPipeline;
         }
 
-        public async Task<Models.PostgreSQL.PipelineExecution> CreateNewPipelineExecution(Guid repositoryId, string name, RabbitMQLibrary.Models.PipelineExecution pipelineExecution)
+        public async Task<Models.PostgreSQL.PipelineExecution> CreateNewPipelineExecution(Guid repositoryId, Guid pipelineId, string status)
         {
-            var pipelineExecutionJson = Newtonsoft.Json.JsonConvert.SerializeObject(pipelineExecution);
-
             var pipelineExecutionObject = new Models.PostgreSQL.PipelineExecution
             {
-                Name = name,
                 RepositoryId = repositoryId,
-                PipelineExecutionJson = pipelineExecutionJson
+                PipelineId = pipelineId,
+                Status = status
             };
 
             var createdPipelineExecution = await _pipelineRepository.AddPipelineExecution(pipelineExecutionObject);

@@ -23,15 +23,13 @@ namespace DAPM.Orchestrator.Processes
         private Guid _ticketId;
 
         private string _pipelineName;
-        private PipelineExecution _pipelineExecution;
         public CreatePipelineExecutionProcess(OrchestratorEngine engine, IServiceProvider serviceProvider,
-            Guid ticketId, Guid processId, Guid organizationId, Guid repositoryId, PipelineExecution pipelineExecution, string name) 
+            Guid ticketId, Guid processId, Guid organizationId, Guid repositoryId, Guid pipelineId) 
             : base(engine, serviceProvider, processId)
         {
             _organizationId = organizationId;
             _repositoryId = repositoryId;
-            _pipelineExecution = pipelineExecution;
-            _pipelineName = name;
+            _pipelineId = pipelineId;
             _ticketId = ticketId;
         }
 
@@ -44,7 +42,7 @@ namespace DAPM.Orchestrator.Processes
                 ProcessId = _processId,
                 TimeToLive = TimeSpan.FromMinutes(1),
                 RepositoryId = _repositoryId,
-                PipelineId = _pipelineExecution.PipelineId
+                PipelineId = _pipelineId
             };
 
             getPipelinesFromRepoMessageProducer.PublishMessage(message);

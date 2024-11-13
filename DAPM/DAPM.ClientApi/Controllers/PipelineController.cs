@@ -45,9 +45,9 @@ namespace DAPM.ClientApi.Controllers
 
         [HttpPost("{organizationId}/repositories/{repositoryId}/pipelines/{pipelineId}/executions")]
         [SwaggerOperation(Description = "Creates a new execution instance for a pipeline previously saved in the system. The execution is created but not started")]
-        public async Task<ActionResult<Guid>> CreatePipelineExecutionInstance(Guid organizationId, Guid repositoryId, [FromBody]PipelineExecutionApiDto pipelineExecutionApiDto)
+        public async Task<ActionResult<Guid>> CreatePipelineExecutionInstance(Guid organizationId, Guid repositoryId, Guid pipelineId)
         {
-            Guid id = _pipelineService.CreatePipelineExecution(organizationId, repositoryId, pipelineExecutionApiDto);
+            Guid id = _pipelineService.CreatePipelineExecution(organizationId, repositoryId, pipelineId);
             return Ok(new ApiResponse { RequestName = "CreatePipelineExecutionInstance", TicketId = id });
         }
 

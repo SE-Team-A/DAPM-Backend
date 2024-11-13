@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Tamás Drabos</author>
@@ -14,15 +15,9 @@ namespace DAPM.RepositoryMS.Api.Models.PostgreSQL
         [Required]
         public Guid RepositoryId { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        public Guid PipelineId { get; set; }
 
-        [Required]
-        public string PipelineExecutionJson { get; set; }
-
-        // Navigation Attributes (Foreign Keys)
-        [ForeignKey("RepositoryId")]
-        public virtual Repository Repository { get; set; }
+        public string Status { get; set; }
 
     }
 }

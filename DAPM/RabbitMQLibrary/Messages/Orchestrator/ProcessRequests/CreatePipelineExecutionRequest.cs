@@ -18,7 +18,6 @@ namespace RabbitMQLibrary.Messages.Orchestrator.ProcessRequests
 
         public Guid OrganizationId { get; set; }
         public Guid RepositoryId { get; set; }
-        public string Name { get; set; }
-        public PipelineExecution PipelineExecution { get; set; }
+        public Guid PipelineId { get; set; }
     }
 }

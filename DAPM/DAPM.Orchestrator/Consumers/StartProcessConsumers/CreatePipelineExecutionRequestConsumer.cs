@@ -13,10 +13,9 @@ namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
         {
             _engine = engine;
         }
-
         public Task ConsumeAsync(CreatePipelineExecutionRequest message)
         {
-            _engine.StartCreatePipelineExecutionProcess(message.TicketId, message.OrganizationId, message.RepositoryId, message.PipelineExecution, message.Name);
+            _engine.StartCreatePipelineExecutionProcess(message.TicketId, message.OrganizationId, message.RepositoryId, message.PipelineId);
             return Task.CompletedTask;
         }
     }

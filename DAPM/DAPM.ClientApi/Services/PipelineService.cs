@@ -3,7 +3,9 @@ using DAPM.ClientApi.Services.Interfaces;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
+using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
+using RabbitMQLibrary.Models;
 
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Tamás Drabos</author>
@@ -33,7 +35,7 @@ namespace DAPM.ClientApi.Services
             _getPipelineExecutionStatusProducer = getPipelineExecutionStatusProducer;
         }
 
-        public Guid CreatePipelineExecution(Guid organizationId, Guid repositoryId, PipelineExecutionApiDto pipelinExecution)
+        public Guid CreatePipelineExecution(Guid organizationId, Guid repositoryId, Guid pipelineId)
         {
             Guid ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
 
@@ -43,12 +45,11 @@ namespace DAPM.ClientApi.Services
                 TimeToLive = TimeSpan.FromMinutes(1),
                 OrganizationId = organizationId,
                 RepositoryId = repositoryId,
-                Name = pipelinExecution.Name,
-                PipelineExecution = pipelinExecution.PipelineExecution
+                PipelineId = pipelineId
             };
 
             _createInstanceProducer.PublishMessage(message);
-            _logger.LogDebug("CreatePipelineExecutionRequest Enqueued");
+            _logger.LogDebug("PostPipelineExecutionToRepoMessage Enqueued");
 
             return ticketId;
         }

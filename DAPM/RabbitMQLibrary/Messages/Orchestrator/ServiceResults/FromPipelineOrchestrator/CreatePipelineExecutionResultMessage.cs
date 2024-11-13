@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RabbitMQLibrary.Models;
 
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator
 {
@@ -14,6 +15,9 @@ namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrche
         public TimeSpan TimeToLive { get; set; }
 
         public bool Succeeded { get; set; }
+
         public Guid PipelineExecutionId { get; set; }
+
+        public PipelineExecution? PipelineExecution { get; set; }
     }
 }
