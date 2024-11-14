@@ -17,6 +17,7 @@ using DAPM.Orchestrator.Consumers.ResultConsumers.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromOperator;
 using DAPM.Orchestrator.Consumers.ResultConsumers.FromOperator;
+using RabbitMQLibrary.Messages.ClientApi;
 
 /// <author>Ákos Gelencsér</author>
 /// <author>Vladyslav Synytskyi</author>
@@ -67,6 +68,7 @@ builder.Services.AddQueueMessageConsumer<GetResourceFilesRequestConsumer, GetRes
 builder.Services.AddQueueMessageConsumer<PostLoginRequestConsumer, PostLoginRequest>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRegistrationRequest>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceRequest>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsRequestConsumer, GetPipelineExecutionsRequest>();
 builder.Services.AddQueueMessageConsumer<GetAllUsersRequestConsumer, GetAllUsersRequest>();
 builder.Services.AddQueueMessageConsumer<PostUserRoleRequestConsumer, PostUserRoleRequest>();
 builder.Services.AddQueueMessageConsumer<DeleteUserRequestConsumer, DeleteUserRequest>();
@@ -114,6 +116,7 @@ builder.Services.AddQueueMessageConsumer<PostUserRoleResultConsumer,PostUserRole
 builder.Services.AddQueueMessageConsumer<DeleteUserResultConsumer, DeleteUserResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsFromRepoResultMessageConsumer, GetPipelineExecutionsFromRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetAllUsersResultConsumer, GetAllUsersResultMessage>();
 
 builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineResultConsumer, DeleteRepositoryPipelineResultMessage>();

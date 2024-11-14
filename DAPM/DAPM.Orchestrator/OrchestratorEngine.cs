@@ -11,6 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.Orchestrator
 {
     public class OrchestratorEngine : IOrchestratorEngine
@@ -46,6 +47,14 @@ namespace DAPM.Orchestrator
             var collabHandshakeProcess = new CollabHandshakeProcess(this, _serviceProvider, apiTicketId, processId, requestedPeerDomain);
             _processes[processId] = collabHandshakeProcess;
             collabHandshakeProcess.StartProcess();
+        }
+
+        public void StartGetPipelineExecutionsProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            var processId = Guid.NewGuid();
+            var process = new GetPipelineExecutionsProcess(this, _serviceProvider, ticketId, processId, organizationId, pipelineId);
+            _processes[processId] = process;
+            process.StartProcess();
         }
 
         public void StartCreatePipelineExecutionProcess(Guid apiTicketId, Guid organizationId, Guid repositoryId, Guid pipelineId)

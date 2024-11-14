@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Services
 {
     public class RepositoryService : IRepositoryService
@@ -100,6 +102,20 @@ namespace DAPM.RepositoryMS.Api.Services
             var edited = await _pipelineRepository.EditPipeline(pipelineObject, pipelineId);
 
             return edited;
+        }
+
+        public async Task<Models.PostgreSQL.PipelineExecution> CreateNewPipelineExecution(Guid repositoryId, Guid pipelineId, string status)
+        {
+            var pipelineExecutionObject = new Models.PostgreSQL.PipelineExecution
+            {
+                RepositoryId = repositoryId,
+                PipelineId = pipelineId,
+                Status = status
+            };
+
+            var createdPipelineExecution = await _pipelineRepository.AddPipelineExecution(pipelineExecutionObject);
+
+            return createdPipelineExecution;
         }
 
         public async Task<Models.PostgreSQL.Resource> CreateNewResource(Guid repositoryId, string name, string resourceType, FileDTO fileDto)

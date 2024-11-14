@@ -3,6 +3,8 @@ using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 using DAPM.RepositoryMS.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Repositories
 {
     public class PipelineRepository : IPipelineRepository
@@ -35,6 +37,13 @@ namespace DAPM.RepositoryMS.Api.Repositories
             return pipeline;
         }
 
+        public async Task<PipelineExecution> AddPipelineExecution(PipelineExecution pipelineExecution)
+        {
+            await _repositoryDbContext.PipelineExecutions.AddAsync(pipelineExecution);
+            _repositoryDbContext.SaveChanges();
+            return pipelineExecution;
+        }
+
         public async Task<Pipeline> GetPipelineById(Guid repositoryId, Guid pipelineId)
         {
             return await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == repositoryId);
@@ -45,6 +54,10 @@ namespace DAPM.RepositoryMS.Api.Repositories
             return await _repositoryDbContext.Pipelines.Where(p => p.RepositoryId == repositoryId).ToListAsync();
         }
 
+        public async Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid repositoryId, Guid pipelineId)
+        {
+            return await _repositoryDbContext.PipelineExecutions.Where(p => p.PipelineId == pipelineId).ToListAsync();
+        }
         public async Task<bool> DeletePipeline(Guid organisationId, Guid repositoryId, Guid pipelineId)
         {
             var pipeline = await _repositoryDbContext.Pipelines.FirstAsync(p => p.Id == pipelineId);

@@ -1,4 +1,5 @@
-﻿using RabbitMQLibrary.Messages.Orchestrator.Other;
+﻿using DAPM.Orchestrator.Consumers.StartProcessConsumers;
+using RabbitMQLibrary.Messages.Orchestrator.Other;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromOperator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPeerApi;
@@ -25,6 +26,7 @@ namespace DAPM.Orchestrator
         public void OnGetResourcesFromRegistryResult(GetResourcesResultMessage message);
         public void OnGetPipelinesFromRegistryResult(GetPipelinesResultMessage message);
         public void OnGetPipelinesFromRepoResult(GetPipelinesFromRepoResultMessage message);
+        public void OnGetPipelineExecutionsFromRepoResult(GetPipelineExecutionsFromRepoResultMessage message);
         public void OnPostResourceToRepoResult(PostResourceToRepoResultMessage message);
         public void OnPostResourceToOperatorResult(PostInputResourceResultMessage message);
         public void OnPostResourceToRegistryResult(PostResourceToRegistryResultMessage message);

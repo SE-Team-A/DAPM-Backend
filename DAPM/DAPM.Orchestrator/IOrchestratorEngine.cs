@@ -6,6 +6,7 @@ using RabbitMQLibrary.Models;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.Orchestrator
 {
     public interface IOrchestratorEngine
@@ -35,6 +36,7 @@ namespace DAPM.Orchestrator
         // Pipeline Processes
         public void StartPostPipelineProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name);
         public void StartGetPipelinesProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid? pipelineId);
+        public void StartGetPipelineExecutionsProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid pipelineId);
         public void StartCreatePipelineExecutionProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid pipelineId);
         public void StartTransferDataActionProcess(Guid? senderProcessId, IdentityDTO orchestratorIdentity, TransferDataActionDTO data);
         public void StartSendTransferDataActionProcess(TransferDataActionDTO data);

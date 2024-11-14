@@ -1,6 +1,7 @@
 ﻿using DAPM.ClientApi.Models;
 using DAPM.ClientApi.Models.DTOs;
 using DAPM.ClientApi.Services.Interfaces;
+using Grpc.Net.Client.Balancer;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -9,6 +10,8 @@ using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.ClientApi.Controllers
 {
     [ApiController]
@@ -46,6 +49,36 @@ namespace DAPM.ClientApi.Controllers
         {
             Guid id = _pipelineService.CreatePipelineExecution(organizationId, repositoryId, pipelineId);
             return Ok(new ApiResponse { RequestName = "CreatePipelineExecutionInstance", TicketId = id });
+        }
+
+        [HttpGet("{organizationId}/repositories/{repositoryId}/pipelines/{pipelineId}/executions")]
+        [SwaggerOperation(Description = "Returns the Executions mapped to a specific Pipeline")]
+        public async Task<ActionResult<IEnumerable<PipelineExecution>>> GetPipelineExecutionByPipelineId(Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            Guid id = _pipelineService.GetPipelineExecutionByPipelineId(organizationId, repositoryId, pipelineId);
+
+            var tries = 1;
+            while (tries < 4)
+            {
+                var resp = _ticketService.GetTicketResolution(id);
+
+                switch ((int)resp["status"])
+                {
+                    case 0:
+                    {
+                        tries++;
+                        Thread.Sleep(2000);
+                        break;
+                    }
+                    case 1:
+                        return Ok(JsonConvert.SerializeObject(resp));
+                    case 2:
+                    case 3:
+                        return NotFound($"No pipelines found for repository {repositoryId}.");
+                }
+            }
+
+            return NotFound("Ticket Resolution timed out");
         }
 
         [HttpPost("{organizationId}/repositories/{repositoryId}/pipelines/{pipelineId}/executions/{executionId}/commands/start")]

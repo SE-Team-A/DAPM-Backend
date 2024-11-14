@@ -3,6 +3,7 @@ using System;
 using DAPM.RepositoryMS.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAPM.RepositoryMS.Api.Migrations
 {
     [DbContext(typeof(RepositoryDbContext))]
-    partial class RepositoryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113154204_PipelineExecutionsAdded")]
+    partial class PipelineExecutionsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,6 +124,8 @@ namespace DAPM.RepositoryMS.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RepositoryId");
+
                     b.ToTable("PipelineExecutions");
                 });
 
@@ -196,6 +201,17 @@ namespace DAPM.RepositoryMS.Api.Migrations
                 });
 
             modelBuilder.Entity("DAPM.RepositoryMS.Api.Models.PostgreSQL.Pipeline", b =>
+                {
+                    b.HasOne("DAPM.RepositoryMS.Api.Models.PostgreSQL.Repository", "Repository")
+                        .WithMany()
+                        .HasForeignKey("RepositoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Repository");
+                });
+
+            modelBuilder.Entity("DAPM.RepositoryMS.Api.Models.PostgreSQL.PipelineExecution", b =>
                 {
                     b.HasOne("DAPM.RepositoryMS.Api.Models.PostgreSQL.Repository", "Repository")
                         .WithMany()

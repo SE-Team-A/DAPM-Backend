@@ -6,6 +6,8 @@ using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Models;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.Orchestrator.Processes
 {
     public class CreatePipelineExecutionProcess : OrchestratorProcess
@@ -19,6 +21,8 @@ namespace DAPM.Orchestrator.Processes
         private PipelineDTO? _pipelineDTO;
 
         private Guid _ticketId;
+
+        private string _pipelineName;
         public CreatePipelineExecutionProcess(OrchestratorEngine engine, IServiceProvider serviceProvider,
             Guid ticketId, Guid processId, Guid organizationId, Guid repositoryId, Guid pipelineId) 
             : base(engine, serviceProvider, processId)
@@ -38,8 +42,7 @@ namespace DAPM.Orchestrator.Processes
                 ProcessId = _processId,
                 TimeToLive = TimeSpan.FromMinutes(1),
                 RepositoryId = _repositoryId,
-                PipelineId = _pipelineId,
-            
+                PipelineId = _pipelineId
             };
 
             getPipelinesFromRepoMessageProducer.PublishMessage(message);
