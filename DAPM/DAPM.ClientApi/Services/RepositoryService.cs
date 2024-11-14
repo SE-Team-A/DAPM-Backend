@@ -49,6 +49,7 @@ namespace DAPM.ClientApi.Services
             _postOperatorRequestProducer = postOperatorRequestProducer;
             _getResourceDeleteRequest = getResourceDeletetProducer;
             _editPipelineRequestProducer = editPipelineRequestProducer;
+            _getPipelineDeleteRequest = getPipelineDeleteRequest;
 
         }
 
