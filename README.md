@@ -50,3 +50,15 @@ http://localhost:5000/swagger/v1/swagger.json
 #### Core functionality
 - Added resource deletion workflow
 - Added an alternative endpoint for querying pipelines more efficiently
+
+
+### Release 2 (15-11-2024)
+
+#### Access control
+- Implemented user role assignment
+- Implemented user deletion
+
+#### Core functionality
+- Added pipeline editing workflow
+- Store pipeline executions persistently
+- Implemented pipeline deletion workflow
