@@ -26,9 +26,8 @@ namespace DAPM.AuthenticationMS.Api.Consumers
             var password = message.Password;
             // drunk, fix later
             // var name = message.Name;
-            var role = message.Role == "admin";
 
-            var result = await _userService.CreateUserAsync(username, password, role);
+            var result = await _userService.CreateUserAsync(username, password, message.Role);
 
             var resultMessage = new PostRegistrationResultMessage
             {

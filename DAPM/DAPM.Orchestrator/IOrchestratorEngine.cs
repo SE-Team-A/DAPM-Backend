@@ -6,6 +6,7 @@ using RabbitMQLibrary.Models;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.Orchestrator
 {
     public interface IOrchestratorEngine
@@ -28,10 +29,14 @@ namespace DAPM.Orchestrator
         public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password);
 
         public void StartPostRegistrationRequestProcess(Guid ticketId, string UserName, string Password, string Name, string Role);
+        public void StartPostUserRoleProcess(Guid ticketId, string RequestToken, Guid UserId, string RoleName);
+
+        public void StartDeleteUserProcess(Guid ticketId, string RequestToken, Guid UserId);
 
         // Pipeline Processes
         public void StartPostPipelineProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name);
         public void StartGetPipelinesProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid? pipelineId);
+        public void StartGetPipelineExecutionsProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid pipelineId);
         public void StartCreatePipelineExecutionProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid pipelineId);
         public void StartTransferDataActionProcess(Guid? senderProcessId, IdentityDTO orchestratorIdentity, TransferDataActionDTO data);
         public void StartSendTransferDataActionProcess(TransferDataActionDTO data);
@@ -41,5 +46,9 @@ namespace DAPM.Orchestrator
         public void StartPostResourceFromPeerProcess(Guid senderProcessId, ResourceDTO resource, int storageMode, Guid executionId, IdentityDTO senderIdentity);
         public void StartGetPipelineExecutionStatusProcess(Guid ticketId, Guid executionId);
         public void StartDeleteResourceProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messageResourceId);
+        public void StartEditPipelineProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name, Guid pipelineId);
+
+        public void StartGetAllUsersProcess(Guid ticketId, string token);
+        public void StartDeletePipelineProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messagePipelineId);
     }
 }

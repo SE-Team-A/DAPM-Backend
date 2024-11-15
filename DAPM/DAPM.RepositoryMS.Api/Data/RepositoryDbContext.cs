@@ -1,6 +1,8 @@
 ﻿using DAPM.RepositoryMS.Api.Models.PostgreSQL;
 using Microsoft.EntityFrameworkCore;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.RepositoryMS.Api.Data
 {
     public class RepositoryDbContext : DbContext
@@ -18,8 +20,9 @@ namespace DAPM.RepositoryMS.Api.Data
         public DbSet<Repository> Repositories { get; set; }
         public DbSet<Models.PostgreSQL.File>  Files { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
-        public DbSet<Operator> Operators { get; set; }
 
+        public DbSet<PipelineExecution> PipelineExecutions { get; set; }
+        public DbSet<Operator> Operators { get; set; }
 
         public void InitializeDatabase()
         {

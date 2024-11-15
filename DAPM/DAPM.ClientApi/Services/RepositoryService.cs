@@ -21,6 +21,10 @@ namespace DAPM.ClientApi.Services
         IQueueProducer<PostPipelineRequest> _postPipelineRequestProducer;
         IQueueProducer<GetPipelinesRequest> _getPipelinesRequestProducer;
         IQueueProducer<DeleteResourceRequest> _getResourceDeleteRequest;
+        IQueueProducer<EditPipelineRequest> _editPipelineRequestProducer;
+        IQueueProducer<DeletePipelineRequest> _getPipelineDeleteRequest;
+
+
 
         public RepositoryService(
             ILogger<RepositoryService> logger,
@@ -31,10 +35,12 @@ namespace DAPM.ClientApi.Services
             IQueueProducer<PostPipelineRequest> postPipelineRequestProducer,
             IQueueProducer<GetPipelinesRequest> getPipelinesRequestProducer,
             IQueueProducer<PostOperatorRequest> postOperatorRequestProducer,
-            IQueueProducer<DeleteResourceRequest> getResourceDeletetProducer) 
+            IQueueProducer<DeleteResourceRequest> getResourceDeletetProducer,
+             IQueueProducer<EditPipelineRequest> editPipelineRequestProducer,
+            IQueueProducer<DeletePipelineRequest> getPipelineDeleteRequest)
         {
             _ticketService = ticketService;
-            _logger = logger; 
+            _logger = logger;
             _getRepositoriesRequestProducer = getRepositoriesRequestProducer;
             _getResourcesRequestProducer = getResourcesRequestProducer;
             _postResourceRequestProducer = postResourceRequestProducer;
@@ -42,11 +48,37 @@ namespace DAPM.ClientApi.Services
             _getPipelinesRequestProducer = getPipelinesRequestProducer;
             _postOperatorRequestProducer = postOperatorRequestProducer;
             _getResourceDeleteRequest = getResourceDeletetProducer;
+            _editPipelineRequestProducer = editPipelineRequestProducer;
+            _getPipelineDeleteRequest = getPipelineDeleteRequest;
+
         }
 
-        public Guid DeleteResourceById (Guid organizationId, Guid repositoryId, Guid resourceId)
+        public Guid EditPipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId, PipelineApiDto pipeline)
         {
-             var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+            Guid ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+
+            var message = new EditPipelineRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                OrganizationId = organizationId,
+                RepositoryId = repositoryId,
+                Name = pipeline.Name,
+                Pipeline = pipeline.Pipeline,
+                PipelineId = pipelineId,
+
+            };
+
+            _editPipelineRequestProducer.PublishMessage(message);
+
+            _logger.LogDebug("EditPipelineMessage Enqueued");
+
+
+            return ticketId;
+        }
+        public Guid DeleteResourceById(Guid organizationId, Guid repositoryId, Guid resourceId)
+        {
+            var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
 
             var message = new DeleteResourceRequest
             {
@@ -57,13 +89,32 @@ namespace DAPM.ClientApi.Services
                 ResourceId = resourceId
             };
 
-             _getResourceDeleteRequest.PublishMessage(message);
+            _getResourceDeleteRequest.PublishMessage(message);
 
             _logger.LogDebug("DeleteResourceFromRepoMessage Enqueued");
 
             return ticketId;
         }
 
+        public Guid DeletePipelineById(Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            var ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+
+            var message = new DeletePipelineRequest
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                OrganizationId = organizationId,
+                RepositoryId = repositoryId,
+                PipelineId = pipelineId
+            };
+
+            _getPipelineDeleteRequest.PublishMessage(message);
+
+            _logger.LogDebug("DeleteRepositoryPipelineMessage Enqueued");
+
+            return ticketId;
+        }
 
         public Guid GetRepositoryById(Guid organizationId, Guid repositoryId)
         {

@@ -3,9 +3,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using DAPM.AuthenticationMS.Api.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DAPM.AuthenticationMS.Api.Services;
@@ -23,15 +21,16 @@ public class TokenService : ITokenService
     public async Task<string> CreateToken(IdentityUser user)
     {
 
-        bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
-
+        bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "SuperAdmin");
+        string roleName = (await _userManager.GetRolesAsync(user)).FirstOrDefault(); // there should be only one assigned for now
 
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(ClaimTypes.Name, user.UserName),
-            new Claim("isAdmin", isAdmin.ToString().ToLower())
+            new Claim("isAdmin", isAdmin.ToString().ToLower()), // keep for backwards compatibility
+            new Claim("role", roleName)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkey??????????????????????????"));
@@ -49,5 +48,12 @@ public class TokenService : ITokenService
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+
+    public string GetRoleFromToken(string token) 
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        return jwtToken.Claims.FirstOrDefault(c => c.Type == "role")?.Value;
     }
 }

@@ -11,6 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.Orchestrator
 {
     public class OrchestratorEngine : IOrchestratorEngine
@@ -46,6 +47,14 @@ namespace DAPM.Orchestrator
             var collabHandshakeProcess = new CollabHandshakeProcess(this, _serviceProvider, apiTicketId, processId, requestedPeerDomain);
             _processes[processId] = collabHandshakeProcess;
             collabHandshakeProcess.StartProcess();
+        }
+
+        public void StartGetPipelineExecutionsProcess(Guid ticketId, Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            var processId = Guid.NewGuid();
+            var process = new GetPipelineExecutionsProcess(this, _serviceProvider, ticketId, processId, organizationId, pipelineId);
+            _processes[processId] = process;
+            process.StartProcess();
         }
 
         public void StartCreatePipelineExecutionProcess(Guid apiTicketId, Guid organizationId, Guid repositoryId, Guid pipelineId)
@@ -119,6 +128,14 @@ namespace DAPM.Orchestrator
             _processes[processId] = postPipelineProcess;
             postPipelineProcess.StartProcess();
         }
+        public void StartEditPipelineProcess(Guid apiTicketId, Guid organizationId, Guid repositoryId, Pipeline pipeline, string name, Guid pipelineId)
+        {
+            var processId = Guid.NewGuid();
+            var editPipelineProcess = new EditPipelineProcess(this, _serviceProvider, apiTicketId, processId, organizationId, repositoryId, pipeline, name, pipelineId);
+            _processes[processId] = editPipelineProcess;
+            editPipelineProcess.StartProcess();
+        }
+
 
         public void StartPostResourceProcess(Guid apiTicketId, Guid organizationId, Guid repositoryId, string name, string resourceType, FileDTO file)
         {
@@ -156,7 +173,15 @@ namespace DAPM.Orchestrator
             //postResourceProcess.OnDeleteResourcesFromRegistryResult();
         }
 
-        
+        public void StartDeletePipelineProcess(Guid messageTicketId, Guid messageOrganizationId, Guid messageRepositoryId, Guid messagePipelineId)
+        {
+            var processId = Guid.NewGuid();
+            var postPipelineProcess = new DeletePipelineProcess(this, _serviceProvider, processId, messageOrganizationId, messageRepositoryId, messageTicketId, messagePipelineId);
+            _processes[processId] = postPipelineProcess;
+            postPipelineProcess.StartProcess();
+        }
+
+
         #endregion
 
         #region PROCESSES TRIGGERED BY SYSTEM
@@ -169,7 +194,7 @@ namespace DAPM.Orchestrator
             registerPeerProcess.StartProcess();
         }
 
-        
+
 
         public void StartExecuteOperatorActionProcess(Guid? senderProcessId, IdentityDTO orchestratorIdentity, ExecuteOperatorActionDTO data)
         {
@@ -179,7 +204,7 @@ namespace DAPM.Orchestrator
             executeOperatorActionProcess.StartProcess();
         }
 
-        
+
 
         public void StartTransferDataActionProcess(Guid? senderProcessId, IdentityDTO orchestratorIdentity, TransferDataActionDTO data)
         {
@@ -199,7 +224,7 @@ namespace DAPM.Orchestrator
 
         public void StartPostResourceFromPeerProcess(Guid senderProcessId, ResourceDTO resource, int storageMode, Guid executionId, IdentityDTO senderIdentity)
         {
-            var processId = Guid.NewGuid(); 
+            var processId = Guid.NewGuid();
             var postResourceProcess = new PostResourceFromPeerProcess(this, _serviceProvider, processId, senderProcessId, resource, storageMode, executionId, senderIdentity);
             _processes[processId] = postResourceProcess;
             postResourceProcess.StartProcess();
@@ -224,7 +249,7 @@ namespace DAPM.Orchestrator
         public void StartPostLoginRequestProcess(Guid ticketId, string UserName, string Password)
         {
             var processId = Guid.NewGuid();
-            var postLogingRequestProcess = new PostLoginRequestProcess(this, _serviceProvider,ticketId, processId,UserName, Password);
+            var postLogingRequestProcess = new PostLoginRequestProcess(this, _serviceProvider, ticketId, processId, UserName, Password);
             _processes[processId] = postLogingRequestProcess;
             postLogingRequestProcess.StartProcess();
         }
@@ -232,9 +257,33 @@ namespace DAPM.Orchestrator
         public void StartPostRegistrationRequestProcess(Guid ticketId, string UserName, string Password, string Name, string Role)
         {
             var processId = Guid.NewGuid();
-            var postRegistrationRequestProcess = new PostRegistrationRequestProcess(this, _serviceProvider,ticketId, processId,UserName, Password, Name, Role);
+            var postRegistrationRequestProcess = new PostRegistrationRequestProcess(this, _serviceProvider, ticketId, processId, UserName, Password, Name, Role);
             _processes[processId] = postRegistrationRequestProcess;
             postRegistrationRequestProcess.StartProcess();
+        }
+
+        public void StartGetAllUsersProcess(Guid ticketId, string Token)
+        {
+            var processId = Guid.NewGuid();
+            var getAllUsersRequestProcess = new GetAllUsersRequestProcess(this, _serviceProvider,ticketId, processId, Token);
+            _processes[processId] = getAllUsersRequestProcess;
+            getAllUsersRequestProcess.StartProcess();
+        }
+        
+        public void StartPostUserRoleProcess(Guid ticketId, string RequestToken, Guid UserId, string RoleName)
+        {
+            var processId = Guid.NewGuid();
+            var postUserRoleProcess = new PostUserRoleProcess(this, _serviceProvider,ticketId, processId,RequestToken, UserId, RoleName);
+            _processes[processId] = postUserRoleProcess;
+            postUserRoleProcess.StartProcess();
+        }
+
+        public void StartDeleteUserProcess(Guid ticketId, string RequestToken, Guid UserId)
+        {
+            var processId = Guid.NewGuid();
+            var deleteUserProcess = new DeleteUserProcess(this, _serviceProvider, ticketId, processId, RequestToken, UserId);
+            _processes[processId] = deleteUserProcess;
+            deleteUserProcess.StartProcess();
         }
 
 

@@ -1,4 +1,5 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Identity;
 
 namespace DAPM.AuthenticationMS.Api.Services.Interfaces;
@@ -7,4 +8,5 @@ namespace DAPM.AuthenticationMS.Api.Services.Interfaces;
 public interface ITokenService
 {
     public Task<string> CreateToken(IdentityUser user);
+    public string GetRoleFromToken(string token);
 }

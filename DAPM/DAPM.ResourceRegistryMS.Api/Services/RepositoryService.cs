@@ -38,6 +38,19 @@ namespace DAPM.ResourceRegistryMS.Api.Services
             return await _pipelineRepository.AddPipeline(pipelineToInsert);
         }
 
+         public async Task<Pipeline> EditPipelineToRepository(Guid organizationId, Guid repositoryId, RabbitMQLibrary.Models.PipelineDTO pipeline, Guid pipelineId)
+        {
+            var pipelineToInsert = new Pipeline()
+            {
+                Id = pipeline.Id,
+                RepositoryId = pipeline.RepositoryId,
+                PeerId = pipeline.OrganizationId,
+                Name = pipeline.Name,
+            };
+
+            return await _pipelineRepository.EditPipeline(pipelineToInsert, pipelineId);
+        }
+
         public Task<bool> DeleteRepository(Guid organizationId, Guid repositoryId)
         {
             throw new NotImplementedException();

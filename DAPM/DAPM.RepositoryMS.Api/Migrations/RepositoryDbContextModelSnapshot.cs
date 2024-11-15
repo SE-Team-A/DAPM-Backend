@@ -103,6 +103,27 @@ namespace DAPM.RepositoryMS.Api.Migrations
                     b.ToTable("Pipelines");
                 });
 
+            modelBuilder.Entity("DAPM.RepositoryMS.Api.Models.PostgreSQL.PipelineExecution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PipelineId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RepositoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PipelineExecutions");
+                });
+
             modelBuilder.Entity("DAPM.RepositoryMS.Api.Models.PostgreSQL.Repository", b =>
                 {
                     b.Property<Guid>("Id")

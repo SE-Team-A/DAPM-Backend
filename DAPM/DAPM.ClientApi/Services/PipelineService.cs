@@ -1,9 +1,15 @@
-﻿using DAPM.ClientApi.Services.Interfaces;
+﻿using DAPM.ClientApi.Models.DTOs;
+using DAPM.ClientApi.Services.Interfaces;
 using RabbitMQLibrary.Interfaces;
+using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
+using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
+using RabbitMQLibrary.Models;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.ClientApi.Services
 {
     public class PipelineService : IPipelineService
@@ -14,13 +20,17 @@ namespace DAPM.ClientApi.Services
         private readonly IQueueProducer<CreatePipelineExecutionRequest> _createInstanceProducer;
         private readonly IQueueProducer<PipelineStartCommandRequest> _pipelineStartCommandProducer;
         private readonly IQueueProducer<GetPipelineExecutionStatusRequest> _getPipelineExecutionStatusProducer;
+        private readonly IQueueProducer<GetPipelineExecutionsRequest> _getPipelineExecutionsProducer;
+
+
         public PipelineService(
             ILogger<PipelineService> logger,
             ITicketService ticketService,
             IQueueProducer<GetPipelinesRequest> getPipelinesRequestProducer,
             IQueueProducer<CreatePipelineExecutionRequest> createInstanceProducer,
             IQueueProducer<PipelineStartCommandRequest> pipelineStartCommandProducer,
-            IQueueProducer<GetPipelineExecutionStatusRequest> getPipelineExecutionStatusProducer)
+            IQueueProducer<GetPipelineExecutionStatusRequest> getPipelineExecutionStatusProducer,
+            IQueueProducer<GetPipelineExecutionsRequest> getPipelineExecutionsProducer)
         {
             _logger = logger;
             _ticketService = ticketService;
@@ -28,7 +38,9 @@ namespace DAPM.ClientApi.Services
             _createInstanceProducer = createInstanceProducer;
             _pipelineStartCommandProducer = pipelineStartCommandProducer;
             _getPipelineExecutionStatusProducer = getPipelineExecutionStatusProducer;
+            _getPipelineExecutionsProducer = getPipelineExecutionsProducer;
         }
+
 
         public Guid CreatePipelineExecution(Guid organizationId, Guid repositoryId, Guid pipelineId)
         {
@@ -38,14 +50,33 @@ namespace DAPM.ClientApi.Services
             {
                 TicketId = ticketId,
                 TimeToLive = TimeSpan.FromMinutes(1),
-
                 OrganizationId = organizationId,
                 RepositoryId = repositoryId,
                 PipelineId = pipelineId
             };
 
             _createInstanceProducer.PublishMessage(message);
-            _logger.LogDebug("CreatePipelineExecutionRequest Enqueued");
+            _logger.LogDebug("PostPipelineExecutionToRepoMessage Enqueued");
+
+            return ticketId;
+        }
+
+        public Guid GetPipelineExecutionByPipelineId(Guid organizationId, Guid repositoryId, Guid pipelineId)
+        {
+            Guid ticketId = _ticketService.CreateNewTicket(TicketResolutionType.Json);
+
+            var message = new GetPipelineExecutionsRequest()
+            {
+                TimeToLive = TimeSpan.FromMinutes(1),
+                TicketId = ticketId,
+                OrganizationId = organizationId,
+                RepositoryId = repositoryId,
+                PipelineId = pipelineId
+            };
+
+            _getPipelineExecutionsProducer.PublishMessage(message);
+
+            _logger.LogDebug("GetPipelinesRequest Enqueued");
 
             return ticketId;
         }

@@ -62,6 +62,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddQueueMessageConsumer<GetOrganizationsProcessResultConsumer, GetOrganizationsProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostItemResultConsumer, PostItemProcessResult>();
+builder.Services.AddQueueMessageConsumer<EditItemResultConsumer, EditItemProcessResult>();
 builder.Services.AddQueueMessageConsumer<GetRepositoriesProcessResultConsumer, GetRepositoriesProcessResult>();
 builder.Services.AddQueueMessageConsumer<GetResourcesProcessResultConsumer, GetResourcesProcessResult>();
 builder.Services.AddQueueMessageConsumer<GetPipelinesProcessResultConsumer, GetPipelinesProcessResult>();
@@ -71,7 +72,15 @@ builder.Services.AddQueueMessageConsumer<PostPipelineCommandProcessResultConsume
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusProcessResultConsumer, GetPipelineExecutionStatusRequestResult>();
 builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginProcessResult>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleProcessResultConsumer,PostUserRoleProcessResult>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsProcessResultConsumer, GetPipelineExecutionsProcessResult>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersProcessResultConsumer, GetAllUsersProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer, PostLoginProcessResult>();
+builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer, PostRegistrationProcessResult>();
+builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResult>();
+builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineConsumer, DeleteRepositoryPipelineResult>();
+builder.Services.AddQueueMessageConsumer<DeleteUserResultConsumer, DeleteUserProcessResult>();
 
 
 
@@ -104,7 +113,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkey??????????????????????????")),
         ValidateLifetime = true,
         ValidateIssuer = false,
-        ValidateAudience = false, 
+        ValidateAudience = false,
     };
 });
 
@@ -125,6 +134,6 @@ app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
-app.MapControllers().RequireAuthorization();;
+app.MapControllers().RequireAuthorization();
 
 app.Run();

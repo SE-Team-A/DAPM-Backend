@@ -5,7 +5,7 @@ using Newtonsoft.Json.Serialization;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Models;
-
+// AYAT AL RIFAI
 namespace DAPM.ClientApi.Consumers
 {
     public class DeleteResourceFromRepoResultConsumer : IQueueConsumer<DeleteResourceFromRepoResult>
@@ -18,9 +18,9 @@ namespace DAPM.ClientApi.Consumers
             _ticketService = ticketService;
         }
 
-       public Task ConsumeAsync(DeleteResourceFromRepoResult message)
+        public Task ConsumeAsync(DeleteResourceFromRepoResult message)
         {
-           _logger.LogInformation("DeleteResourceFromRepoResult received");
+            _logger.LogInformation("DeleteResourceFromRepoResult received");
 
             // Objects used for serialization
             JToken result = new JObject();
@@ -39,7 +39,7 @@ namespace DAPM.ClientApi.Consumers
 
 
             return Task.CompletedTask;
-            
+
         }
 
     }

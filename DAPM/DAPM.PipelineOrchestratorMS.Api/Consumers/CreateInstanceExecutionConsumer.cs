@@ -24,7 +24,7 @@ namespace DAPM.PipelineOrchestratorMS.Api.Consumers
         {
             _logger.LogInformation("CreateInstanceExecutionMessage received");
 
-            var executionId = _pipelineOrchestrationEngine.CreatePipelineExecutionInstance(message.Pipeline.Pipeline);
+            var executionId = _pipelineOrchestrationEngine.CreatePipelineExecutionInstance(message.Pipeline, message.ProcessId);
 
             var resultMessage = new CreatePipelineExecutionResultMessage()
             {

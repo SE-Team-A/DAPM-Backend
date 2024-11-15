@@ -17,6 +17,7 @@ using DAPM.Orchestrator.Consumers.ResultConsumers.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromOperator;
 using DAPM.Orchestrator.Consumers.ResultConsumers.FromOperator;
+using RabbitMQLibrary.Messages.ClientApi;
 
 /// <author>Ákos Gelencsér</author>
 /// <author>Vladyslav Synytskyi</author>
@@ -61,10 +62,17 @@ builder.Services.AddQueueMessageConsumer<PostResourceFromPeerRequestConsumer, Po
 builder.Services.AddQueueMessageConsumer<PostOperatorRequestConsumer, PostOperatorRequest>();
 builder.Services.AddQueueMessageConsumer<PostRepositoryRequestConsumer, PostRepositoryRequest>();
 builder.Services.AddQueueMessageConsumer<PostPipelineRequestConsumer, PostPipelineRequest>();
+builder.Services.AddQueueMessageConsumer<EditPipelineRequestConsumer, EditPipelineRequest>();
+
 builder.Services.AddQueueMessageConsumer<GetResourceFilesRequestConsumer, GetResourceFilesRequest>();
 builder.Services.AddQueueMessageConsumer<PostLoginRequestConsumer, PostLoginRequest>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationRequestConsumer, PostRegistrationRequest>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoConsumer, DeleteResourceRequest>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsRequestConsumer, GetPipelineExecutionsRequest>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersRequestConsumer, GetAllUsersRequest>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleRequestConsumer, PostUserRoleRequest>();
+builder.Services.AddQueueMessageConsumer<DeleteUserRequestConsumer, DeleteUserRequest>();
+builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineConsumer, DeletePipelineRequest>();
 
 //Handshake
 builder.Services.AddQueueMessageConsumer<CollabHandshakeRequestConsumer, CollabHandshakeRequest>();
@@ -91,8 +99,10 @@ builder.Services.AddQueueMessageConsumer<PostResourceToRegistryResultConsumer, P
 builder.Services.AddQueueMessageConsumer<PostRepoToRepoResultConsumer, PostRepoToRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostRepoToRegistryResultConsumer, PostRepoToRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostPipelineToRepoResultConsumer, PostPipelineToRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<EditPipelineInRepoResultConsumer, EditPipelineInRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetPipelinesFromRepoResultConsumer, GetPipelinesFromRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostPipelineToRegistryResultConsumer, PostPipelineToRegistryResultMessage>();
+builder.Services.AddQueueMessageConsumer<EditPipelineToRegistryResultConsumer, EditPipelineToRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetPipelinesFromRegistryResultConsumer, GetPipelinesResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetResourceFilesFromRepoResultConsumer, GetResourceFilesFromRepoResultMessage>();
 builder.Services.AddQueueMessageConsumer<GetOperatorFilesFromRepoResultConsumer, GetOperatorFilesFromRepoResultMessage>();
@@ -102,9 +112,15 @@ builder.Services.AddQueueMessageConsumer<ExecuteOperatorResultConsumer, ExecuteO
 
 builder.Services.AddQueueMessageConsumer<PostLoginResultConsumer,PostLoginResultMessage>();
 builder.Services.AddQueueMessageConsumer<PostRegistrationResultConsumer,PostRegistrationResultMessage>();
+builder.Services.AddQueueMessageConsumer<PostUserRoleResultConsumer,PostUserRoleResultMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteUserResultConsumer, DeleteUserResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRegistryConsumer, DeleteResourceFromRegistryResultMessage>();
 builder.Services.AddQueueMessageConsumer<DeleteResourceFromRepoResultConsumer, DeleteResourceFromRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionsFromRepoResultMessageConsumer, GetPipelineExecutionsFromRepoResultMessage>();
+builder.Services.AddQueueMessageConsumer<GetAllUsersResultConsumer, GetAllUsersResultMessage>();
 
+builder.Services.AddQueueMessageConsumer<DeleteRepositoryPipelineResultConsumer, DeleteRepositoryPipelineResultMessage>();
+builder.Services.AddQueueMessageConsumer<DeleteRegistryPipelineResultConsumer, DeleteRegistryPipelineResultMessage>();
 
 
 // Handshake
