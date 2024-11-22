@@ -69,6 +69,8 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
                 
                 _state = PipelineExecutionState.Running;
                 _stopwatch = Stopwatch.StartNew();
+
+                _logger.LogInformation($"Pipeline execution initial state: {GetStatus()}");
                 
                 ExecuteAvailableSteps();
 
