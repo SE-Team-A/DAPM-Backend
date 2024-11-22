@@ -58,7 +58,18 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         public void ExecutePipelineStartCommand(Guid executionId)
         {
             var execution = GetPipelineExecution(executionId);
-            execution.StartExecution();
+            
+            try{
+                _logger.LogInformation($"Starting execution for pipeline with ExecutionId: {executionId}");
+            
+                execution.StartExecution(executionId);
+
+                _logger.LogInformation($"Pipeline execution with ExecutionId: {executionId} is running.");
+            }
+            catch(Exception e){
+                _logger.LogError(e, $"An error occurred while executing the pipeline with ExecutionId: {executionId}");
+                throw;
+            }
         }
 
 

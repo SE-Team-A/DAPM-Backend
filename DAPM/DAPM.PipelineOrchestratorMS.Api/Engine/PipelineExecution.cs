@@ -61,11 +61,25 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
 
         #region Pipeline Execution Public Methods
 
-        public void StartExecution()
+        public void StartExecution(Guid executionId)
         {
-            _state = PipelineExecutionState.Running;
-            _stopwatch = Stopwatch.StartNew();
-            ExecuteAvailableSteps();
+            try
+            {
+                _logger.LogInformation($"Pipeline execution started with ExecutionId: {executionId}");
+                
+                _state = PipelineExecutionState.Running;
+                _stopwatch = Stopwatch.StartNew();
+                
+                ExecuteAvailableSteps();
+
+                _logger.LogInformation($"Pipeline execution with ExecutionId: {executionId} is running.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while executing the pipeline with ExecutionId: {executionId}");
+                _state = PipelineExecutionState.Faulted;
+                throw;
+            }
         }
 
         public PipelineExecutionStatus GetStatus()
@@ -369,4 +383,5 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         #endregion
 
     }
+
 }
