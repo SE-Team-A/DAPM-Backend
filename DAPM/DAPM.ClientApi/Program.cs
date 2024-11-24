@@ -1,4 +1,5 @@
 using DAPM.ClientApi.Services;
+using DAPM.ClientApi.Middleware;
 using DAPM.ClientApi.Services.Interfaces;
 using Microsoft.AspNetCore.Http.Features;
 using RabbitMQ.Client;
@@ -132,7 +133,10 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
+app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<GuestRoleMiddleware>();
+
 
 app.MapControllers().RequireAuthorization();
 
