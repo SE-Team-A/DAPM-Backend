@@ -11,7 +11,11 @@ namespace DAPM.ClientApi.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Method == HttpMethods.Get) {
+            if (context.Request.Method != HttpMethods.Post &&
+                context.Request.Method != HttpMethods.Put &&    
+                context.Request.Method != HttpMethods.Delete
+                // Add more here in the future if needed
+                ) {
                 await _next(context);
                 return;
             }
