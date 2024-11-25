@@ -2,6 +2,7 @@ using DAPM.Orchestrator.Processes;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 
+/// <author>Raihanullah Mehran</author>
 namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
 {
     public class DeleteRepositoryPipelineConsumer : IQueueConsumer<DeletePipelineRequest>

@@ -5,6 +5,7 @@ using Newtonsoft.Json.Serialization;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 
+/// <author>Raihanullah Mehran</author>
 namespace DAPM.ClientApi.Consumers
 {
     public class DeleteRepositoryPipelineConsumer : IQueueConsumer<DeleteRepositoryPipelineResult>
