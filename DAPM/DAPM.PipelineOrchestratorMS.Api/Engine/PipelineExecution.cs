@@ -4,6 +4,8 @@ using RabbitMQLibrary.Models;
 using System.Diagnostics;
 using ActionResult = DAPM.PipelineOrchestratorMS.Api.Models.ActionResult;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.PipelineOrchestratorMS.Api.Engine
 {
 
@@ -73,8 +75,6 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
                 _logger.LogInformation($"Pipeline execution initial state: {GetStatus()}");
                 
                 ExecuteAvailableSteps();
-
-                _logger.LogInformation($"Pipeline execution with ExecutionId: {executionId} is running.");
             }
             catch (Exception e)
             {
@@ -130,13 +130,16 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
             {
                 _state = PipelineExecutionState.Completed;
                 _stopwatch.Stop();
+                _logger.LogInformation($"Pipeline execution completed with state: {GetStatus()}. Total execution time: {_stopwatch.Elapsed}");
                 return;
             }
 
             foreach (var step in availableSteps)
             {
+                _logger.LogInformation($"Executing step with StepId: {step} for pipeline execution");
                 _stepsDictionary[step].Execute();
                 _currentSteps.Add(step);
+                _logger.LogInformation($"Step with StepId: {step} for pipeline execution has completed.");
             }
         }
 
