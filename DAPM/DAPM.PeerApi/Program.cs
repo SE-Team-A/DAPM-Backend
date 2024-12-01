@@ -45,6 +45,7 @@ builder.Services.AddScoped<IActionService, ActionService>();
 builder.Services.AddScoped<IRegistryService, RegistryService>();
 builder.Services.AddScoped<IHandshakeService, HandshakeService>();
 builder.Services.AddScoped<IHttpService, HttpService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 
 

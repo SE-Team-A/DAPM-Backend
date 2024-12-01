@@ -14,19 +14,25 @@ namespace DAPM.PeerApi.Controllers
         private readonly ILogger<ResourceController> _logger;
         private IQueueProducer<PostResourceFromPeerRequest> _postResourceQueueProducer;
         private IQueueProducer<SendResourceToPeerResultMessage> _sendResourceToPeerResultQueueProducer;
+        private readonly IHttpService _httpService;
 
         public ResourceController(ILogger<ResourceController> logger,
             IQueueProducer<PostResourceFromPeerRequest> postResourceQueueProducer,
-            IQueueProducer<SendResourceToPeerResultMessage> sendResourceToPeerResultQueueProducer)
+            IQueueProducer<SendResourceToPeerResultMessage> sendResourceToPeerResultQueueProducer,
+            IHttpService httpService)
         {
             _logger = logger;
             _postResourceQueueProducer = postResourceQueueProducer;
             _sendResourceToPeerResultQueueProducer = sendResourceToPeerResultQueueProducer;
+            _httpService = httpService;
         }
 
         [HttpPost]
         public async Task<ActionResult> PostResource([FromBody] SendResourceToPeerDto sendResourceToPeerDto)
         {
+            if (!await _httpService.verifyExternalToken(sendResourceToPeerDto.SenderPeerIdentity.Domain, Request.Headers["Authorization"].FirstOrDefault())) {
+                return Unauthorized();
+            }
             _logger.LogInformation("Ticket id / step id in post resource endpoint is " + sendResourceToPeerDto.StepId.ToString());
             var message = new PostResourceFromPeerRequest()
             {
