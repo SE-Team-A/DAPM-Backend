@@ -40,6 +40,7 @@ builder.Services.AddQueueMessageConsumer<CreateInstanceExecutionConsumer, Create
 builder.Services.AddQueueMessageConsumer<ActionResultConsumer, ActionResultMessage>();
 builder.Services.AddQueueMessageConsumer<PipelineStartCommandConsumer, PipelineStartCommand>();
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusConsumer, GetPipelineExecutionStatusMessage>();
+builder.Services.AddQueueMessageConsumer<GetPipelineExecutionFromRepoResultMessageConsumer, GetPipelineExecutionFromRepoResultMessage>();
 
 
 builder.Services.AddScoped<IPipelineOrchestrationEngine, PipelineOrchestrationEngine>();

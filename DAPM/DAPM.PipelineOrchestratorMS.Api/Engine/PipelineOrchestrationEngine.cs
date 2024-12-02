@@ -18,13 +18,16 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         private Dictionary<Guid, IPipelineExecution> _pipelineExecutions;
 
         IQueueProducer<PostPipelineExecutionToRepoMessage> _queueProducer;
+        IQueueProducer<GetPipelineExecutionsFromRepoMessage> _getPipelineExecutionsFromRepoMessageProducer;
 
-        public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider, IQueueProducer<PostPipelineExecutionToRepoMessage> queueProducer)
+        public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider, IQueueProducer<PostPipelineExecutionToRepoMessage> queueProducer,
+            IQueueProducer<GetPipelineExecutionsFromRepoMessage> getPipelineExecutionsFromRepoMessageProducer)
         {
             _pipelineExecutions = new Dictionary<Guid, IPipelineExecution>();
             _logger = logger;
             _serviceProvider = serviceProvider;
             _queueProducer = queueProducer;
+            _getPipelineExecutionsFromRepoMessageProducer = getPipelineExecutionsFromRepoMessageProducer;
         }
 
         public Guid CreatePipelineExecutionInstance(PipelineDTO pipeline, Guid processId)
@@ -55,21 +58,38 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         }
 
 
-        public void ExecutePipelineStartCommand(Guid executionId)
+        public void ExecutePipelineStartCommand(Guid processId,Guid executionId)
         {
-            var execution = GetPipelineExecution(executionId);
-            
-            try{
-                _logger.LogInformation($"Starting execution for pipeline with ExecutionId: {executionId}");
-            
-                execution.StartExecution(executionId);
+            var message = new GetPipelineExecutionsFromRepoMessage()
+            {
+                ProcessId = processId,
+                ExecutionId = executionId,
+                TimeToLive = TimeSpan.FromMinutes(1),
+            };
 
-                _logger.LogInformation($"Pipeline execution with ExecutionId: {executionId} is running.");
+            _getPipelineExecutionsFromRepoMessageProducer.PublishMessage(message);
+        }
+
+        public void OnPipelineExecutionRetrieved(PipelineDTO pipeline, RabbitMQLibrary.Models.PipelineExecution ex)
+        {
+            PipelineExecution execution = new PipelineExecution(ex.ExecutionId, pipeline.Pipeline, _serviceProvider);
+
+            _pipelineExecutions.Add(ex.ExecutionId, execution);
+
+            try
+            {
+                _logger.LogInformation($"Starting execution for pipeline with ExecutionId: {ex.ExecutionId}");
+
+                execution.StartExecution(ex.ExecutionId);
+
+                _logger.LogInformation($"Pipeline execution with ExecutionId: {ex.ExecutionId} is running.");
             }
-            catch(Exception e){
-                _logger.LogError(e, $"An error occurred while executing the pipeline with ExecutionId: {executionId}");
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while executing the pipeline with ExecutionId: {ex.ExecutionId}");
                 throw;
             }
+
         }
 
 
