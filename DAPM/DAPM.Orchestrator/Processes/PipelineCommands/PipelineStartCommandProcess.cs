@@ -26,7 +26,7 @@ namespace DAPM.Orchestrator.Processes.PipelineCommands
             var commandMessage = new PipelineStartCommand()
             {
                 TimeToLive = TimeSpan.FromMinutes(1),
-                ProcessId = _ticketId,
+                ProcessId = _processId,
                 ExecutionId = _executionId,
             };
 
