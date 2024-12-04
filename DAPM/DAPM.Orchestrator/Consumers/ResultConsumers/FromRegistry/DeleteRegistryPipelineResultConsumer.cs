@@ -2,6 +2,7 @@ using DAPM.Orchestrator.Processes;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 
+/// <author>Raihanullah Mehran</author>
 namespace DAPM.Orchestrator.Consumers.ResultConsumers.FromRegistry
 {
     public class DeleteRegistryPipelineResultConsumer : IQueueConsumer<DeleteRegistryPipelineResultMessage>

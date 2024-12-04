@@ -1,5 +1,6 @@
 using RabbitMQLibrary.Interfaces;
 
+/// <author>Raihanullah Mehran</author>
 namespace RabbitMQLibrary.Messages.ClientApi
 {
     public class DeleteRepositoryPipelineResult : IQueueMessage

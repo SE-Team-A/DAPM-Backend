@@ -5,6 +5,7 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 
+/// <author>Raihanullah Mehran</author>
 namespace DAPM.Orchestrator.Processes
 {
     public class DeletePipelineProcess : OrchestratorProcess
@@ -78,7 +79,7 @@ namespace DAPM.Orchestrator.Processes
             };
 
             deleteRepositoryPipelineMessageProducer.PublishMessage(processResultMessage);
-        
+
 
             EndProcess();
         }
