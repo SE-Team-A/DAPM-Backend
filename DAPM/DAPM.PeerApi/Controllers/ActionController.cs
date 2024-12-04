@@ -12,16 +12,21 @@ namespace DAPM.PeerApi.Controllers
     {
         private readonly ILogger<ActionController> _logger;
         private readonly IActionService _actionService;
+        private readonly IHttpService _httpService;
 
-        public ActionController(ILogger<ActionController> logger, IActionService actionService)
+        public ActionController(ILogger<ActionController> logger, IActionService actionService, IHttpService httpService)
         {
             _logger = logger;
             _actionService = actionService;
+            _httpService = httpService;
         }
 
         [HttpPost("transfer-data")]
         public async Task<ActionResult> PostSendDataAction([FromBody] TransferDataActionDto actionDto)
         {
+            if (!await _httpService.verifyExternalToken(actionDto.SenderIdentity.Domain, Request.Headers["Authorization"].FirstOrDefault())) {
+                return Unauthorized();
+            }
             _actionService.OnTransferDataActionReceived(actionDto.SenderProcessId, actionDto.SenderIdentity, actionDto.StepId, actionDto.Data);
             return Ok();
         }
@@ -29,6 +34,9 @@ namespace DAPM.PeerApi.Controllers
         [HttpPost("execute-operator")]
         public async Task<ActionResult> PostExecuteOperatorAction([FromBody] ExecuteOperatorActionDto actionDto)
         {
+            if (!await _httpService.verifyExternalToken(actionDto.SenderIdentity.Domain, Request.Headers["Authorization"].FirstOrDefault())) {
+                return Unauthorized();
+            }
             _actionService.OnExecuteOperatorActionReceived(actionDto.SenderProcessId, actionDto.SenderIdentity, actionDto.StepId, actionDto.Data);
             return Ok();
         }

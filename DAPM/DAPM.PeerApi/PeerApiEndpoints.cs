@@ -2,8 +2,8 @@
 {
     public static class PeerApiEndpoints
     {
-        public static string PeerApiPort = ":5001";
-
+        // public static string PeerApiPort = ":5001";
+        public static string PeerApiPort = "";
         public static string HandshakeRequestEndpoint = PeerApiPort + "/handshake/request";
         public static string HandshakeRequestResponseEndpoint = PeerApiPort + "/handshake/request-response";
         public static string RegistryUpdateAckEndpoint = PeerApiPort + "/registry/update-ack";
@@ -13,5 +13,6 @@
         public static string TransferDataActionEndpoint = PeerApiPort + "/actions/transfer-data";
         public static string ExecuteOperatorActionEndpoint = PeerApiPort + "/actions/execute-operator";
         public static string ActionResultEndpoint = PeerApiPort + "/actions/action-result";
+        public static string VerifyTokenEndpoint = PeerApiPort + "/token/verify";
     }
 }
