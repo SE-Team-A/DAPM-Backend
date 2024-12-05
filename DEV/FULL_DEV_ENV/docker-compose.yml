@@ -1,0 +1,243 @@
+version: "3.4"
+
+services:
+  # nginx:
+  #   image: nginx:latest
+  #   restart: always
+  #   network_mode: "host"
+  #   volumes:
+  #     - ./nginx/conf.d:/etc/nginx/conf.d
+  #     - ./nginx/certs:/etc/nginx/certs
+
+  # frontend:
+  #   image: se2-frontent
+  #   build:
+  #     context: ../../DAPM-Frontend
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - REACT_APP_API_URL="https://se2-a.compute.dtu.dk"
+  #     - REACT_APP_FRONTEND_URL="https://se2-a.compute.dtu.dk"
+  #   networks:
+  #     - DAPM
+  #   ports:
+  #     - "4999:80"
+
+  dapm-clientapi:
+    image: se2-dapmclientapi
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.ClientApi/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "5000:8080"
+    networks:
+      - DAPM
+
+  dapm-peerapi:
+    image: se2-dapmpeerapi
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.PeerApi/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "5001:8080"
+    networks:
+      - DAPM
+
+  dapm.authenticationms.api:
+    image: se2-authenticationmsapi
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.AuthenticationMS.Api/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres-auth:
+        condition: service_healthy
+    networks:
+      - DAPM
+
+  dapm.repositoryms.api:
+    image: se2-dapmrepositorymsapi
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.RepositoryMS.Api/Dockerfile
+    depends_on:
+      mongo:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      postgres-repository:
+        condition: service_healthy
+    networks:
+      - DAPM
+
+  dapm.resourceregistryms.api:
+    image: se2-dapmresourceregistrymsapi
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.ResourceRegistryMS.Api/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - DAPM
+
+  dapm.pipelineorchestratorms.api:
+    image: se2-dapmpipelineorchestratormsapi
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.PipelineOrchestratorMS.Api/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - DAPM
+
+  dapm.orchestrator:
+    image: se2-dapmorchestrator
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.Orchestrator/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - DAPM
+
+  dapm.operatorMS.api:
+    image: se2-dapmoperatormsapi
+    build:
+      context: ../../DAPM
+      dockerfile: DAPM.OperatorMS.Api/Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - operator-data:/app/shared
+    user: root
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - DAPM
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: "rabbitmq"
+    labels:
+      NAME: "rabbitmq"
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    networks:
+      - DAPM
+
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ../mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    networks:
+      - DAPM
+
+  postgres:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: DAPM_ResourceRegistry
+    volumes:
+      - ../postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - DAPM
+
+  postgres-repository:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: DAPM_Repository
+    volumes:
+      - ../postgres-repository:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - DAPM
+
+  postgres-auth:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: DAPM_Auth
+    volumes:
+      - ../postgres-auth:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - DAPM
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pipi@kaka.com # very secure bro
+      PGADMIN_DEFAULT_PASSWORD: asdfghjk # hehe
+    volumes:
+      - ../pgadmin:/var/lib/pgadmin
+    networks:
+      - DAPM
+
+networks:
+  DAPM:
+    name: DAPM
+    driver: bridge
+
+volumes:
+  operator-data:
+    name: operator-data
+  postgres:
+    name: postgres
+  postgres-repository:
+    name: postgres-repository
+  postgres-auth:
+    name: postgres-auth
+  mongo:
+    name: mongo
+  pgadmin:
+    name: pgadmin

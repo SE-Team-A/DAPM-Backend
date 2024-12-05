@@ -19,7 +19,7 @@ namespace DAPM.PipelineOrchestratorMS.Api.Consumers
 
         public Task ConsumeAsync(PipelineStartCommand message)
         {
-            _pipelineOrchestrationEngine.ExecutePipelineStartCommand(message.ExecutionId);
+            _pipelineOrchestrationEngine.ExecutePipelineStartCommand(message.ProcessId, message.ExecutionId);
 
             var commandEnqueuedMessage = new CommandEnqueuedMessage()
             {

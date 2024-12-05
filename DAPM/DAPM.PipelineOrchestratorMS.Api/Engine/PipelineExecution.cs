@@ -4,6 +4,8 @@ using RabbitMQLibrary.Models;
 using System.Diagnostics;
 using ActionResult = DAPM.PipelineOrchestratorMS.Api.Models.ActionResult;
 
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Tamás Drabos</author>
 namespace DAPM.PipelineOrchestratorMS.Api.Engine
 {
 
@@ -61,11 +63,25 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
 
         #region Pipeline Execution Public Methods
 
-        public void StartExecution()
+        public void StartExecution(Guid executionId)
         {
-            _state = PipelineExecutionState.Running;
-            _stopwatch = Stopwatch.StartNew();
-            ExecuteAvailableSteps();
+            try
+            {
+                _logger.LogInformation($"Pipeline execution started with ExecutionId: {executionId}");
+                
+                _state = PipelineExecutionState.Running;
+                _stopwatch = Stopwatch.StartNew();
+
+                _logger.LogInformation($"Pipeline execution initial state: {GetStatus()}");
+                
+                ExecuteAvailableSteps();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while executing the pipeline with ExecutionId: {executionId}");
+                _state = PipelineExecutionState.Faulted;
+                throw;
+            }
         }
 
         public PipelineExecutionStatus GetStatus()
@@ -114,13 +130,16 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
             {
                 _state = PipelineExecutionState.Completed;
                 _stopwatch.Stop();
+                _logger.LogInformation($"Pipeline execution completed with state: {GetStatus()}. Total execution time: {_stopwatch.Elapsed}");
                 return;
             }
 
             foreach (var step in availableSteps)
             {
+                _logger.LogInformation($"Executing step with StepId: {step} for pipeline execution");
                 _stepsDictionary[step].Execute();
                 _currentSteps.Add(step);
+                _logger.LogInformation($"Step with StepId: {step} for pipeline execution has completed.");
             }
         }
 
@@ -369,4 +388,5 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         #endregion
 
     }
+
 }

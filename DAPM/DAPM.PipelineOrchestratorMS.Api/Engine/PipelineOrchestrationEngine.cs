@@ -18,13 +18,16 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         private Dictionary<Guid, IPipelineExecution> _pipelineExecutions;
 
         IQueueProducer<PostPipelineExecutionToRepoMessage> _queueProducer;
+        IQueueProducer<GetPipelineExecutionsFromRepoMessage> _getPipelineExecutionsFromRepoMessageProducer;
 
-        public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider, IQueueProducer<PostPipelineExecutionToRepoMessage> queueProducer)
+        public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider, IQueueProducer<PostPipelineExecutionToRepoMessage> queueProducer,
+            IQueueProducer<GetPipelineExecutionsFromRepoMessage> getPipelineExecutionsFromRepoMessageProducer)
         {
             _pipelineExecutions = new Dictionary<Guid, IPipelineExecution>();
             _logger = logger;
             _serviceProvider = serviceProvider;
             _queueProducer = queueProducer;
+            _getPipelineExecutionsFromRepoMessageProducer = getPipelineExecutionsFromRepoMessageProducer;
         }
 
         public Guid CreatePipelineExecutionInstance(PipelineDTO pipeline, Guid processId)
@@ -50,15 +53,54 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
 
         public void ProcessActionResult(ActionResultDTO actionResultDto)
         {
-            var execution = GetPipelineExecution(actionResultDto.ExecutionId);
-            execution.ProcessActionResult(actionResultDto);
+            _logger.LogInformation($"Processing action result for pipeline execution {actionResultDto.ExecutionId}");
+            try {
+                var execution = GetPipelineExecution(actionResultDto.ExecutionId);
+                execution.ProcessActionResult(actionResultDto);
+            } catch (KeyNotFoundException) {
+                _logger.LogError("Execution id was not available.");
+                IEnumerable<Guid> guids = _pipelineExecutions.Keys;
+                foreach (var guid in guids) {
+                    _logger.LogInformation($"{guid.ToString()} is an available guid.");
+                }
+            }
         }
 
 
-        public void ExecutePipelineStartCommand(Guid executionId)
+        public void ExecutePipelineStartCommand(Guid processId,Guid executionId)
         {
-            var execution = GetPipelineExecution(executionId);
-            execution.StartExecution();
+            var message = new GetPipelineExecutionsFromRepoMessage()
+            {
+                ProcessId = processId,
+                ExecutionId = executionId,
+                TimeToLive = TimeSpan.FromMinutes(1),
+            };
+
+            _getPipelineExecutionsFromRepoMessageProducer.PublishMessage(message);
+        }
+
+        public void OnPipelineExecutionRetrieved(PipelineDTO pipeline, RabbitMQLibrary.Models.PipelineExecution ex)
+        {
+            PipelineExecution execution = new PipelineExecution(ex.ExecutionId, pipeline.Pipeline, _serviceProvider);
+
+            _pipelineExecutions.Add(ex.ExecutionId, execution);
+
+            _logger.LogInformation($"An execution with id {ex.ExecutionId} has been instantiated and added into memory storage of executions.");
+
+            try
+            {
+                _logger.LogInformation($"Starting execution for pipeline with ExecutionId: {ex.ExecutionId}");
+
+                execution.StartExecution(ex.ExecutionId);
+
+                _logger.LogInformation($"Pipeline execution with ExecutionId: {ex.ExecutionId} is running.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"An error occurred while executing the pipeline with ExecutionId: {ex.ExecutionId}");
+                throw;
+            }
+
         }
 
 
