@@ -43,7 +43,7 @@ builder.Services.AddQueueMessageConsumer<GetPipelineExecutionStatusConsumer, Get
 builder.Services.AddQueueMessageConsumer<GetPipelineExecutionFromRepoResultMessageConsumer, GetPipelineExecutionFromRepoResultMessage>();
 
 
-builder.Services.AddScoped<IPipelineOrchestrationEngine, PipelineOrchestrationEngine>();
+builder.Services.AddSingleton<IPipelineOrchestrationEngine, PipelineOrchestrationEngine>();
 
 var app = builder.Build();
 

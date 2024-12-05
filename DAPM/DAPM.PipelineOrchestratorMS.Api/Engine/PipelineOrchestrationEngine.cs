@@ -53,8 +53,17 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
 
         public void ProcessActionResult(ActionResultDTO actionResultDto)
         {
-            var execution = GetPipelineExecution(actionResultDto.ExecutionId);
-            execution.ProcessActionResult(actionResultDto);
+            _logger.LogInformation($"Processing action result for pipeline execution {actionResultDto.ExecutionId}");
+            try {
+                var execution = GetPipelineExecution(actionResultDto.ExecutionId);
+                execution.ProcessActionResult(actionResultDto);
+            } catch (KeyNotFoundException) {
+                _logger.LogError("Execution id was not available.");
+                IEnumerable<Guid> guids = _pipelineExecutions.Keys;
+                foreach (var guid in guids) {
+                    _logger.LogInformation($"{guid.ToString()} is an available guid.");
+                }
+            }
         }
 
 
@@ -75,6 +84,8 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
             PipelineExecution execution = new PipelineExecution(ex.ExecutionId, pipeline.Pipeline, _serviceProvider);
 
             _pipelineExecutions.Add(ex.ExecutionId, execution);
+
+            _logger.LogInformation($"An execution with id {ex.ExecutionId} has been instantiated and added into memory storage of executions.");
 
             try
             {
