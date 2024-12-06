@@ -62,3 +62,17 @@ http://localhost:5000/swagger/v1/swagger.json
 - Added pipeline editing workflow
 - Store pipeline executions persistently
 - Implemented pipeline deletion workflow
+- 
+
+
+
+### Release 3 (06-12-2024)
+
+#### Access control
+- Enforce read-only permissions on guest users
+- Token verification during collaboration between two organizations
+
+#### Core functionality
+- Filtering and sorting pipelines on the frontend
+- File extension validation
+- View pipeline execution status while it is running
