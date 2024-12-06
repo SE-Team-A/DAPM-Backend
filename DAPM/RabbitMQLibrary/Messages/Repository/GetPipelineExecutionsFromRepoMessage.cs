@@ -14,5 +14,6 @@ namespace RabbitMQLibrary.Messages.Repository
         public Guid RepositoryId { get; set; }
         public Guid PipelineId { get; set; }
         public Guid ProcessId { get; set; }
+        public Guid? ExecutionId { get; set; }
     }
 }

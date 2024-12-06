@@ -9,7 +9,8 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine.Interfaces
     public interface IPipelineOrchestrationEngine
     {
         public Guid CreatePipelineExecutionInstance(PipelineDTO pipeline, Guid processId);
-        public void ExecutePipelineStartCommand(Guid executionId);
+        public void ExecutePipelineStartCommand(Guid processId, Guid executionId);
+        public void OnPipelineExecutionRetrieved(PipelineDTO pipeline, RabbitMQLibrary.Models.PipelineExecution ex);
         public PipelineExecutionStatus GetPipelineExecutionStatus(Guid executionId);
         public void ProcessActionResult(ActionResultDTO actionResultDto);
     }

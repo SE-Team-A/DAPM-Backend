@@ -3,6 +3,7 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 using RabbitMQLibrary.Messages.Repository;
 
+/// <author>Raihanullah Mehran</author>
 namespace DAPM.RepositoryMS.Api.Consumers
 {
     public class DeleteRepositoryPipelineConsumer : IQueueConsumer<DeleteRepositoryPipelineMessage>

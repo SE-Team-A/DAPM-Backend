@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Tamás Drabos</author>
+/// <author>Raihanullah Mehran</author>
 namespace DAPM.RepositoryMS.Api.Repositories
 {
     public class PipelineRepository : IPipelineRepository
@@ -24,14 +25,15 @@ namespace DAPM.RepositoryMS.Api.Repositories
             _repositoryDbContext.SaveChanges();
             return pipeline;
         }
+
         public async Task<Pipeline> EditPipeline(Pipeline pipeline, Guid pipelineId)
         {
-            
-            var found = await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == pipeline.RepositoryId);
-        
-            found.PipelineJson=pipeline.PipelineJson;    
 
-           // _repositoryDbContext.Entry(found).CurrentValues.SetValues(pipeline.PipelineJson);
+            var found = await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == pipelineId && p.RepositoryId == pipeline.RepositoryId);
+
+            found.PipelineJson = pipeline.PipelineJson;
+
+            // _repositoryDbContext.Entry(found).CurrentValues.SetValues(pipeline.PipelineJson);
 
             _repositoryDbContext.SaveChanges();
             return pipeline;
@@ -54,10 +56,19 @@ namespace DAPM.RepositoryMS.Api.Repositories
             return await _repositoryDbContext.Pipelines.Where(p => p.RepositoryId == repositoryId).ToListAsync();
         }
 
-        public async Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid repositoryId, Guid pipelineId)
+        public async Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid pipelineId)
         {
             return await _repositoryDbContext.PipelineExecutions.Where(p => p.PipelineId == pipelineId).ToListAsync();
         }
+
+        public async Task<Tuple<Pipeline, PipelineExecution>> GetPipelineExecutionById(Guid executionId)
+        {
+            PipelineExecution ex = await _repositoryDbContext.PipelineExecutions.Where(p => p.Id == executionId).FirstOrDefaultAsync();
+            Pipeline pip = await _repositoryDbContext.Pipelines.FirstOrDefaultAsync(p => p.Id == ex.PipelineId);
+
+            return new Tuple<Pipeline, PipelineExecution>(pip, ex);
+        }
+
         public async Task<bool> DeletePipeline(Guid organisationId, Guid repositoryId, Guid pipelineId)
         {
             var pipeline = await _repositoryDbContext.Pipelines.FirstAsync(p => p.Id == pipelineId);
