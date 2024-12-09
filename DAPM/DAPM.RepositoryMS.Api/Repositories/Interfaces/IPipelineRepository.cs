@@ -16,5 +16,7 @@ namespace DAPM.RepositoryMS.Api.Repositories.Interfaces
         Task<Pipeline> EditPipeline(Pipeline pipeline, Guid pipelindId);
 
         Task<bool> DeletePipeline(Guid organizationId, Guid repositoryId, Guid pipelineId);
+
+        Task<bool> UpdatePipelineExecutionStatus(Guid executionId, string status);
     }
 }

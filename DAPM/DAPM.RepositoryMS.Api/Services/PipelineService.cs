@@ -57,6 +57,10 @@ namespace DAPM.RepositoryMS.Api.Services
         {
             return _pipelineRepository.GetPipelineExecutionById(executionId);
         }
-
+        
+        public async Task<bool> UpdatePipelineExecutionStatus(Guid executionId, string newStatus)
+        {
+            return await _pipelineRepository.UpdatePipelineExecutionStatus(executionId, newStatus);
+        }
     }
 }

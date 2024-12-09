@@ -84,5 +84,24 @@ namespace DAPM.RepositoryMS.Api.Repositories
 
             return true;
         }
+        
+        public async Task<bool> UpdatePipelineExecutionStatus(Guid executionId, string newStatus)
+        {
+            var pipelineExecution = await _repositoryDbContext.PipelineExecutions
+                                                              .FirstOrDefaultAsync(p => p.Id == executionId);
+
+            if (pipelineExecution == null)
+            {
+                _logger.LogWarning($"Pipeline execution with ID '{executionId}' not found.");
+                return false;
+            }
+
+            pipelineExecution.Status = newStatus;
+            _repositoryDbContext.PipelineExecutions.Update(pipelineExecution);
+            await _repositoryDbContext.SaveChangesAsync();
+
+            _logger.LogInformation($"Updated status of pipeline execution with ID '{executionId}' to '{newStatus}'.");
+            return true;
+        }
     }
 }
