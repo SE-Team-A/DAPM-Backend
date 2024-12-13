@@ -5,7 +5,8 @@ using Newtonsoft.Json;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Models;
-
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ClientApi.Consumers
 {
     public class EditItemResultConsumer : IQueueConsumer<EditItemProcessResult>

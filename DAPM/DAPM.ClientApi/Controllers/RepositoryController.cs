@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using RabbitMQLibrary.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ClientApi.Controllers
 {
     [ApiController]
@@ -83,6 +85,7 @@ namespace DAPM.ClientApi.Controllers
             return Ok(new ApiResponse { RequestName = "PostPipelineToRepository", TicketId = id });
         }
 
+
         [HttpPut("{organizationId}/repositories/{repositoryId}/pipeline/{pipelineId}")]
         [SwaggerOperation(Description = "Edits a pipeline by id. This endpoint includes the " +
             "pipeline model in JSON. You need to have a collaboration agreement to retrieve this information.")]
@@ -92,14 +95,12 @@ namespace DAPM.ClientApi.Controllers
             return Ok(new ApiResponse { RequestName = "EditPipelineById", TicketId = id });
         }
 
-
+        /// <author>Ayat Al Rifai</author>
         [HttpDelete("{organizationId}/repositories/{repositoryId}/resources/{resourceId}")]
         [SwaggerOperation(Description = "Marks a resource as deleted in a specific repository.")]
         public async Task<IActionResult> DeleteResourceById(Guid organizationId, Guid repositoryId, Guid resourceId)
         {
-            Console.WriteLine("i am in client api");
             Guid id = _repositoryService.DeleteResourceById(organizationId, repositoryId, resourceId);
-            //   return Ok(new ApiResponse { RequestName = "PostPipelineToRepository", TicketId = id });
             if (id != Guid.Empty)
             {
                 return Ok(new { success = true, message = id });

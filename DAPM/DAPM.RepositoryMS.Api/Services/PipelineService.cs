@@ -2,6 +2,9 @@
 using DAPM.RepositoryMS.Api.Repositories.Interfaces;
 using DAPM.RepositoryMS.Api.Services.Interfaces;
 
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
+
 namespace DAPM.RepositoryMS.Api.Services
 {
     public class PipelineService : IPipelineService

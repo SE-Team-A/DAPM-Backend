@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Tamás Drabos</author>
 /// <author>Raihanullah Mehran</author>
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.RepositoryMS.Api.Repositories
 {
     public class PipelineRepository : IPipelineRepository

@@ -1,6 +1,8 @@
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
 {
     public class EditPipelineRequestConsumer : IQueueConsumer<EditPipelineRequest>

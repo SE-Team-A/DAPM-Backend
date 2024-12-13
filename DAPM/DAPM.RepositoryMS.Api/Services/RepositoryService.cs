@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Tamás Drabos</author>
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.RepositoryMS.Api.Services
 {
     public class RepositoryService : IRepositoryService
@@ -50,17 +52,7 @@ namespace DAPM.RepositoryMS.Api.Services
                 return false;
             }
 
-            // Optionally delete the associated file from MongoDB
-          /*  if (resource.File != null && !string.IsNullOrEmpty(resource.File.MongoDbFileId))
-            {
-                bool fileDeleted = await _fileRepository.DeleteFile(resource.File.MongoDbFileId);
-                if (!fileDeleted)
-                {
-                    _logger.LogError($"Failed to delete the file with MongoDb ID: {resource.File.MongoDbFileId}");
-                    return false;
-                }
-            }*/
-
+          
             // Delete the resource from PostgreSQL
             bool resourceDeleted = await _resourceRepository.DeleteResource(organisationId,repositoryId, resourceId);
             if (!resourceDeleted)

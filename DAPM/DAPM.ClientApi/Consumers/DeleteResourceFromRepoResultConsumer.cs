@@ -5,7 +5,7 @@ using Newtonsoft.Json.Serialization;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Models;
-// AYAT AL RIFAI
+/// <author>Ayat Al Rifai</author>
 namespace DAPM.ClientApi.Consumers
 {
     public class DeleteResourceFromRepoResultConsumer : IQueueConsumer<DeleteResourceFromRepoResult>
@@ -26,14 +26,8 @@ namespace DAPM.ClientApi.Consumers
             JToken result = new JObject();
             JsonSerializer serializer = JsonSerializer.Create(new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
 
-            //JToken idsJSON = JToken.FromObject(message., serializer);
-
-            //Serialization
-            //result["itemIds"] = idsJSON;
-            //result["itemType"] = message.ItemType;
             result["resourceId"] = message.resourceId;
-            //result["message"] = message.Message;  
-
+           
             // Update resolution
             _ticketService.UpdateTicketResolution(message.TicketId, result);
 

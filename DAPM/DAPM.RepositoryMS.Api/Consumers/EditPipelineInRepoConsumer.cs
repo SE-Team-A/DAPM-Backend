@@ -6,6 +6,8 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Models;
 
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.RepositoryMS.Api.Consumers
 {
     public class EditPipelineInRepoConsumer : IQueueConsumer<EditPipelineInRepoMessage>

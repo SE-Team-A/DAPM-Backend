@@ -7,7 +7,8 @@ using RabbitMQLibrary.Messages.ResourceRegistry;
 using RabbitMQLibrary.Models;
 using System.IO;
 using System.Xml.Linq;
-
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ClientApi.Services
 {
     public class RepositoryService : IRepositoryService
