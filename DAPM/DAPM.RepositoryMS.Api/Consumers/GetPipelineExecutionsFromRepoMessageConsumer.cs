@@ -6,6 +6,8 @@ using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Models;
 
+/// <author>Nicolai Veiglin Arends</author>
+
 namespace DAPM.RepositoryMS.Api.Consumers
 {
     public class GetPipelineExecutionsFromRepoMessageConsumer: IQueueConsumer<GetPipelineExecutionsFromRepoMessage>
