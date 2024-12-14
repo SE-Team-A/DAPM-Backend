@@ -9,5 +9,7 @@ namespace DAPM.RepositoryMS.Api.Services.Interfaces
         Task<IEnumerable<PipelineExecution>> GetPipelineExecutions(Guid pipelineId);
         Task<Tuple<Pipeline, PipelineExecution>> GetPipelineExecutionById(Guid executionId);
         Task<bool> DeletePipeline(Guid organizationId, Guid repositoryId, Guid pipelineId);
+
+        Task<bool> UpdatePipelineExecutionStatus(Guid executionId, string status);
     }
 }
