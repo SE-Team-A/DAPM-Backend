@@ -60,6 +60,15 @@ namespace DAPM.RepositoryMS.Api.Consumers
                 _getPipelineExecutionFromRepoResultProducer.PublishMessage(resultMessage);
                 _logger.LogInformation("GetPipelineExecutionFromRepoResultMessage Enqueued");
 
+                var updateResult = await _pipelineService.UpdatePipelineExecutionStatus(executionId, executionDto.State);
+                if (updateResult)
+                {
+                    _logger.LogInformation($"Successfully updated status of pipeline execution with ID: {executionId} to {executionDto.State}");
+                }
+                else
+                {
+                    _logger.LogError($"Failed to update status of pipeline execution with ID: {executionId}");
+                }  
             } else {
                 var executions = Enumerable.Empty<Models.PostgreSQL.PipelineExecution>();
                 executions = await _pipelineService.GetPipelineExecutions(message.PipelineId);
