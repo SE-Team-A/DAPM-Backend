@@ -20,14 +20,13 @@ namespace DAPM.PipelineOrchestratorMS.Api.Engine
         IQueueProducer<PostPipelineExecutionToRepoMessage> _queueProducer;
         IQueueProducer<GetPipelineExecutionsFromRepoMessage> _getPipelineExecutionsFromRepoMessageProducer;
 
-        public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider, IQueueProducer<PostPipelineExecutionToRepoMessage> queueProducer,
-            IQueueProducer<GetPipelineExecutionsFromRepoMessage> getPipelineExecutionsFromRepoMessageProducer)
+        public PipelineOrchestrationEngine(ILogger<IPipelineOrchestrationEngine> logger, IServiceProvider serviceProvider)
         {
             _pipelineExecutions = new Dictionary<Guid, IPipelineExecution>();
             _logger = logger;
             _serviceProvider = serviceProvider;
-            _queueProducer = queueProducer;
-            _getPipelineExecutionsFromRepoMessageProducer = getPipelineExecutionsFromRepoMessageProducer;
+            _queueProducer = serviceProvider.GetRequiredService<IQueueProducer<PostPipelineExecutionToRepoMessage>>();
+            _getPipelineExecutionsFromRepoMessageProducer = serviceProvider.GetRequiredService<IQueueProducer<GetPipelineExecutionsFromRepoMessage>>();
         }
 
         public Guid CreatePipelineExecutionInstance(PipelineDTO pipeline, Guid processId)
