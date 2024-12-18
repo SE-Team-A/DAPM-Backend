@@ -1,6 +1,9 @@
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
 {
     public class PostUserRoleRequestConsumer : IQueueConsumer<PostUserRoleRequest>

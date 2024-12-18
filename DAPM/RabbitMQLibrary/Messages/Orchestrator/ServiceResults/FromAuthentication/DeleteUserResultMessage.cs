@@ -1,5 +1,7 @@
 using RabbitMQLibrary.Interfaces;
 
+/// <author>Vladyslav Synytskyi</author>
+
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry
 {
     public class DeleteUserResultMessage : IQueueMessage

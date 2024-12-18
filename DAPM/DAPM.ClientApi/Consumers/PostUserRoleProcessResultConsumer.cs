@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.ClientApi.Consumers
 {
     public class PostUserRoleProcessResultConsumer : IQueueConsumer<PostUserRoleProcessResult>

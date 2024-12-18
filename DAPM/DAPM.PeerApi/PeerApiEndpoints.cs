@@ -1,4 +1,7 @@
-﻿namespace DAPM.PeerApi
+﻿/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
+namespace DAPM.PeerApi
 {
     public static class PeerApiEndpoints
     {

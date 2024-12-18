@@ -87,17 +87,19 @@ public class UserService : IUserService
     public async Task<bool> DeleteUserFromSystem(string requestToken, Guid userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
-        if (user == null)
-        {
-            _logger.LogInformation($"Failed to delete user {userId}, because user does not exist.");
-            return false;
-        }
 
         // If the request comes from a regular user
         string requestRoleName = _tokenService.GetRoleFromToken(requestToken);
         if (requestRoleName != "Admin" && requestRoleName != "SuperAdmin")
         {
             _logger.LogInformation($"Failed to delete user {userId}, because request role is only {requestRoleName}");
+            return false;
+        }
+
+        // If the user does not exist
+        if (user == null)
+        {
+            _logger.LogInformation($"Failed to delete user {userId}, because user does not exist.");
             return false;
         }
 
@@ -118,4 +120,3 @@ public class UserService : IUserService
         return deleteUser.Succeeded;
     }
 }
-

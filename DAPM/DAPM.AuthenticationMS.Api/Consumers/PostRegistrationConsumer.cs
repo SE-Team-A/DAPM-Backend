@@ -3,6 +3,9 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Authentication;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.AuthenticationMS.Api.Consumers
 {
     public class PostRegistrationConsumer : IQueueConsumer<PostRegistrationMessage>

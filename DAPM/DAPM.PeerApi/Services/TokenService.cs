@@ -8,6 +8,9 @@ using DAPM.PeerApi.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using RabbitMQLibrary.Models;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.PeerApi.Services
 {
     public class TokenService : ITokenService

@@ -5,10 +5,8 @@ using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 
-/// <author>Ákos Gelencsér</author>
 /// <author>Vladyslav Synytskyi</author>
-/// <author>Nicolai Veiglin Arends</author>
-/// <author>Thøger Bang Petersen</author>
+
 namespace DAPM.Orchestrator.Processes
 {
     public class GetAllUsersRequestProcess : OrchestratorProcess

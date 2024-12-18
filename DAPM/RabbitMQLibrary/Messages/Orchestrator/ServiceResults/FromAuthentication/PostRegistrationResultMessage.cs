@@ -1,5 +1,8 @@
 using RabbitMQLibrary.Interfaces;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry
 {
     public class PostRegistrationResultMessage : IQueueMessage

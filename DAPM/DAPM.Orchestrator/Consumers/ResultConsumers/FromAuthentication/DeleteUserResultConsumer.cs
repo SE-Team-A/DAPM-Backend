@@ -1,6 +1,8 @@
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.Orchestrator.Consumers.ResultConsumers.FromRegistry
 {
     public class DeleteUserResultConsumer : IQueueConsumer<DeleteUserResultMessage>
