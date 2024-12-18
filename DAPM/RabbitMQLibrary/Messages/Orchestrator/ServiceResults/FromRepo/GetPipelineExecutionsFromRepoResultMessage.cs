@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Models;
 
+/// <author>Tamas Drabos</author>
+
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo
 {
     public class GetPipelineExecutionsFromRepoResultMessage: IQueueMessage

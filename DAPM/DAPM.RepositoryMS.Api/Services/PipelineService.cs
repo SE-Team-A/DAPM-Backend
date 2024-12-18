@@ -4,6 +4,7 @@ using DAPM.RepositoryMS.Api.Services.Interfaces;
 
 /// <author>Ayat Al Rifai</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamas Drabos</author>
 
 namespace DAPM.RepositoryMS.Api.Services
 {

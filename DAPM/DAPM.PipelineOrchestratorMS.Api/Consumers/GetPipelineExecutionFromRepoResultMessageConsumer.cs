@@ -2,6 +2,8 @@
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.PipelineOrchestrator;
 
+/// <author>Tamás Drabos</author>
+
 namespace DAPM.PipelineOrchestratorMS.Api.Consumers
 {
     public class GetPipelineExecutionFromRepoResultMessageConsumer : IQueueConsumer<GetPipelineExecutionFromRepoResultMessage>
