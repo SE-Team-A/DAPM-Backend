@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <author>Tamas Drabos</author>
+
 namespace RabbitMQLibrary.Messages.Orchestrator.ProcessRequests
 {
     public class DeleteResourceRequest : IQueueMessage

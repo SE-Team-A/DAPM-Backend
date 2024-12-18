@@ -12,6 +12,8 @@ using RabbitMQLibrary.Messages.Repository;
 using Microsoft.EntityFrameworkCore;
 using DAPM.RepositoryMS.Api.Data;
 
+/// <author>Tamas Drabos</author>
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();

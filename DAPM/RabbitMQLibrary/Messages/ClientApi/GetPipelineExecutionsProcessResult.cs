@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Models;
 
+/// <author>Tamas Drabos</author>
+
 namespace RabbitMQLibrary.Messages.ClientApi
 {
     public class GetPipelineExecutionsProcessResult: IQueueMessage
