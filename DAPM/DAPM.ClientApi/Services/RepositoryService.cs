@@ -9,6 +9,7 @@ using System.IO;
 using System.Xml.Linq;
 /// <author>Ayat Al Rifai</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamas Drabos</author>
 namespace DAPM.ClientApi.Services
 {
     public class RepositoryService : IRepositoryService

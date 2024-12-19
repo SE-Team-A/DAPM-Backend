@@ -1,6 +1,8 @@
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
 {
     public class DeleteUserRequestConsumer : IQueueConsumer<DeleteUserRequest>

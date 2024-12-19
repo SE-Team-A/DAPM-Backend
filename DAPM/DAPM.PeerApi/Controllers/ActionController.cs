@@ -4,6 +4,9 @@ using DAPM.PipelineOrchestratorMS.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.PeerApi.Controllers
 {
     [ApiController]

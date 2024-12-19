@@ -2,6 +2,9 @@
 using DAPM.PeerApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.PeerApi.Controllers
 {
     [ApiController]

@@ -6,6 +6,7 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 using RabbitMQLibrary.Models;
 /// <author>Ayat Al Rifai</author>
+/// <author>Tamas Drabos</author>
 
 namespace DAPM.ResourceRegistryMS.Api.Consumers
 {

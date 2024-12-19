@@ -3,6 +3,8 @@ using Newtonsoft.Json.Linq;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.ClientApi.Consumers
 {
     public class DeleteUserResultConsumer : IQueueConsumer<DeleteUserProcessResult>

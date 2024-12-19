@@ -6,6 +6,8 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Models;
 
+/// <author>Tamas Drabos</author>
+
 namespace DAPM.ClientApi.Consumers
 {
     public class GetPipelineExecutionsProcessResultConsumer: IQueueConsumer<GetPipelineExecutionsProcessResult>

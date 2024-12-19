@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <author>Vladyslav Synytskyi</author>
+
 namespace RabbitMQLibrary.Messages.ClientApi
 {
     public class GetAllUsersProcessResult : IQueueMessage

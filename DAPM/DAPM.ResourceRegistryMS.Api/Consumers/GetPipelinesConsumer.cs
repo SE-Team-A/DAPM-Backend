@@ -5,6 +5,8 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 using RabbitMQLibrary.Models;
 
+/// <author>Tamas Drabos</author>
+
 namespace DAPM.ResourceRegistryMS.Api.Consumers
 {
     public class GetPipelinesConsumer : IQueueConsumer<GetPipelinesMessage>

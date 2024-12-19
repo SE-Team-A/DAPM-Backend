@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Models;
 
+/// <author>Tamás Drabos</author>
+
 namespace RabbitMQLibrary.Messages.PipelineOrchestrator
 {
     public class GetPipelineExecutionFromRepoResultMessage: IQueueMessage

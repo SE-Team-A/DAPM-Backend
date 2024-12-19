@@ -19,6 +19,7 @@ using System.Text;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamas Drabos</author>
 
 var builder = WebApplication.CreateBuilder(args);
 

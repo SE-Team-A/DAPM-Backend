@@ -5,6 +5,8 @@ using RabbitMQLibrary.Messages.PipelineOrchestrator;
 using DAPM.PipelineOrchestratorMS.Api.Engine.Interfaces;
 using DAPM.PipelineOrchestratorMS.Api.Engine;
 
+/// <author>Tamas Drabos</author>
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();

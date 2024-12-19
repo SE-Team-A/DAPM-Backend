@@ -3,6 +3,8 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 
+/// <author>Tamas Drabos</author>
+
 namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
 {
     public class GetPipelineExecutionsRequestConsumer : IQueueConsumer<GetPipelineExecutionsRequest>
