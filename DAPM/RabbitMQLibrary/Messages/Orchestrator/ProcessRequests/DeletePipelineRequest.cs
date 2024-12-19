@@ -1,5 +1,4 @@
 using RabbitMQLibrary.Interfaces;
-
 namespace RabbitMQLibrary.Messages.Orchestrator.ProcessRequests
 {
     public class DeletePipelineRequest : IQueueMessage

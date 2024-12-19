@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+/// <author>Ayat Al Rifai</author>
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry
 {
     public class DeleteResourceFromRegistryResultMessage : IQueueMessage

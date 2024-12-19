@@ -1,4 +1,5 @@
 using RabbitMQLibrary.Interfaces;
+/// <author>Ayat Al Rifai</author>
 
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo
 {
