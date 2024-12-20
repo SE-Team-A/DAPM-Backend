@@ -12,10 +12,12 @@ namespace DAPM.AuthenticationMS.Api.Services;
 public class TokenService : ITokenService
 {
     public readonly UserManager<IdentityUser> _userManager;
+    private readonly IConfiguration _configuration;
 
-    public TokenService(UserManager<IdentityUser> userManager)
+    public TokenService(UserManager<IdentityUser> userManager, IConfiguration configuration)
     {
         _userManager = userManager;
+        _configuration = configuration;
     }
     
     public async Task<string> CreateToken(IdentityUser user)
@@ -33,7 +35,7 @@ public class TokenService : ITokenService
             new Claim("role", roleName)
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkey??????????????????????????"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["ClientJWTSecretKey"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var tokenDescriptor = new SecurityTokenDescriptor
