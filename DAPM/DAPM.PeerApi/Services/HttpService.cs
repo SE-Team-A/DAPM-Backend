@@ -9,6 +9,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.PeerApi.Services
 {
     public class HttpService : IHttpService

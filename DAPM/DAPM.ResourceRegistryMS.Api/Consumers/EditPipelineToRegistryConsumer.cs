@@ -3,6 +3,8 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ResourceRegistryMS.Api.Consumers
 {
     public class EditPipelineToRegistryConsumer : IQueueConsumer<EditPipelineToRegistryMessage>

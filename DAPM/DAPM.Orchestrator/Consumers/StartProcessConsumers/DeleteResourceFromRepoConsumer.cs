@@ -1,6 +1,9 @@
 ﻿using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ProcessRequests;
 
+/// <author>Ayat Al Rifai</author>
+/// <author>Tamas Drabos</author>
+
 namespace DAPM.Orchestrator.Consumers.StartProcessConsumers
 {
     public class DeleteResourceFromRepoConsumer: IQueueConsumer<DeleteResourceRequest>

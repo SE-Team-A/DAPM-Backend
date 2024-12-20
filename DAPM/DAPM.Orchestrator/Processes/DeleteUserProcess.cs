@@ -6,6 +6,8 @@ using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.Orchestrator.Processes
 {
     public class DeleteUserProcess : OrchestratorProcess

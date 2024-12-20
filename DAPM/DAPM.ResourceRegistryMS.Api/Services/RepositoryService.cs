@@ -1,7 +1,8 @@
 ﻿using DAPM.ResourceRegistryMS.Api.Models;
 using DAPM.ResourceRegistryMS.Api.Repositories.Interfaces;
 using DAPM.ResourceRegistryMS.Api.Services.Interfaces;
-
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ResourceRegistryMS.Api.Services
 {
     public class RepositoryService : IRepositoryService

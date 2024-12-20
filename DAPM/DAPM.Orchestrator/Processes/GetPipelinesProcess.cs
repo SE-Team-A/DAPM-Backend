@@ -5,6 +5,8 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 
+/// <author>Tamas Drabos</author>
+
 namespace DAPM.Orchestrator.Processes
 {
     public class GetPipelinesProcess : OrchestratorProcess

@@ -7,7 +7,8 @@ using RabbitMQLibrary.Messages.PeerApi;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 using RabbitMQLibrary.Models;
-
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.Orchestrator.Processes
 {
     public class EditPipelineProcess : OrchestratorProcess

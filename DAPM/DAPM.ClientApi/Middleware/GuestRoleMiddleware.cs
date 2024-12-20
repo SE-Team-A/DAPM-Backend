@@ -1,3 +1,6 @@
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.ClientApi.Middleware
 {
     public class GuestRoleMiddleware

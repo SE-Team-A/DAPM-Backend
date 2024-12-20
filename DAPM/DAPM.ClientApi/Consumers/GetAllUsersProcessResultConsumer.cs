@@ -7,6 +7,8 @@ using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Models;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.ClientApi.Consumers
 {
     public class GetAllUsersProcessResultConsumer : IQueueConsumer<GetAllUsersProcessResult>

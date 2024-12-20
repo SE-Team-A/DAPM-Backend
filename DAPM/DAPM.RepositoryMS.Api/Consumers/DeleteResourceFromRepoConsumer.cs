@@ -5,7 +5,8 @@ using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 using RabbitMQLibrary.Models;
-// AYAT AL RIFAI
+/// <author>Ayat Al Rifai</author>
+
 namespace DAPM.RepositoryMS.Api.Consumers
 {
     public class DeleteResourceFromRepoConsumer : IQueueConsumer<DeleteResourceFromRepoMessage>

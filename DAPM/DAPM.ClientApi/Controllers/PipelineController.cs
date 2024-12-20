@@ -12,6 +12,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Tamás Drabos</author>
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ClientApi.Controllers
 {
     [ApiController]

@@ -1,6 +1,7 @@
 using RabbitMQLibrary.Interfaces;
 
-/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace RabbitMQLibrary.Messages.ClientApi
 {
     public class DeleteUserProcessResult : IQueueMessage

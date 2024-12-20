@@ -8,6 +8,8 @@ using RabbitMQLibrary.Messages.Repository;
 using RabbitMQLibrary.Messages.ResourceRegistry;
 using RabbitMQLibrary.Models;
 using System.Runtime.CompilerServices;
+/// <author>Ayat Al Rifai</author>
+/// <author>Tamas Drabos</author>
 
 namespace DAPM.Orchestrator.Processes
 {

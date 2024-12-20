@@ -8,11 +8,17 @@ using DAPM.PeerApi.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using RabbitMQLibrary.Models;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.PeerApi.Services
 {
     public class TokenService : ITokenService
     {
-        private readonly string TOKEN_KEY = "secretkey?????????????????????????!";
+        private readonly IConfiguration _configuration;
+        public TokenService(IConfiguration configiration) {
+            _configuration = configiration;
+        }
 
         public bool checkSignature(string token)
         {
@@ -22,7 +28,7 @@ namespace DAPM.PeerApi.Services
                 ValidateAudience = false, // Set to true if you want to validate the audience
                 ValidateLifetime = false, // Set to true if you want to validate token expiration
                 ValidateIssuerSigningKey = true, // Ensure the signing key is validated
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TOKEN_KEY)), // Use the symmetric key for validation
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["PeerJWTSecretKey"])), // Use the symmetric key for validation
             };
 
             try
@@ -47,7 +53,7 @@ namespace DAPM.PeerApi.Services
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TOKEN_KEY));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["PeerJWTSecretKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var tokenDescriptor = new SecurityTokenDescriptor

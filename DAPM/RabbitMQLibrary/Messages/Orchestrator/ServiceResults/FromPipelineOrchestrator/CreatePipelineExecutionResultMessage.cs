@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RabbitMQLibrary.Models;
 
+/// <author>Tamás Drabos</author>
+
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromPipelineOrchestrator
 {
     public class CreatePipelineExecutionResultMessage : IQueueMessage

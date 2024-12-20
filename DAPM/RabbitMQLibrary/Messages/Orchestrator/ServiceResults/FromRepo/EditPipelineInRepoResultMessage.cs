@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo
 {
     public class EditPipelineInRepoResultMessage : IQueueMessage

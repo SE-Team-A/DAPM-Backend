@@ -1,6 +1,9 @@
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRegistry;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+
 namespace DAPM.Orchestrator.Consumers.ResultConsumers.FromRegistry
 {
     public class PostUserRoleResultConsumer : IQueueConsumer<PostUserRoleResultMessage>

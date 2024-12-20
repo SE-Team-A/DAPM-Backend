@@ -19,6 +19,7 @@ using System.Text;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamas Drabos</author>
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -111,7 +112,7 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretkey??????????????????????????")),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["ClientJWTSecretKey"])),
         ValidateLifetime = true,
         ValidateIssuer = false,
         ValidateAudience = false,

@@ -2,6 +2,8 @@ using DAPM.Orchestrator.Processes;
 using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.Orchestrator.ServiceResults.FromRepo;
 
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.Orchestrator.Consumers.ResultConsumers.FromRepo
 {
     public class EditPipelineInRepoResultConsumer : IQueueConsumer<EditPipelineInRepoResultMessage>

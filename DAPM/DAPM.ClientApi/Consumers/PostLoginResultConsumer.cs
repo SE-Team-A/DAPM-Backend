@@ -6,6 +6,11 @@ using RabbitMQLibrary.Interfaces;
 using RabbitMQLibrary.Messages.ClientApi;
 using RabbitMQLibrary.Models;
 
+/// <author>Ákos Gelencsér</author>
+/// <author>Vladyslav Synytskyi</author>
+/// <author>Nicolai Veiglin Arends</author>
+/// <author>Thøger Bang Petersen</author>
+
 namespace DAPM.ClientApi.Consumers
 {
     public class PostLoginResultConsumer : IQueueConsumer<PostLoginProcessResult>

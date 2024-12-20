@@ -13,6 +13,7 @@ using RabbitMQLibrary.Messages.Repository;
 /// <author>Vladyslav Synytskyi</author>
 /// <author>Nicolai Veiglin Arends</author>
 /// <author>Thøger Bang Petersen</author>
+/// <author>Tamas Drabos</author>
 namespace DAPM.Orchestrator
 {
     public interface IOrchestratorProcess

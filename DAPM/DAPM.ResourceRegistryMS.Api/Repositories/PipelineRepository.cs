@@ -1,6 +1,7 @@
 ﻿using DAPM.ResourceRegistryMS.Api.Models;
 using DAPM.ResourceRegistryMS.Api.Repositories.Interfaces;
-
+/// <author>Ayat Al Rifai</author>
+/// <author>Thøger Bang Petersen</author>
 namespace DAPM.ResourceRegistryMS.Api.Repositories
 {
     public class PipelineRepository : IPipelineRepository
@@ -22,14 +23,6 @@ namespace DAPM.ResourceRegistryMS.Api.Repositories
         }
         public async Task<Pipeline> EditPipeline(Pipeline pipeline, Guid pipelineId)
         {
-          // var found = GetPipelineById(pipeline.PeerId, pipeline.RepositoryId, pipelineId);
-           
-        
-            //_context.Entry(found).CurrentValues.SetValues(pipeline);
-
-       //  var found = (Pipeline)_context.Resources.Where(r => r.PeerId == pipeline.PeerId && r.RepositoryId == pipeline.RepositoryId && r.Id == pipelineId);
-        //    found.PipelineJson=pipeline.PipelineJson;   
-        
             _context.SaveChanges();
             return pipeline;
         }
