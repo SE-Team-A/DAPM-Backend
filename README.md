@@ -76,3 +76,12 @@ http://localhost:5000/swagger/v1/swagger.json
 - Filtering and sorting pipelines on the frontend
 - File extension validation
 - View pipeline execution status while it is running
+- 
+
+
+
+### Release 4 (20-12-2024)
+
+- Minor bug fixes
+- Code cleanup
+
